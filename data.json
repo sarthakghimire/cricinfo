@@ -1,0 +1,1827 @@
+{
+  "info": {
+    "_postman_id": "cricket-backend-api-collection",
+    "name": "Cricket Backend API",
+    "description": "Complete API collection for Cricket Backend Management System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "cricket-backend"
+  },
+  "item": [
+    {
+      "name": "Tournament Types",
+      "item": [
+        {
+          "name": "Create Tournament Type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"League\",\n  \"description\": \"League format tournament\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tournament-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournament-types"]
+            },
+            "description": "Create a new tournament type"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Tournament Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournament-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournament-types"]
+            },
+            "description": "Get all tournament types"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tournament Type by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournament-types/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournament-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Tournament Type ID"
+                }
+              ]
+            },
+            "description": "Get a specific tournament type by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Tournament Type",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Super League\",\n  \"description\": \"Updated league format\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tournament-types/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournament-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Tournament Type ID"
+                }
+              ]
+            },
+            "description": "Update an existing tournament type"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Tournament Type",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournament-types/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournament-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Tournament Type ID"
+                }
+              ]
+            },
+            "description": "Delete a tournament type"
+          },
+          "response": []
+        }
+      ],
+      "description": "Tournament Types CRUD operations"
+    },
+    {
+      "name": "Match Types",
+      "item": [
+        {
+          "name": "Create Match Type",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"T20\",\n  \"description\": \"Twenty20 cricket format\",\n  \"total_overs\": 20,\n  \"balls_per_over\": 6,\n  \"power_play_overs\": 6\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/match-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["match-types"]
+            },
+            "description": "Create a new match type"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Match Type - ODI",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"ODI\",\n  \"description\": \"One Day International format\",\n  \"total_overs\": 50,\n  \"balls_per_over\": 6,\n  \"power_play_overs\": 10\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/match-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["match-types"]
+            },
+            "description": "Create ODI match type"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Match Type - Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test\",\n  \"description\": \"Test match format\",\n  \"total_overs\": 90,\n  \"balls_per_over\": 6,\n  \"power_play_overs\": 0\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/match-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["match-types"]
+            },
+            "description": "Create Test match type"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Match Types",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/match-types",
+              "host": ["{{baseUrl}}"],
+              "path": ["match-types"]
+            },
+            "description": "Get all match types"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Match Type by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/match-types/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["match-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match Type ID"
+                }
+              ]
+            },
+            "description": "Get a specific match type by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Match Type",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"T20 Updated\",\n  \"description\": \"Updated Twenty20 format\",\n  \"power_play_overs\": 7\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/match-types/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["match-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match Type ID"
+                }
+              ]
+            },
+            "description": "Update an existing match type"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Match Type",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/match-types/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["match-types", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match Type ID"
+                }
+              ]
+            },
+            "description": "Delete a match type"
+          },
+          "response": []
+        }
+      ],
+      "description": "Match Types CRUD operations"
+    },
+    {
+      "name": "Officials",
+      "item": [
+        {
+          "name": "Create Official - Umpire",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kumar Dharmasena\",\n  \"type\": \"umpire\",\n  \"description\": \"Elite panel umpire from Sri Lanka\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/officials",
+              "host": ["{{baseUrl}}"],
+              "path": ["officials"]
+            },
+            "description": "Create a new umpire official"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Official - Match Referee",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ranjan Madugalle\",\n  \"type\": \"match_refree\",\n  \"description\": \"ICC Elite Panel Match Referee\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/officials",
+              "host": ["{{baseUrl}}"],
+              "path": ["officials"]
+            },
+            "description": "Create a match referee official"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Official - TV Umpire",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nigel Llong\",\n  \"type\": \"tv_umpire\",\n  \"description\": \"Third umpire specialist\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/officials",
+              "host": ["{{baseUrl}}"],
+              "path": ["officials"]
+            },
+            "description": "Create a TV umpire official"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Official - Reserve Umpire",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Joel Wilson\",\n  \"type\": \"reserve_umpire\",\n  \"description\": \"Reserve umpire for international matches\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/officials",
+              "host": ["{{baseUrl}}"],
+              "path": ["officials"]
+            },
+            "description": "Create a reserve umpire official"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Officials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/officials",
+              "host": ["{{baseUrl}}"],
+              "path": ["officials"]
+            },
+            "description": "Get all officials"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Official by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/officials/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["officials", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Official ID"
+                }
+              ]
+            },
+            "description": "Get a specific official by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Official",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kumar Dharmasena\",\n  \"description\": \"Elite panel umpire - Updated\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/officials/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["officials", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Official ID"
+                }
+              ]
+            },
+            "description": "Update an existing official"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Official",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/officials/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["officials", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Official ID"
+                }
+              ]
+            },
+            "description": "Delete an official"
+          },
+          "response": []
+        }
+      ],
+      "description": "Officials CRUD operations"
+    },
+    {
+      "name": "Tournaments",
+      "item": [
+        {
+          "name": "Create Tournament",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"IPL 2024\",\n  \"description\": \"Indian Premier League Season 2024\",\n  \"season\": \"2024\",\n  \"locations\": [\"Mumbai\", \"Delhi\", \"Bangalore\", \"Chennai\"],\n  \"logo\": \"https://example.com/ipl-logo.png\",\n  \"banner_image\": \"https://example.com/ipl-banner.png\",\n  \"gender\": \"M\",\n  \"match_type\": \"{{matchTypeId}}\",\n  \"tournament_type\": \"{{tournamentTypeId}}\",\n  \"officials\": [\"{{officialId}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tournaments",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournaments"]
+            },
+            "description": "Create a new tournament. Requires valid match_type, tournament_type, and officials IDs."
+          },
+          "response": []
+        },
+        {
+          "name": "Create Tournament - Women's World Cup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Women's Cricket World Cup 2025\",\n  \"description\": \"ICC Women's Cricket World Cup 2025\",\n  \"season\": \"2025\",\n  \"locations\": [\"Auckland\", \"Wellington\", \"Christchurch\"],\n  \"logo\": \"https://example.com/wwc-logo.png\",\n  \"banner_image\": \"https://example.com/wwc-banner.png\",\n  \"gender\": \"F\",\n  \"match_type\": \"{{matchTypeId}}\",\n  \"tournament_type\": \"{{tournamentTypeId}}\",\n  \"officials\": [\"{{officialId}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tournaments",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournaments"]
+            },
+            "description": "Create a women's tournament"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Tournaments",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournaments"]
+            },
+            "description": "Get all tournaments"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Tournament by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournaments", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Tournament ID"
+                }
+              ]
+            },
+            "description": "Get a specific tournament by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Tournament",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"IPL 2024 - Updated\",\n  \"description\": \"Indian Premier League Season 2024 - Updated description\",\n  \"locations\": [\"Mumbai\", \"Delhi\", \"Bangalore\", \"Chennai\", \"Kolkata\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournaments", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Tournament ID"
+                }
+              ]
+            },
+            "description": "Update an existing tournament. All fields are optional."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Tournament",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/tournaments/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["tournaments", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Tournament ID"
+                }
+              ]
+            },
+            "description": "Delete a tournament"
+          },
+          "response": []
+        }
+      ],
+      "description": "Tournaments CRUD operations"
+    },
+    {
+      "name": "Players",
+      "item": [
+        {
+          "name": "Create Player - Male",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Virat Kohli\",\n  \"gender\": \"M\",\n  \"date_of_birth\": \"1988-11-05\",\n  \"image\": \"https://example.com/virat-kohli.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/players",
+              "host": ["{{baseUrl}}"],
+              "path": ["players"]
+            },
+            "description": "Create a new male player"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Player - Female",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Smriti Mandhana\",\n  \"gender\": \"F\",\n  \"date_of_birth\": \"1996-07-18\",\n  \"image\": \"https://example.com/smriti-mandhana.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/players",
+              "host": ["{{baseUrl}}"],
+              "path": ["players"]
+            },
+            "description": "Create a new female player"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Player - Without Optional Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Rohit Sharma\",\n  \"gender\": \"M\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/players",
+              "host": ["{{baseUrl}}"],
+              "path": ["players"]
+            },
+            "description": "Create a player with only required fields"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Players",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/players",
+              "host": ["{{baseUrl}}"],
+              "path": ["players"]
+            },
+            "description": "Get all players"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Player by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/players/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["players", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Player ID"
+                }
+              ]
+            },
+            "description": "Get a specific player by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Player",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Virat Kohli\",\n  \"image\": \"https://example.com/virat-kohli-updated.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/players/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["players", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Player ID"
+                }
+              ]
+            },
+            "description": "Update an existing player. All fields are optional."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Player",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/players/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["players", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Player ID"
+                }
+              ]
+            },
+            "description": "Delete a player"
+          },
+          "response": []
+        }
+      ],
+      "description": "Players CRUD operations"
+    },
+    {
+      "name": "Venues",
+      "item": [
+        {
+          "name": "Create Venue",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wankhede Stadium\",\n  \"address\": \"D Road, Churchgate, Mumbai, Maharashtra 400020, India\",\n  \"capacity\": 33108\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/venues",
+              "host": ["{{baseUrl}}"],
+              "path": ["venues"]
+            },
+            "description": "Create a new venue with all fields"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Venue - Eden Gardens",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Eden Gardens\",\n  \"address\": \"Kolkata, West Bengal 700021, India\",\n  \"capacity\": 66000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/venues",
+              "host": ["{{baseUrl}}"],
+              "path": ["venues"]
+            },
+            "description": "Create Eden Gardens venue"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Venue - Without Optional Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"M. Chinnaswamy Stadium\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/venues",
+              "host": ["{{baseUrl}}"],
+              "path": ["venues"]
+            },
+            "description": "Create a venue with only required fields"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Venues",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/venues",
+              "host": ["{{baseUrl}}"],
+              "path": ["venues"]
+            },
+            "description": "Get all venues"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Venue by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/venues/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["venues", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Venue ID"
+                }
+              ]
+            },
+            "description": "Get a specific venue by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Venue",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"capacity\": 34000,\n  \"address\": \"D Road, Churchgate, Mumbai, Maharashtra, India\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/venues/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["venues", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Venue ID"
+                }
+              ]
+            },
+            "description": "Update an existing venue. All fields are optional."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Venue",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/venues/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["venues", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Venue ID"
+                }
+              ]
+            },
+            "description": "Delete a venue"
+          },
+          "response": []
+        }
+      ],
+      "description": "Venues CRUD operations"
+    },
+    {
+      "name": "Teams",
+      "item": [
+        {
+          "name": "Create Team",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Mumbai Indians\",\n  \"slogan\": \"Duniya Hila Denge Hum\",\n  \"description\": \"Mumbai Indians is a franchise cricket team based in Mumbai, Maharashtra, that plays in the Indian Premier League.\",\n  \"banner_image\": \"https://example.com/mi-banner.jpg\",\n  \"logo\": \"https://example.com/mi-logo.png\",\n  \"players\": [\"{{playerId}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams"]
+            },
+            "description": "Create a new team with all fields"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Team - Chennai Super Kings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Chennai Super Kings\",\n  \"slogan\": \"Whistle Podu\",\n  \"description\": \"Chennai Super Kings is an Indian franchise cricket team based in Chennai, Tamil Nadu.\",\n  \"banner_image\": \"https://example.com/csk-banner.jpg\",\n  \"logo\": \"https://example.com/csk-logo.png\",\n  \"players\": [\"{{playerId}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams"]
+            },
+            "description": "Create Chennai Super Kings team"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Team - Without Optional Fields",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Royal Challengers Bangalore\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams"]
+            },
+            "description": "Create a team with only required fields (without players)"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Team - With Players",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kolkata Knight Riders\",\n  \"slogan\": \"Korbo Lorbo Jeetbo Re\",\n  \"players\": [\"{{playerId}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams"]
+            },
+            "description": "Create a team with players array"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Teams",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/teams",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams"]
+            },
+            "description": "Get all teams"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Team by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/teams/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Team ID"
+                }
+              ]
+            },
+            "description": "Get a specific team by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Team",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"slogan\": \"Play Bold\",\n  \"description\": \"Updated description for RCB\",\n  \"players\": [\"{{playerId}}\"]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/teams/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Team ID"
+                }
+              ]
+            },
+            "description": "Update an existing team. All fields are optional."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Team",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/teams/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["teams", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Team ID"
+                }
+              ]
+            },
+            "description": "Delete a team"
+          },
+          "response": []
+        }
+      ],
+      "description": "Teams CRUD operations"
+    },
+    {
+      "name": "Stages",
+      "item": [
+        {
+          "name": "Create Stage",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Group Stage\",\n  \"tournament\": \"{{tournamentId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stages",
+              "host": ["{{baseUrl}}"],
+              "path": ["stages"]
+            },
+            "description": "Create a new stage for a tournament"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Stage - Knockout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Knockout Stage\",\n  \"tournament\": \"{{tournamentId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stages",
+              "host": ["{{baseUrl}}"],
+              "path": ["stages"]
+            },
+            "description": "Create knockout stage"
+          },
+          "response": []
+        },
+        {
+          "name": "Create Stage - Finals",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Finals\",\n  \"tournament\": \"{{tournamentId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stages",
+              "host": ["{{baseUrl}}"],
+              "path": ["stages"]
+            },
+            "description": "Create finals stage"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Stages by Tournament ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/stages/tournaments/:tournamentId",
+              "host": ["{{baseUrl}}"],
+              "path": ["stages", "tournaments", ":tournamentId"],
+              "variable": [
+                {
+                  "key": "tournamentId",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Tournament ID"
+                }
+              ]
+            },
+            "description": "Get all stages for a specific tournament"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Stage by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/stages/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["stages", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Stage ID"
+                }
+              ]
+            },
+            "description": "Get a specific stage by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Stage",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Super Group Stage\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stages/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["stages", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Stage ID"
+                }
+              ]
+            },
+            "description": "Update an existing stage. All fields are optional."
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Stage",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/stages/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["stages", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Stage ID"
+                }
+              ]
+            },
+            "description": "Delete a stage"
+          },
+          "response": []
+        }
+      ],
+      "description": "Stages CRUD operations (e.g., Group Stage, Knockout, Finals)"
+    },
+    {
+      "name": "Matches",
+      "item": [
+        {
+          "name": "Create Match",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"team_1\": \"{{teamId}}\",\n  \"team_2\": \"{{teamId}}\",\n  \"date\": \"2024-03-15T14:30:00.000Z\",\n  \"match_number\": 1,\n  \"stage\": \"{{stageId}}\",\n  \"tournament\": \"{{tournamentId}}\",\n  \"venue\": \"{{venueId}}\",\n  \"description\": \"League match between Team 1 and Team 2\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches"]
+            },
+            "description": "Create a new match"
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Matches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches"]
+            },
+            "description": "Get all matches"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Matches by Tournament",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/tournaments/:tournamentId",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", "tournaments", ":tournamentId"],
+              "variable": [
+                {
+                  "key": "tournamentId",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Tournament ID"
+                }
+              ]
+            },
+            "description": "Get all matches for a specific tournament"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Matches by Stage",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/stages/:stageId",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", "stages", ":stageId"],
+              "variable": [
+                {
+                  "key": "stageId",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Stage ID"
+                }
+              ]
+            },
+            "description": "Get all matches for a specific stage"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Match by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Get a specific match by ID"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Match",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2024-03-16T14:30:00.000Z\",\n  \"venue\": \"{{venueId}}\",\n  \"description\": \"Updated match description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Update an existing match"
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Match",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Delete a match (also removes associated players and officials)"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Match Target",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"runs\": 181,\n  \"overs\": 20\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/target",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "target"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Update the target for a match"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Toss Result",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"winner\": \"{{teamId}}\",\n  \"decision\": \"BAT\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/toss-result",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "toss-result"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Update the toss result. Decision can be BAT or BOWL"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Match Outcome - Win by Runs",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"result\": \"WIN\",\n  \"winner\": \"{{teamId}}\",\n  \"by\": {\n    \"by_type\": \"RUN\",\n    \"value\": 25\n  },\n  \"summary\": \"Team 1 won by 25 runs\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/outcome",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "outcome"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Update match outcome for a win by runs"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Match Outcome - Win by Wickets",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"result\": \"WIN\",\n  \"winner\": \"{{teamId}}\",\n  \"by\": {\n    \"by_type\": \"WICKET\",\n    \"value\": 6\n  },\n  \"summary\": \"Team 2 won by 6 wickets\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/outcome",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "outcome"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Update match outcome for a win by wickets"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Match Outcome - Draw",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"result\": \"DRAW\",\n  \"summary\": \"Match ended in a draw\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/outcome",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "outcome"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Update match outcome for a draw"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Player to Match",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"player\": \"{{playerId}}\",\n  \"team\": \"{{teamId}}\",\n  \"player_name\": \"Virat Kohli\",\n  \"player_image\": \"https://example.com/virat.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/players",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "players"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Add a player to a match"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Match Players",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/players",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "players"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Get all players for a specific match"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Match Players by Team",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/players/teams/:teamId",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "players", "teams", ":teamId"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                },
+                {
+                  "key": "teamId",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Team ID"
+                }
+              ]
+            },
+            "description": "Get all players for a specific team in a match"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Match Player",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"player_name\": \"Virat Kohli (C)\",\n  \"player_image\": \"https://example.com/virat-updated.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/players/:playerId",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", "players", ":playerId"],
+              "variable": [
+                {
+                  "key": "playerId",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match Player ID"
+                }
+              ]
+            },
+            "description": "Update a match player's details"
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Player from Match",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/players/:playerId",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", "players", ":playerId"],
+              "variable": [
+                {
+                  "key": "playerId",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match Player ID"
+                }
+              ]
+            },
+            "description": "Remove a player from a match"
+          },
+          "response": []
+        },
+        {
+          "name": "Add Official to Match",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"official\": \"{{officialId}}\",\n  \"name\": \"Kumar Dharmasena\",\n  \"type\": \"umpire\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/officials",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "officials"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Add an official to a match. Type can be: umpire, tv_umpire, reserve_umpire, match_refree"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Match Officials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/:id/officials",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", ":id", "officials"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match ID"
+                }
+              ]
+            },
+            "description": "Get all officials for a specific match"
+          },
+          "response": []
+        },
+        {
+          "name": "Update Match Official",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Kumar Dharmasena (ICC Elite Panel)\",\n  \"type\": \"umpire\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/matches/officials/:officialId",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", "officials", ":officialId"],
+              "variable": [
+                {
+                  "key": "officialId",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match Official ID"
+                }
+              ]
+            },
+            "description": "Update a match official's details"
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Official from Match",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/matches/officials/:officialId",
+              "host": ["{{baseUrl}}"],
+              "path": ["matches", "officials", ":officialId"],
+              "variable": [
+                {
+                  "key": "officialId",
+                  "value": "60f7b3b3b3b3b3b3b3b3b3b3",
+                  "description": "Match Official ID"
+                }
+              ]
+            },
+            "description": "Remove an official from a match"
+          },
+          "response": []
+        }
+      ],
+      "description": "Matches management including match details, players, officials, target, toss result, and outcome"
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8085",
+      "type": "string"
+    }
+  ]
+}
