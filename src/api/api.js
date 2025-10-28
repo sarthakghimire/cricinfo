@@ -117,3 +117,24 @@ export const getTeams = async () => {
     throw error;
   }
 };
+
+// Players
+export const createPlayer = async (data) => {
+  try {
+    const response = await axios.post("/players", data);
+    return response.data;
+  } catch (error) {
+    console.error("CreatePlayer Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getPlayers = async () => {
+  try {
+    const response = await axios.get("/players");
+    return response.data;
+  } catch (error) {
+    console.error("GetPlayers Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
