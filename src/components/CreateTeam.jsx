@@ -19,8 +19,12 @@ const CreateTeam = () => {
       queryClient.invalidateQueries(["teams"]);
       setFormData({ name: "", slogan: "", description: "", players: "" });
     },
-    onError: () => {
-      toast.error("Failed to create team");
+    onError: (error) => {
+      toast.error(
+        `Failed to create team: ${
+          error.response?.data?.message || error.message
+        }`
+      );
     },
   });
 
@@ -28,8 +32,8 @@ const CreateTeam = () => {
     e.preventDefault();
     mutation.mutate({
       name: formData.name,
-      slogan: formData.slogan,
-      description: formData.description,
+      slogan: formData.slogan || "",
+      description: formData.description || "",
       players: formData.players
         ? formData.players.split(",").map((id) => id.trim())
         : [],
