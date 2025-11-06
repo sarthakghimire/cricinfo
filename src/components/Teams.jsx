@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getTeams } from "./../api/api";
+import { Link } from "react-router-dom";
 
 const Teams = () => {
   const {
@@ -47,7 +48,8 @@ const Teams = () => {
           <div className="overflow-x-auto hide-scrollbar">
             <div className="flex gap-6 py-4 snap-x snap-mandatory">
               {teams.map((team) => (
-                <div
+                <Link
+                  to={`/teams/${team._id}`}
                   key={team._id}
                   className="
                     flex-none w-64 sm:w-72 md:w-80
@@ -68,7 +70,7 @@ const Teams = () => {
                   <p className="text-sm text-blue-600 italic mt-2 text-center line-clamp-2">
                     "{team.slogan}"
                   </p>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

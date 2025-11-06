@@ -117,6 +117,15 @@ export const getTeams = async () => {
     throw error;
   }
 };
+export const getTeamById = async (id) => {
+  try {
+    const response = await axios.get(`/teams/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("GetTeam Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
 
 // Players
 export const createPlayer = async (data) => {
@@ -132,6 +141,15 @@ export const createPlayer = async (data) => {
 export const getPlayers = async () => {
   try {
     const response = await axios.get("/players");
+    return response.data;
+  } catch (error) {
+    console.error("GetPlayers Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+export const getPlayerById = async (id) => {
+  try {
+    const response = await axios.get(`/players/${id}`);
     return response.data;
   } catch (error) {
     console.error("GetPlayers Error:", error.response?.data || error.message);

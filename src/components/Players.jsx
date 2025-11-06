@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getPlayers } from "./../api/api";
+import { Link } from "react-router-dom";
 
 const Players = () => {
   const {
@@ -58,8 +59,9 @@ const Players = () => {
           <div className="overflow-x-auto hide-scrollbar">
             <div className="flex gap-6 py-4 snap-x snap-mandatory">
               {players.map((player) => (
-                <div
+                <Link
                   key={player._id}
+                  to={`/players/${player._id}`}
                   className="
                     flex-none w-64 sm:w-72 md:w-80
                     bg-white rounded-xl shadow-md overflow-hidden
@@ -84,7 +86,7 @@ const Players = () => {
                       Gender: {player.gender === "M" ? "Male" : "Female"}
                     </p>
                   </div>
-                </div>
+                </Link>
               ))}
             </div>
           </div>
