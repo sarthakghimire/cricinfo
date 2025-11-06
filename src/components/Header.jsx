@@ -1,6 +1,6 @@
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Header = () => {
   const { user, login, logout } = useAuth();
@@ -15,7 +15,9 @@ const Header = () => {
 
   return (
     <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold">cricINFO</h1>
+      <Link to={"/"} className="text-xl font-bold">
+        cricINFO
+      </Link>
       <div className="flex items-center">
         {!user ? (
           <form onSubmit={handleLogin} className="flex space-x-2">
