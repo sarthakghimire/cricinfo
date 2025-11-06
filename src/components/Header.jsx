@@ -15,7 +15,7 @@ const Header = () => {
 
   return (
     <header className="bg-blue-500 text-white p-4 flex justify-between items-center">
-      <h1 className="text-xl font-bold">CricINFO</h1>
+      <h1 className="text-xl font-bold">cricINFO</h1>
       <div className="flex items-center">
         {!user ? (
           <form onSubmit={handleLogin} className="flex space-x-2">
