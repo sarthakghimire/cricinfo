@@ -15,30 +15,33 @@ const Players = () => {
 
   const players = response?.data ?? [];
 
-  const formatDOB = (isoString) => {
-    const date = new Date(isoString);
-    return date.toLocaleDateString("en-US", {
+  const formatDOB = (iso) => {
+    const d = new Date(iso);
+    return d.toLocaleDateString("en-US", {
       year: "numeric",
       month: "short",
       day: "numeric",
     });
   };
+
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
+    <section className="py-12 bg-gray-50">
       <h2
         className="
-          text-3xl sm:text-4xl font-extrabold
-          bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700
-          bg-clip-text text-transparent
-          mb-8 tracking-tight
-          max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
-          drop-shadow-sm
-        "
+        text-3xl sm:text-4xl font-extrabold
+        bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700
+        bg-clip-text text-transparent
+        mb-8 tracking-tight
+        max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
+        drop-shadow-sm
+      "
       >
         Players
       </h2>
 
-      {isLoading && <p className="text-center text-gray-600">Loading…</p>}
+      {isLoading && (
+        <p className="text-center text-gray-600">Loading players…</p>
+      )}
 
       {isError && (
         <p className="text-center text-red-600">
@@ -52,7 +55,7 @@ const Players = () => {
 
       {!isLoading && !isError && players.length > 0 && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="overflow-x-scroll scrollbar-hide">
+          <div className="overflow-x-auto hide-scrollbar">
             <div className="flex gap-6 py-4 snap-x snap-mandatory">
               {players.map((player) => (
                 <div
@@ -64,14 +67,12 @@ const Players = () => {
                     snap-center
                   "
                 >
-                  <div className="rounded-full">
-                    <img
-                      src={player.image}
-                      alt={player.name}
-                      className="w-full h-56 object-cover "
-                      loading="lazy"
-                    />
-                  </div>
+                  <img
+                    src={player.image}
+                    alt={player.name}
+                    className="w-full h-56 object-cover rounded-t-xl"
+                    loading="lazy"
+                  />
                   <div className="p-5">
                     <h3 className="font-semibold text-lg text-gray-900 truncate">
                       {player.name}
@@ -89,7 +90,7 @@ const Players = () => {
           </div>
         </div>
       )}
-    </div>
+    </section>
   );
 };
 
