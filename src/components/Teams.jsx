@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getTeams } from "./../api/api";
 import { Link } from "react-router-dom";
+import Loading from "./Loading";
 
 const Teams = () => {
   const {
@@ -31,7 +32,7 @@ const Teams = () => {
         Teams
       </h2>
 
-      {isLoading && <p className="text-center text-gray-600">Loading teams…</p>}
+      {isLoading && <Loading />}
 
       {isError && (
         <p className="text-center text-red-600">

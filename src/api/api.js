@@ -120,7 +120,7 @@ export const getTeams = async () => {
 export const getTeamById = async (id) => {
   try {
     const response = await axios.get(`/teams/${id}`);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("GetTeam Error:", error.response?.data || error.message);
     throw error;
@@ -150,7 +150,7 @@ export const getPlayers = async () => {
 export const getPlayerById = async (id) => {
   try {
     const response = await axios.get(`/players/${id}`);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.error("GetPlayers Error:", error.response?.data || error.message);
     throw error;

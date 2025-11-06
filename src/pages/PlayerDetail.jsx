@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
 import { getPlayerById } from "./../api/api";
 import Header from "./../components/Header";
+import Loading from "../components/Loading";
 
 const PlayerDetail = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const PlayerDetail = () => {
     queryFn: () => getPlayerById(id),
   });
 
-  if (isLoading) return <p className="text-center py-20">Loading player...</p>;
+  if (isLoading) return <Loading />;
   if (isError)
     return <p className="text-center text-red-600 py-20">{error?.message}</p>;
   if (!player) return <p className="text-center py-20">Player not found.</p>;
@@ -44,7 +45,7 @@ const PlayerDetail = () => {
             <img
               src={player.image}
               alt={player.name}
-              className="w-full h-96 object-cover"
+              className="w-full h-96 object-fit"
             />
             <div className="p-8">
               <h1 className="text-4xl font-bold text-gray-900 mb-4">
@@ -63,10 +64,6 @@ const PlayerDetail = () => {
                     {formatDate(player.date_of_birth)}
                   </p>
                 </div>
-              </div>
-              <div className="mt-8 text-sm text-gray-500">
-                <p>Added: {formatDate(player.created_at)}</p>
-                <p>Updated: {formatDate(player.updated_at)}</p>
               </div>
             </div>
           </div>

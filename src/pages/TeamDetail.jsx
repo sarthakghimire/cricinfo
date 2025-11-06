@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
 import { getTeamById } from "./../api/api";
 import Header from "./../components/Header";
+import Loading from "../components/Loading";
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -16,7 +17,7 @@ const TeamDetail = () => {
     queryFn: () => getTeamById(id),
   });
 
-  if (isLoading) return <p className="text-center py-20">Loading team...</p>;
+  if (isLoading) return <Loading />;
   if (isError)
     return <p className="text-center text-red-600 py-20">{error?.message}</p>;
   if (!team) return <p className="text-center py-20">Team not found.</p>;
@@ -59,20 +60,39 @@ const TeamDetail = () => {
               <div className="prose max-w-none text-gray-700 mb-8">
                 <p>{team.description}</p>
               </div>
-
-              <div className="text-sm text-gray-500">
-                <p>Added: {new Date(team.created_at).toLocaleDateString()}</p>
-                <p>Updated: {new Date(team.updated_at).toLocaleDateString()}</p>
-              </div>
-
               {team.players && team.players.length > 0 && (
                 <div className="mt-8">
                   <h3 className="text-lg font-semibold mb-3">
                     Players ({team.players.length})
                   </h3>
-                  <p className="text-sm text-gray-600">
-                    Player details coming soon...
-                  </p>
+                  {/* Map the array here */}
+                  <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 text-gray-700">
+                    {team.players.map((player, index) => (
+                      <li
+                        key={player._id || index}
+                        className="bg-gray-100 p-4 rounded-xl shadow-sm hover:shadow-md transition"
+                      >
+                        <Link
+                          to={`/players/${player._id}`}
+                          className="flex items-center gap-3"
+                        >
+                          <img
+                            src={player.image}
+                            alt={player.name}
+                            className="w-12 h-12 rounded-full object-cover"
+                          />
+                          <div>
+                            <p className="font-semibold text-blue-600">
+                              {player.name}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              {player.gender}
+                            </p>
+                          </div>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
             </div>
