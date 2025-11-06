@@ -14,13 +14,13 @@ const Hero = () => {
       {/* Text Content */}
       <div className="relative z-10 flex flex-col items-center justify-center h-full text-center text-white px-6">
         <h1 className="text-4xl md:text-6xl font-bold mb-4">
-          Welcome to Cricket World
+          Welcome to cricINFO
         </h1>
         <p className="text-lg md:text-xl max-w-2xl">
           Experience the thrill of the game with live scores, highlights, and
           more.
         </p>
-        <button className="mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg transition">
+        <button className="mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg transition cursor-pointer">
           Explore Now
         </button>
       </div>
