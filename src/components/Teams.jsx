@@ -26,7 +26,7 @@ const Teams = () => {
         bg-clip-text text-transparent
         mb-8 tracking-tight
         max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
-        drop-shadow-sm
+        drop-shadow-sm cursor-pointer
       "
       >
         Teams

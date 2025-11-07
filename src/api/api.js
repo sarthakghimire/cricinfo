@@ -156,3 +156,24 @@ export const getPlayerById = async (id) => {
     throw error;
   }
 };
+
+//Umpires
+export const getOfficials = async () => {
+  try {
+    const response = await axios.get("/officials");
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getOfficialById = async (id) => {
+  try {
+    const response = await axios.get(`/officials/${id}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("Error:", error.response?.data || error.message);
+    throw error;
+  }
+};

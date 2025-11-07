@@ -6,12 +6,16 @@ import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PlayerDetail from "./pages/PlayerDetail";
 import TeamDetail from "./pages/TeamDetail";
+import OfficialInfo from "./pages/OfficialInfo";
+import TournamentInfo from "./pages/TournamentInfo";
 
 const App = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Toaster position="top-right" />
       <Routes>
+        <Route path="/tournaments/:id" element={<TournamentInfo />} />
+        <Route path="/officials/:id" element={<OfficialInfo />} />
         <Route path="/players/:id" element={<PlayerDetail />} />
         <Route path="/teams/:id" element={<TeamDetail />} />
         <Route path="/" element={<Home />} />
