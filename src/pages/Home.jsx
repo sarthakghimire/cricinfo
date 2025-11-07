@@ -10,9 +10,9 @@ const Home = () => {
     <>
       <Header />
       <Hero />
+      <Tournaments />
       <Players />
       <Teams />
-      <Tournaments />
       <Officials />
     </>
   );

@@ -59,7 +59,7 @@ const Officials = () => {
               ) : (
                 officials.slice(0, 12).map((official) => (
                   <Link
-                    to={`/official/${official._id}`}
+                    to={`/officials/${official._id}`}
                     key={official._id}
                     onClick={() => handleOfficialClick(official)}
                     className="group relative bg-white/95 backdrop-blur-lg rounded-2xl shadow-2xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-110 hover:-translate-y-4 hover:shadow-3xl border border-white/50"
