@@ -14,7 +14,7 @@ const TournamentInfo = () => {
     error,
   } = useQuery({
     queryKey: ["tournament", id],
-    queryFn: getTournamentById(id),
+    queryFn: () => getTournamentById(id),
   });
 
   const tournament = response?.data;
@@ -145,7 +145,7 @@ const TournamentInfo = () => {
                   {tournament.officials.map((official) => (
                     <Link
                       key={official._id}
-                      to={`/official/${official._id}`}
+                      to={`/officials/${official._id}`}
                       className="group bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-blue-200"
                     >
                       <h3 className="font-bold text-lg text-gray-800 group-hover:text-blue-700">
