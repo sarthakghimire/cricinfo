@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import { getTeamById } from "./../api/api";
 import Header from "./../components/Header";
 import Loading from "../components/Loading";
+import Banner from "./../assets/npl_banner.png";
 
 const TeamDetail = () => {
   const { id } = useParams();
@@ -77,7 +78,7 @@ const TeamDetail = () => {
                           className="flex items-center gap-3"
                         >
                           <img
-                            src={player.image}
+                            src={player.image ? player.image : Banner}
                             alt={player.name}
                             className="w-12 h-12 rounded-full object-cover"
                           />
