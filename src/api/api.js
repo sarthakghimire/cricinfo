@@ -177,3 +177,14 @@ export const getOfficialById = async (id) => {
     throw error;
   }
 };
+
+//Venues
+export const getVenues = async () => {
+  try {
+    const response = await axios.get("/venues");
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};

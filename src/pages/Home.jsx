@@ -4,6 +4,7 @@ import Hero from "../components/Hero";
 import Teams from "../components/Teams";
 import Officials from "../components/Officials";
 import Tournaments from "./../components/Tournaments";
+import Venues from "../components/Venues";
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
       <Players />
       <Teams />
       <Officials />
+      <Venues />
     </>
   );
 };
