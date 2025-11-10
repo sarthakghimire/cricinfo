@@ -188,3 +188,25 @@ export const getVenues = async () => {
     throw error;
   }
 };
+//Add venues post method
+
+//Add match types (ODI/Test....)
+export const getMatchType = async () => {
+  try {
+    const response = await axios.get("/match-types");
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};
+//Fetch Match by ID
+export const getMatchTypeById = async (id) => {
+  try {
+    const response = await axios.get(`/match-types/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};

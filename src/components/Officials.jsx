@@ -90,13 +90,6 @@ const Officials = () => {
               )}
             </div>
           </div>
-
-          {/* Bottom Caption */}
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-center">
-            <p className="text-lg sm:text-2xl font-bold text-white drop-shadow-2xl bg-black/40 px-6 py-3 rounded-full backdrop-blur-sm">
-              Our Elite Panel of Umpires & Referees
-            </p>
-          </div>
         </div>
       </div>
 

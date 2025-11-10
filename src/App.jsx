@@ -8,6 +8,7 @@ import PlayerDetail from "./pages/PlayerDetail";
 import TeamDetail from "./pages/TeamDetail";
 import OfficialInfo from "./pages/OfficialInfo";
 import TournamentInfo from "./pages/TournamentInfo";
+import MatchInfo from "./pages/MatchInfo";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
       <Toaster position="top-right" />
       <Routes>
         <Route path="/tournaments/:id" element={<TournamentInfo />} />
+        <Route path="/match-info/:id" element={<MatchInfo />} />
         <Route path="/officials/:id" element={<OfficialInfo />} />
         <Route path="/players/:id" element={<PlayerDetail />} />
         <Route path="/teams/:id" element={<TeamDetail />} />
