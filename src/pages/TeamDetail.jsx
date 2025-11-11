@@ -1,12 +1,15 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
-import { getTeamById } from "./../api/api";
-import Header from "./../components/Header";
+import { getTeamById } from "../api/api";
+import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Banner from "./../assets/npl_banner.png";
 
 const TeamDetail = () => {
+  const handleError = (e) => {
+    e.target.src = Banner;
+  };
   const { id } = useParams();
   const {
     data: team,
@@ -40,6 +43,7 @@ const TeamDetail = () => {
               src={team.banner_image}
               alt={team.name}
               className="w-full h-80 object-cover"
+              onError={handleError}
             />
             <div className="p-8">
               <div className="flex items-center gap-6 mb-6">

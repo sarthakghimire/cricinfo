@@ -210,3 +210,13 @@ export const getMatchTypeById = async (id) => {
     throw error;
   }
 };
+//Fetch Stage Details
+export const getStagesById = async (id) => {
+  try {
+    const response = await axios.get(`/stages/tournaments/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};
