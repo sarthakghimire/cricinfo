@@ -108,7 +108,7 @@ const Tournaments = () => {
         ) : isError ? (
           <div className="text-center py-20">
             <p className="text-red-600 text-2xl font-bold">
-              Error loading tournaments
+              {error} || Error loading tournaments
             </p>
           </div>
         ) : tournaments.length === 0 ? (
