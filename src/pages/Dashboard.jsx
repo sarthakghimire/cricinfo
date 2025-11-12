@@ -1,6 +1,7 @@
 import Header from "../components/Header";
 import CreateTeam from "../components/CreateTeam";
 import CreatePlayer from "../components/CreatePlayer";
+import Footer from "../components/Footer";
 
 const Dashboard = () => {
   return (
@@ -11,6 +12,7 @@ const Dashboard = () => {
         <CreatePlayer />
         <CreateTeam />
       </div>
+      {/* <Footer /> */}
     </div>
   );
 };

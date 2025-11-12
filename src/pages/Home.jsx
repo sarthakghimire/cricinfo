@@ -6,6 +6,7 @@ import Officials from "../components/Officials";
 import Tournaments from "./../components/Tournaments";
 import Venues from "../components/Venues";
 import MatchType from "../components/MatchType";
+import Footer from "../components/Footer";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <Officials />
       <Venues />
       <MatchType />
+      {/* <Footer /> */}
     </>
   );
 };

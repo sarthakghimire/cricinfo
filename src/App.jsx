@@ -12,6 +12,7 @@ import MatchInfo from "./pages/MatchInfo";
 import TournamentStages from "./pages/TournamentStages";
 import Matches from "./pages/Matches";
 import MatchScore from "./pages/MatchScore";
+import Footer from "./components/Footer";
 
 const App = () => {
   return (
@@ -37,6 +38,7 @@ const App = () => {
         />
         <Route path="*" element={<NotFound />} />
       </Routes>
+      <Footer />
     </div>
   );
 };
