@@ -1,5 +1,6 @@
 import React from "react";
 import Banner from "./../assets/cricket_banner.jpg";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -20,9 +21,12 @@ const Hero = () => {
           Experience the thrill of the game with live scores, highlights, and
           more.
         </p>
-        <button className="mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg transition cursor-pointer">
-          Explore Now
-        </button>
+        <Link
+          to={"/matches"}
+          className="mt-6 px-6 py-3 bg-green-600 hover:bg-green-700 text-white font-semibold rounded-lg shadow-lg transition cursor-pointer"
+        >
+          Explore Matches
+        </Link>
       </div>
     </div>
   );

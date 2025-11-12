@@ -10,12 +10,16 @@ import OfficialInfo from "./pages/OfficialInfo";
 import TournamentInfo from "./pages/TournamentInfo";
 import MatchInfo from "./pages/MatchInfo";
 import TournamentStages from "./pages/TournamentStages";
+import Matches from "./pages/Matches";
+import MatchScore from "./pages/MatchScore";
 
 const App = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Toaster position="top-right" />
       <Routes>
+        <Route path="/matches" element={<Matches />} />
+        <Route path="/matches/:id" element={<MatchScore />} />
         <Route path="/stages/tournaments/:id" element={<TournamentStages />} />
         <Route path="/tournaments/:id" element={<TournamentInfo />} />
         <Route path="/match-info/:id" element={<MatchInfo />} />
