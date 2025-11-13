@@ -220,3 +220,40 @@ export const getStagesById = async (id) => {
     throw error;
   }
 };
+
+//Auth
+export const loginUser = async (email, password) => {
+  try {
+    const response = await axios.post("/auth/login", { email, password });
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      "Login failed";
+    throw new Error(message);
+  }
+};
+
+export const getMe = async () => {
+  try {
+    const response = await axios.get("/auth/me");
+    return response.data;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      "Failed to fetch user";
+    throw new Error(message);
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    await axios.post("/auth/logout");
+  } catch (error) {
+    console.warn("Logout API failed:", error.message);
+  }
+};

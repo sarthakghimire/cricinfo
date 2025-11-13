@@ -1,40 +1,52 @@
-import { createContext, useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-hot-toast";
-import { users } from "../utils/users";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { loginUser, getMe } from "../api/api";
+import axios from "axios";
 
 const AuthContext = createContext();
 
+export const useAuth = () => useContext(AuthContext);
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const navigate = useNavigate();
+  const [loading, setLoading] = useState(true);
 
-  const login = (id, password) => {
-    const foundUser = users.find((u) => u.id === id && u.password === password);
-    if (foundUser) {
-      if (foundUser.role === "admin") {
-        setUser(foundUser);
-        toast.success("Login successful!");
-        navigate("/dashboard");
-      } else {
-        toast.error("Access denied: Admins only");
-      }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      getMe()
+        .then((res) => setUser(res.data))
+        .catch(() => {
+          localStorage.removeItem("token");
+          delete axios.defaults.headers.common["Authorization"];
+        })
+        .finally(() => setLoading(false));
     } else {
-      toast.error("Invalid ID or password");
+      setLoading(false);
+    }
+  }, []);
+
+  const login = async (email, password) => {
+    try {
+      const { token, user } = await loginUser(email, password);
+      localStorage.setItem("token", token);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      setUser(user);
+      setError("");
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   const logout = () => {
+    localStorage.removeItem("token");
+    delete axios.defaults.headers.common["Authorization"];
     setUser(null);
-    toast.success("Logged out");
-    navigate("/");
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

@@ -18,7 +18,7 @@ const Matches = () => {
   const matches = response?.data || [];
 
   if (isLoading || !response) return <Loading />;
-  if (isError) return <p className="text-red-600">Error:{error}</p>;
+  if (isError) return <p className="text-red-600">Error:{error.message}</p>;
   if (matches.length == 0)
     return <p className="text-red-500">No matches found</p>;
 

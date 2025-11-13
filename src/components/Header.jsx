@@ -1,34 +1,36 @@
 import { useAuth } from "../context/AuthContext";
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const { user, login, logout } = useAuth();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
+  const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    login(id, password);
+    setError("");
+    const result = await login(id, password);
+    if (!result.success) {
+      setError(result.error);
+    }
   };
 
   return (
     <header className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white shadow-2xl border-b-4 border-yellow-400">
       <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
-        {/* Logo */}
-        <Link to={"/"} className="flex items-center gap-3 group">
-          <div className="text-3xl font-black tracking-wider">
-            <span className="text-yellow-400">cricInfo</span>
+        <Link to="/" className="flex items-center gap-3">
+          <div className="text-3xl font-black">
+            <span className="text-yellow-400">cricINFO</span>
           </div>
         </Link>
 
-        {/* Auth Section */}
         <div className="flex items-center gap-6">
           {!user ? (
             <form
               onSubmit={handleLogin}
-              className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-5 py-2 border border-white/30"
+              className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-5 py-2"
             >
               <input
                 type="text"
@@ -49,7 +51,7 @@ const Header = () => {
               />
               <button
                 type="submit"
-                className="bg-yellow-400 text-blue-900 font-bold px-6 py-2 rounded-full hover:bg-yellow-300 transition shadow-lg"
+                className="bg-yellow-400 text-blue-900 font-bold px-6 py-2 rounded-full hover:bg-yellow-300 transition"
               >
                 LOGIN
               </button>
@@ -58,13 +60,11 @@ const Header = () => {
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium">
                 Welcome,{" "}
-                <span className="text-yellow-400 font-bold">
-                  {user.name || "Admin"}
-                </span>
+                <span className="text-yellow-400 font-bold">{user.name}</span>
               </span>
               <button
                 onClick={logout}
-                className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2 rounded-full transition shadow-lg"
+                className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2 rounded-full transition"
               >
                 LOGOUT
               </button>
@@ -72,6 +72,9 @@ const Header = () => {
           )}
         </div>
       </div>
+      {error && (
+        <div className="bg-red-600 text-white text-center py-2">{error}</div>
+      )}
     </header>
   );
 };
