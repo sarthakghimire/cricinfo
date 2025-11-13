@@ -13,10 +13,12 @@ import TournamentStages from "./pages/TournamentStages";
 import Matches from "./pages/Matches";
 import MatchScore from "./pages/MatchScore";
 import Footer from "./components/Footer";
+import Header from "./components/Header";
 
 const App = () => {
   return (
     <div className="min-h-screen bg-gray-50">
+      <Header />
       <Toaster position="top-right" />
       <Routes>
         <Route path="/matches" element={<Matches />} />

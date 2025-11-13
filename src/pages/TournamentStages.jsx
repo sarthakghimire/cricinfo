@@ -8,7 +8,6 @@ import {
   getOfficials,
 } from "./../api/api";
 import Loading from "../components/Loading";
-import Header from "../components/Header";
 
 const TournamentStages = () => {
   const { id } = useParams();
@@ -54,7 +53,6 @@ const TournamentStages = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <h1 className="text-6xl font-extrabold text-center mb-12 bg-gradient-to-r from-red-600 via-yellow-400 to-blue-600 bg-clip-text text-transparent">

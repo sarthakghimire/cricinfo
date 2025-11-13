@@ -5,7 +5,6 @@ import { getOfficialById } from "../api/api";
 import Loading from "../components/Loading";
 import umpireImage from "./../assets/umpire.png";
 import Video from "./../assets/umpire.mp4";
-import Header from "./../components/Header";
 
 const OfficialInfo = () => {
   const { id } = useParams();
@@ -68,7 +67,6 @@ const OfficialInfo = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       {/* Hero Video Background */}
       <div className="relative h-screen flex items-center justify-center overflow-hidden">
         <video

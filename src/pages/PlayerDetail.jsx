@@ -2,7 +2,6 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
 import { getPlayerById } from "./../api/api";
-import Header from "./../components/Header";
 import Loading from "../components/Loading";
 
 const PlayerDetail = () => {
@@ -31,7 +30,6 @@ const PlayerDetail = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link

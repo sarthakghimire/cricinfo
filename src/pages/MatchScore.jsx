@@ -2,7 +2,6 @@ import React from "react";
 import { getMatchById } from "../api/api";
 import { Link, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
-import Header from "../components/Header";
 import { useQuery } from "@tanstack/react-query";
 
 const MatchScore = () => {
@@ -32,8 +31,6 @@ const MatchScore = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-50">
-      <Header />
-
       <div className="max-w-6xl mx-auto p-6 mt-8">
         {/* Main Card */}
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">

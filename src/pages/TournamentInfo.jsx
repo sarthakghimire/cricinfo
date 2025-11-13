@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/Loading";
 import { getTournamentById } from "../api/api";
 import { useParams, Link } from "react-router-dom";
-import Header from "../components/Header";
 
 const TournamentInfo = () => {
   const { id } = useParams();
@@ -48,7 +47,6 @@ const TournamentInfo = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-gray-50">
         {/* Hero Banner */}
         <div className="relative h-96 md:h-screen">

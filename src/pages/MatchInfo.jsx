@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { getMatchTypeById } from "./../api/api";
 import Loading from "../components/Loading";
-import Header from "../components/Header";
 
 const MatchInfo = () => {
   const { id } = useParams();
@@ -47,7 +46,6 @@ const MatchInfo = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 py-16 px-4">
         <div className="max-w-5xl mx-auto">
           {/* Main Card */}

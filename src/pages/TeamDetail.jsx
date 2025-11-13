@@ -2,7 +2,6 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
 import { getTeamById } from "../api/api";
-import Header from "../components/Header";
 import Loading from "../components/Loading";
 import Banner from "./../assets/npl_banner.png";
 
@@ -28,7 +27,6 @@ const TeamDetail = () => {
 
   return (
     <>
-      <Header />
       <div className="min-h-screen bg-gray-50 py-12">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <Link

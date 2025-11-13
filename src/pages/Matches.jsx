@@ -1,5 +1,4 @@
 import React from "react";
-import Header from "../components/Header";
 import { Link, useParams } from "react-router-dom";
 import { getMatches } from "../api/api";
 import { useQuery } from "@tanstack/react-query";
@@ -24,8 +23,7 @@ const Matches = () => {
     return <p className="text-red-500">No matches found</p>;
 
   return (
-    <div>
-      <Header />
+    <div className="h-screen">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {matches.map((match) => {
           //Change
@@ -40,9 +38,9 @@ const Matches = () => {
             <Link
               key={match._id}
               to={`/matches/${match._id}`}
-              className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 hover:shadow-3xl hover:scale-105 transition-all duration-500 group m-6"
+              className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 hover:shadow-3xl hover:scale-105 transition-all duration-500 group m-6 flex flex-col justify-between"
             >
-              <div className="flex items-center justify-center gap-8 p-10 bg-gradient-to-b from-blue-50 to-indigo-50">
+              <div className="flex items-center justify-center gap-8 p-10 bg-gradient-to-b from-blue-50 to-indigo-50 flex-1">
                 <div className="text-center">
                   <img
                     className="w-28 h-28 rounded-full object-cover border-8 border-white shadow-2xl  transition-all duration-300 mx-auto"
