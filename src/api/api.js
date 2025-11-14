@@ -225,7 +225,7 @@ export const getStagesById = async (id) => {
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post("/auth/login", { email, password });
-    return response.data; // important!
+    return response.data;
   } catch (error) {
     throw new Error(
       error.response?.data?.message ||
@@ -259,7 +259,7 @@ export const logoutUser = async () => {
 
 export const registerUser = async (data) => {
   try {
-    const response = await axios.post("/users/register", data);
+    const response = await axios.post("/auth/register", data);
     return response.data;
   } catch (error) {
     throw new Error(

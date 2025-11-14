@@ -21,11 +21,24 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    //passwords matching
     if (form.password !== form.confirmPassword) {
       toast.error("Passwords do not match!");
       return;
     }
 
+    // Password validation
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?]).{6,}$/;
+
+    if (!passwordRegex.test(form.password)) {
+      toast.error(
+        "Password must be at least 6 characters and contain 1 uppercase, 1 lowercase, 1 number, and 1 special character"
+      );
+      return;
+    }
+
+    // Proceed to register
     const result = await register(form.name, form.email, form.password);
 
     if (result.success) {
