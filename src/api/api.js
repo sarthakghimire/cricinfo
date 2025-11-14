@@ -225,14 +225,13 @@ export const getStagesById = async (id) => {
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post("/auth/login", { email, password });
-    return response.data;
+    return response.data; // important!
   } catch (error) {
-    const message =
+    throw new Error(
       error.response?.data?.message ||
-      error.response?.data?.error ||
-      error.message ||
-      "Login failed";
-    throw new Error(message);
+        error.response?.data?.error ||
+        "Login failed"
+    );
   }
 };
 
@@ -255,5 +254,19 @@ export const logoutUser = async () => {
     await axios.post("/auth/logout");
   } catch (error) {
     console.warn("Logout API failed:", error.message);
+  }
+};
+
+export const registerUser = async (data) => {
+  try {
+    const response = await axios.post("/users/register", data);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Registration failed"
+    );
   }
 };

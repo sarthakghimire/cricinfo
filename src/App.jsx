@@ -14,6 +14,7 @@ import Matches from "./pages/Matches";
 import MatchScore from "./pages/MatchScore";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import Register from "./pages/Register";
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
       <Header />
       <Toaster position="top-right" />
       <Routes>
+        <Route path="/register" element={<Register />} />
         <Route path="/matches" element={<Matches />} />
         <Route path="/matches/:id" element={<MatchScore />} />
         <Route path="/stages/tournaments/:id" element={<TournamentStages />} />
