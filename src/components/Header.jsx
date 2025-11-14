@@ -5,20 +5,22 @@ import { toast } from "react-hot-toast";
 
 const Header = () => {
   const { user, login, logout } = useAuth();
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("sarthak@gmail.com");
+  const [password, setPassword] = useState("Sarthak123@");
   const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
-    const result = await login(id, password);
-
-    if (result.success) {
+    try {
+      const result = await login(email, password);
       toast.success("Login successful!");
-      navigate("/dashboard");
-    } else {
-      toast.error(result.error);
+
+      // const token = result.data.access_token;
+      // localStorage.setItem("token", token);
+      navigate("/dashboard", { replace: true });
+    } catch (error) {
+      toast.error(result.error || "Invalid email or password");
     }
   };
 
@@ -37,11 +39,11 @@ const Header = () => {
                 className="flex items-center gap-3 bg-white/10 backdrop-blur-md rounded-full px-5 py-2"
               >
                 <input
-                  type="text"
-                  placeholder="Admin ID"
-                  value={id}
-                  onChange={(e) => setId(e.target.value)}
-                  className="bg-transparent text-white placeholder-white/70 outline-none w-32 text-sm"
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="bg-transparent text-white placeholder-white/70 outline-none w-40 text-sm"
                   required
                 />
                 <span className="text-white/50">|</span>
@@ -72,7 +74,9 @@ const Header = () => {
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium">
                 Welcome,{" "}
-                <span className="text-yellow-400 font-bold">{user.name}</span>
+                <span className="text-yellow-400 font-bold">
+                  {user.name || user.email}
+                </span>
               </span>
               <button
                 onClick={logout}

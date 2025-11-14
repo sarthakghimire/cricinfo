@@ -222,6 +222,7 @@ export const getStagesById = async (id) => {
 };
 
 //Auth
+//try..catch remove
 export const loginUser = async (email, password) => {
   try {
     const response = await axios.post("/auth/login", { email, password });
@@ -238,7 +239,8 @@ export const loginUser = async (email, password) => {
 export const getMe = async () => {
   try {
     const response = await axios.get("/auth/me");
-    return response.data;
+    // return response.data;
+    return response.data.user;
   } catch (error) {
     const message =
       error.response?.data?.message ||

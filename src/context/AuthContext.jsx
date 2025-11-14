@@ -4,15 +4,21 @@ import { loginUser, getMe, logoutUser, registerUser } from "../api/api";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
+  // const [user, setUser] = useState(null);
 
   // Load user if token exists
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       getMe()
-        .then((res) => setUser(res.data))
-        .catch(() => setUser(null));
+        .then((res) => {
+          setUser(res);
+        })
+        .catch(() => {
+          localStorage.removeItem("token");
+          setUser(null);
+        });
     }
   }, []);
 
@@ -21,12 +27,13 @@ export const AuthProvider = ({ children }) => {
     try {
       const res = await loginUser(email, password);
 
-      localStorage.setItem("token", res.data.token);
-      setUser(res.data.user);
+      localStorage.setItem("token", res.data.access_token);
+      console.log("token", res);
+      setUser(res.user);
 
       return { success: true };
     } catch (error) {
-      return { success: false, error: error.message };
+      return { success: false, error: error.message || "Login failed" };
     }
   };
 

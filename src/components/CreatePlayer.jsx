@@ -53,7 +53,7 @@ const CreatePlayer = () => {
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700">
-            Gender
+            Gender(M/F/O)
           </label>
           <input
             type="text"

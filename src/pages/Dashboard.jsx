@@ -9,7 +9,6 @@ const Dashboard = () => {
         <CreatePlayer />
         <CreateTeam />
       </div>
-      {/* <Footer /> */}
     </div>
   );
 };
