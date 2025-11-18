@@ -35,7 +35,7 @@ const CreatePlayer = () => {
   };
 
   return (
-    <div className="p-4">
+    <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
       <form onSubmit={handleSubmit} className="space-y-4">
         <h3 className="text-lg font-bold">Create Player</h3>
         <div>

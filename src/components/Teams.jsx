@@ -16,6 +16,7 @@ const Teams = () => {
   });
 
   const teams = response?.data ?? [];
+  console.log(teams);
 
   return (
     <section className="py-12 bg-gray-50">

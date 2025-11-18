@@ -16,7 +16,7 @@ const Dashboard = () => {
             onClick={logout}
             className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2  transition"
           >
-            LOGOUT
+            Log Out
           </button>
         </div>
       </div>
