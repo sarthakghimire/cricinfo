@@ -64,7 +64,7 @@ const CreateTeam = () => {
 
   return (
     <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Create New Team</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Team</h2>
 
       <form onSubmit={handleSubmit} className="space-y-5">
         {/* Team Name */}

@@ -178,6 +178,16 @@ export const getOfficialById = async (id) => {
   }
 };
 
+//Creating umpires/officials
+export const createOfficial = async (data) => {
+  try {
+    const response = await axios.post("/officials", data);
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || { message: "Failed to create official" };
+  }
+};
+
 //Venues
 export const getVenues = async () => {
   try {
@@ -189,6 +199,10 @@ export const getVenues = async () => {
   }
 };
 //Add venues post method
+export const createVenue = async (data) => {
+  const response = await axios.post("/venues", data);
+  return response.data;
+};
 
 //Add match types (ODI/Test....)
 export const getMatchType = async () => {
