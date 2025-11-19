@@ -30,90 +30,115 @@ const DisplayDelivery = () => {
   }
   return (
     <div>
-      <h2>Deliveries:</h2>
+      <h2 className="text-3xl m-2 p-2">Deliveries:</h2>
       {/* Map */}
-      {matchDeliveries.map((delivery) => {
-        const overNumber = delivery.over;
-        const ballsInThisOver = matchDeliveries
-          .filter((d) => d.over === overNumber)
-          .sort((a, b) => a.ball_number - b.ball_number);
+      {matchDeliveries
+        .sort((a, b) => a.over - b.over || a.ball_number - b.ball_number)
+        .map((delivery, index, arr) => {
+          const currentOver = delivery.over;
+          const currentBall = delivery.ball_number;
 
-        return (
-          <div
-            key={delivery._id}
-            className="delivery-parent border m-2 p-2 flex flex-col justify-around"
-          >
-            <div className="font-bold text-lg mb-2">Over {overNumber + 1}</div>
+          const ballsBowled = arr
+            .filter(
+              (d) => d.over === currentOver && d.ball_number <= currentBall
+            )
+            .sort((a, b) => a.ball_number - b.ball_number);
 
-            <div className="flex gap-10 justify-between p-3">
-              <div className="flex gap-2">
-                {[1, 2, 3, 4, 5, 6].map((ballNum) => {
-                  const ball = ballsInThisOver.find(
-                    (b) => b.ball_number === ballNum
-                  );
+          return (
+            <div
+              key={delivery._id}
+              className="delivery-parent border m-2 p-2 flex flex-col justify-around"
+            >
+              {/* Over + Current Ball */}
+              <div className="font-bold text-lg mb-2 text-blue-700">
+                Over {currentOver + 1} • Ball {currentBall}
+              </div>
 
-                  if (!ball) {
+              {/* 6 Ball Display */}
+              <div className="flex gap-10 justify-between p-3">
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5, 6].map((ballNum) => {
+                    const ball = ballsBowled.find(
+                      (b) => b.ball_number === ballNum
+                    );
+
+                    if (!ball) {
+                      return (
+                        <span
+                          key={ballNum}
+                          className="border m-1 p-2 w-10 text-center text-gray-300"
+                        >
+                          –
+                        </span>
+                      );
+                    }
+
+                    const isCurrentBall = ball.ball_number === currentBall;
+                    const isWicket = ball.is_wicket;
+                    const runs = ball.runs.total;
+
                     return (
                       <span
                         key={ballNum}
-                        className="border m-1 p-2 w-10 text-center text-gray-400"
+                        className={`border m-1 p-2 w-10 text-center font-bold transition-all ${
+                          isCurrentBall
+                            ? isWicket
+                              ? "bg-red-600 text-white animate-pulse"
+                              : runs === 4
+                              ? "bg-green-600 text-white"
+                              : runs === 6
+                              ? "bg-purple-600 text-white"
+                              : "bg-blue-600 text-white"
+                            : isWicket
+                            ? "bg-red-500 text-white"
+                            : runs === 4
+                            ? "bg-green-500 text-white"
+                            : runs === 6
+                            ? "bg-purple-500 text-white"
+                            : runs > 0
+                            ? "bg-blue-500 text-white"
+                            : "bg-gray-300"
+                        }`}
                       >
-                        –
+                        {isWicket ? "W" : runs > 0 ? runs : "•"}
                       </span>
                     );
-                  }
+                  })}
+                </div>
 
-                  const isWicket = ball.is_wicket;
-                  const runs = ball.runs.batter;
-                  const extras = ball.runs.extras;
-                  const total = ball.runs.total;
+                <div className="font-bold text-gray-800">{delivery.bowler}</div>
+              </div>
 
-                  return (
-                    <span
-                      key={ballNum}
-                      className={`border m-1 p-2 w-10 text-center font-bold ${
-                        isWicket
-                          ? "bg-red-600 text-white"
-                          : runs === 4
-                          ? "bg-green-600 text-white"
-                          : runs === 6
-                          ? "bg-purple-600 text-white"
-                          : runs > 0
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-200"
-                      }`}
-                    >
-                      {isWicket ? "W" : total > 0 ? total : "•"}
+              {/* Batsman & Runs */}
+              <div className="flex gap-10 justify-between p-3 text-sm">
+                <div>
+                  <span className="font-semibold">{delivery.batter}</span>
+                  {delivery.runs.batter > 0 && (
+                    <span className="ml-2 text-green-600 font-bold">
+                      +{delivery.runs.batter}
                     </span>
-                  );
-                })}
+                  )}
+                </div>
+                <div className="text-gray-600">
+                  Non-striker: {delivery.non_striker}
+                </div>
               </div>
 
-              <div className="font-bold">{delivery.bowler}</div>
+              {/* Wicket Alert */}
+              {delivery.is_wicket && (
+                <div className="bg-red-600 text-white p-3 rounded font-bold text-center animate-pulse text-lg">
+                  WICKET! {delivery.wickets[0].player_out} —{" "}
+                  {delivery.wickets[0].kind.toUpperCase()}
+                </div>
+              )}
+
+              {/* Commentary */}
+              <p className="text-sm italic text-gray-700 mt-2 border-t pt-2">
+                {delivery.summary}
+              </p>
             </div>
-
-            <div className="flex gap-10 justify-between p-3 text-sm">
-              <div>
-                <span>🏏</span>
-                {delivery.batter}{" "}
-                {delivery.runs.batter > 0 && `(${delivery.runs.batter})`}
-              </div>
-              <div className="text-gray-600">{delivery.non_striker}</div>
-            </div>
-
-            {delivery.is_wicket && (
-              <div className="bg-red-100 text-red-800 p-2 rounded font-bold text-center">
-                WICKET! {delivery.wickets[0].player_out} -{" "}
-                {delivery.wickets[0].kind.toUpperCase()}
-              </div>
-            )}
-
-            <p className="text-xs italic text-gray-600 mt-1">
-              {delivery.summary}
-            </p>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };
