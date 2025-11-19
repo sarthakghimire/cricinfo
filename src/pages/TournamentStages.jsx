@@ -53,9 +53,9 @@ const TournamentStages = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-blue-50 py-16 px-4">
+      <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-blue-50 py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-6xl font-extrabold text-center mb-12 bg-gradient-to-r from-red-600 via-yellow-400 to-blue-600 bg-clip-text text-transparent">
+          <h1 className="text-6xl font-extrabold text-center mb-12 bg-linear-to-r from-red-600 via-yellow-400 to-blue-600 bg-clip-text text-transparent">
             Tournament Stages
           </h1>
 
@@ -82,7 +82,7 @@ const TournamentStages = () => {
                     })`,
                   }}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
                   <div className="absolute bottom-8 left-8 text-white">
                     <h2 className="text-5xl font-extrabold drop-shadow-2xl">
                       {stage.name}
@@ -137,7 +137,7 @@ const TournamentStages = () => {
                               to={`/officials/${official._id}`}
                               className="inline-flex items-center gap-3 bg-white rounded-full px-6 py-4 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-yellow-300 hover:border-yellow-500 group"
                             >
-                              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                              <div className="w-12 h-12 rounded-full bg-linear-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
                                 {official.name.charAt(0)}
                               </div>
                               <div>

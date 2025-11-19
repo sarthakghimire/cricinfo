@@ -25,7 +25,7 @@ const Officials = () => {
       <h2
         className="
         text-3xl sm:text-4xl font-extrabold
-        bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700
+        bg-linear-to-r from-blue-600 via-blue-700 to-indigo-700
         bg-clip-text text-transparent
         mb-8 tracking-tight
         max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
@@ -84,7 +84,7 @@ const Officials = () => {
                     </div>
 
                     {/* Hover Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-blue-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
+                    <div className="absolute inset-0 bg-linear-to-t from-blue-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl" />
                   </Link>
                 ))
               )}

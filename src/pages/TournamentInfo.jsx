@@ -55,7 +55,7 @@ const TournamentInfo = () => {
             alt={tournament.name}
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
 
           {/* Logo + Name */}
           <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-center">
@@ -132,7 +132,7 @@ const TournamentInfo = () => {
                   {tournament.locations.map((location, i) => (
                     <span
                       key={i}
-                      className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-full shadow-lg"
+                      className="px-6 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-full shadow-lg"
                     >
                       {location}
                     </span>
@@ -151,7 +151,7 @@ const TournamentInfo = () => {
                       <Link
                         key={official._id}
                         to={`/officials/${official._id}`}
-                        className="group bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-blue-200"
+                        className="group bg-linear-to-br from-blue-50 to-indigo-50 rounded-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-blue-200"
                       >
                         <h3 className="font-bold text-lg text-gray-800 group-hover:text-blue-700">
                           {official.name}
@@ -168,7 +168,7 @@ const TournamentInfo = () => {
 
             {/* Right: Quick Info Card */}
             <div className="space-y-6">
-              <div className="bg-gradient-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8 top-6">
+              <div className="bg-linear-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8 top-6">
                 <h3 className="text-2xl font-bold mb-6">Quick Info</h3>
                 <div className="space-y-5">
                   <div>

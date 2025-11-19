@@ -84,7 +84,7 @@ const OfficialInfo = () => {
           <div className="bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border border-white/50">
             <div className="grid md:grid-cols-2">
               {/* Image */}
-              <div className="bg-gradient-to-br from-blue-50 to-indigo-100 p-10 flex items-center justify-center">
+              <div className="bg-linear-to-br from-blue-50 to-indigo-100 p-10 flex items-center justify-center">
                 <img
                   src={umpireImage}
                   alt={official.name}
@@ -113,7 +113,7 @@ const OfficialInfo = () => {
                 <div className="pt-6">
                   <Link
                     to="/"
-                    className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-700 text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                    className="inline-flex items-center px-8 py-4 bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold text-lg rounded-full hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
                   >
                     Home Page
                   </Link>

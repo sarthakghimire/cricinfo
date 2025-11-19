@@ -40,7 +40,7 @@ const Matches = () => {
               to={`/matches/${match._id}`}
               className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200 hover:shadow-3xl hover:scale-105 transition-all duration-500 group m-6 flex flex-col justify-between"
             >
-              <div className="flex items-center justify-center gap-8 p-10 bg-gradient-to-b from-blue-50 to-indigo-50 flex-1">
+              <div className="flex items-center justify-center gap-8 p-10 bg-linear-to-b from-blue-50 to-indigo-50 flex-1">
                 <div className="text-center">
                   <img
                     className="w-28 h-28 rounded-full object-cover border-8 border-white shadow-2xl  transition-all duration-300 mx-auto"
@@ -52,7 +52,7 @@ const Matches = () => {
                   </p>
                 </div>
 
-                <strong className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-700">
+                <strong className="text-5xl font-black text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-700">
                   VS
                 </strong>
 
@@ -68,7 +68,7 @@ const Matches = () => {
                 </div>
               </div>
 
-              <div className="p-6 bg-gradient-to-r from-blue-600 to-indigo-700 text-white text-center">
+              <div className="p-6 bg-linear-to-r from-blue-600 to-indigo-700 text-white text-center">
                 <p className="text-lg font-semibold">{match.venue.name}</p>
                 <p className="text-sm opacity-90 mt-1">
                   {new Date(match.date).toLocaleDateString("en-GB", {

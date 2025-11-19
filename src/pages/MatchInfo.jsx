@@ -46,13 +46,13 @@ const MatchInfo = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 py-16 px-4">
+      <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-gray-100 py-16 px-4">
         <div className="max-w-5xl mx-auto">
           {/* Main Card */}
           <div className="bg-white rounded-3xl shadow-xl overflow-hidden border-4 border-gray-200">
             {/* Hero Section */}
             <div
-              className={`h-80 bg-gradient-to-r ${
+              className={`h-80 bg-linear-to-r ${
                 accentColor.split(" ")[0]
               } relative`}
             >

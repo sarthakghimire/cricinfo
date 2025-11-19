@@ -80,25 +80,13 @@ const DisplayDelivery = () => {
                     return (
                       <span
                         key={ballNum}
-                        className={`border m-1 p-2 w-10 text-center font-bold transition-all ${
-                          isCurrentBall
-                            ? isWicket
+                        className={`border m-1 p-2 w-10 text-center font-bold transition-all
+                          ${
+                            isWicket
                               ? "bg-red-600 text-white animate-pulse"
-                              : runs === 4
-                              ? "bg-green-600 text-white"
-                              : runs === 6
-                              ? "bg-purple-600 text-white"
                               : "bg-blue-600 text-white"
-                            : isWicket
-                            ? "bg-red-500 text-white"
-                            : runs === 4
-                            ? "bg-green-500 text-white"
-                            : runs === 6
-                            ? "bg-purple-500 text-white"
-                            : runs > 0
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-300"
-                        }`}
+                          }
+                              `}
                       >
                         {isWicket ? "W" : runs > 0 ? runs : "•"}
                       </span>

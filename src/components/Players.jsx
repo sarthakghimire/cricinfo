@@ -31,7 +31,7 @@ const Players = () => {
       <h2
         className="
         text-3xl sm:text-4xl font-extrabold
-        bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700
+        bg-linear-to-r from-blue-600 via-blue-700 to-indigo-700
         bg-clip-text text-transparent
         mb-8 tracking-tight
         max-w-7xl mx-auto px-4 sm:px-6 lg:px-8

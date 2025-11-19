@@ -84,12 +84,12 @@ const Tournaments = () => {
   };
 
   return (
-    <section className="py-16 bg-gradient-to-b from-gray-50 to-gray-100">
+    <section className="py-16 bg-linear-to-b from-gray-50 to-gray-100">
       {/* Title */}
       <h2
         className="
         text-3xl sm:text-4xl font-extrabold
-        bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700
+        bg-linear-to-r from-blue-600 via-blue-700 to-indigo-700
         bg-clip-text text-transparent
         mb-8 tracking-tight
         max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
@@ -129,7 +129,7 @@ const Tournaments = () => {
                     />
 
                     {/* Dark Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
 
                     {/* Tournament Name */}
                     <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12 text-center">
@@ -142,7 +142,7 @@ const Tournaments = () => {
                     </div>
 
                     {/* Hover Glow */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <div className="absolute inset-0 bg-linear-to-t from-yellow-500/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
                 </Link>
               </div>

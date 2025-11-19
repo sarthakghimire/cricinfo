@@ -23,7 +23,7 @@ const Venues = () => {
         <h2
           className="
         text-3xl sm:text-4xl font-extrabold
-        bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700
+        bg-linear-to-r from-blue-600 via-blue-700 to-indigo-700
         bg-clip-text text-transparent
         mb-8 tracking-tight
         max-w-7xl mx-auto px-4 sm:px-6 lg:px-8
@@ -60,7 +60,7 @@ const Venues = () => {
                 key={venue._id}
                 className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100"
               >
-                <div className="h-56 bg-gradient-to-br from-green-400 to-blue-600 relative overflow-hidden">
+                <div className="h-56 bg-linear-to-br from-green-400 to-blue-600 relative overflow-hidden">
                   <div className="absolute inset-0 bg-black/30 group-hover:bg-black/50 transition" />
                   <div className="absolute bottom-6 left-6 text-white">
                     <h3 className="text-3xl font-bold drop-shadow-lg">
@@ -85,7 +85,7 @@ const Venues = () => {
                   </div>
                 </div>
 
-                <div className="p-8 text-center bg-gradient-to-b from-white to-gray-50">
+                <div className="p-8 text-center bg-linear-to-b from-white to-gray-50">
                   <p className="text-gray-600 text-sm uppercase tracking-wider mb-3">
                     Stadium Capacity
                   </p>

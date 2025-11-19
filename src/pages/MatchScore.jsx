@@ -31,12 +31,12 @@ const MatchScore = () => {
     );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-50">
+    <div className="min-h-screen bg-linear-to-b from-blue-50 to-indigo-50">
       <div className="max-w-6xl mx-auto p-6 mt-8">
         {/* Main Card */}
         <div className="bg-white rounded-3xl shadow-2xl overflow-hidden border border-gray-200">
           {/* Header */}
-          <div className="bg-gradient-to-r from-blue-700 to-indigo-800 text-white py-8 px-10 text-center">
+          <div className="bg-linear-to-r from-blue-700 to-indigo-800 text-white py-8 px-10 text-center">
             <h1 className="text-4xl md:text-6xl font-black">
               {match.team_1.name}{" "}
               <span className="mx-6 text-yellow-300">VS</span>{" "}
@@ -141,7 +141,7 @@ const MatchScore = () => {
           </div>
 
           {/* Match Info */}
-          <div className="bg-gradient-to-r from-blue-100 to-indigo-100 p-8 border-t-4 border-blue-500">
+          <div className="bg-linear-to-r from-blue-100 to-indigo-100 p-8 border-t-4 border-blue-500">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-center md:text-left">
               <div>
                 <h3 className="font-bold text-xl text-gray-800 mb-4">
@@ -189,7 +189,7 @@ const MatchScore = () => {
 
           {/* Result */}
           {match.outcome && (
-            <div className="bg-gradient-to-r from-green-600 to-emerald-700 text-white p-8 text-center">
+            <div className="bg-linear-to-r from-green-600 to-emerald-700 text-white p-8 text-center">
               <h2 className="text-4xl font-black mb-3">
                 {match.outcome.winner.name} WON!
               </h2>
