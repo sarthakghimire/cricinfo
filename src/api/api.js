@@ -286,3 +286,19 @@ export const registerUser = async (data) => {
     );
   }
 };
+
+//Add new format
+export const addFormat = async (data) => {
+  const response = await axios.post("/match-types", data);
+};
+
+//Get deliveries
+export const getDeliveries = async () => {
+  try {
+    const response = await axios.get("/deliveries");
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};

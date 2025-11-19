@@ -3,6 +3,7 @@ import CreateTeam from "../components/CreateTeam";
 import CreatePlayer from "../components/CreatePlayer";
 import CreateOfficial from "../components/CreateOfficial";
 import CreateVenue from "../components/CreateVenue";
+import CreateFormat from "../components/CreateFormat";
 import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
@@ -22,6 +23,7 @@ const Dashboard = () => {
       component: <CreateOfficial />,
     },
     { id: "venue", title: "Add New Venue", component: <CreateVenue /> },
+    { id: "format", title: "Add New Format", component: <CreateFormat /> },
   ];
 
   return (

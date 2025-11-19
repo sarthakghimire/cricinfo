@@ -3,6 +3,7 @@ import { getMatchById } from "../api/api";
 import { Link, useParams } from "react-router-dom";
 import Loading from "../components/Loading";
 import { useQuery } from "@tanstack/react-query";
+import DisplayDelivery from "../components/DisplayDelivery";
 
 const MatchScore = () => {
   const { id } = useParams();
@@ -201,6 +202,7 @@ const MatchScore = () => {
           )}
         </div>
       </div>
+      <DisplayDelivery />
     </div>
   );
 };

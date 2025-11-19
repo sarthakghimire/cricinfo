@@ -25,7 +25,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white shadow-lg border-b-4 border-yellow-400">
+    <header className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
         <Link to="/" className="text-3xl font-black">
           <span className="text-yellow-400">cricINFO</span>
