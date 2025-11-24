@@ -40,11 +40,13 @@ const PlayerDetail = () => {
           </Link>
 
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-            <img
-              src={player.image}
-              alt={player.name}
-              className="w-full h-96 object-fit"
-            />
+            <div className="flex justify-center">
+              <img
+                src={player.image}
+                alt={player.name}
+                className="h-96 object-fit"
+              />
+            </div>
             <div className="p-8">
               <h1 className="text-4xl font-bold text-gray-900 mb-4">
                 {player.name}

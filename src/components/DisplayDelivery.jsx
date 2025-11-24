@@ -112,7 +112,7 @@ const DisplayDelivery = () => {
                 </div>
               </div>
 
-              {/* Wicket Alert */}
+              {/* Wicket Alert...Easy: Check is_wicket true/false */}
               {delivery.is_wicket && (
                 <div className="bg-red-600 text-white p-3 rounded font-bold text-center animate-pulse text-lg">
                   WICKET! {delivery.wickets[0].player_out} —{" "}
@@ -120,7 +120,7 @@ const DisplayDelivery = () => {
                 </div>
               )}
 
-              {/* Commentary */}
+              {/* Commentary..Easy */}
               <p className="text-sm italic text-gray-700 mt-2 border-t pt-2">
                 {delivery.summary}
               </p>
