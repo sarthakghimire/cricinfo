@@ -198,6 +198,15 @@ export const getVenues = async () => {
     throw error;
   }
 };
+export const getVenueById = async (id) => {
+  try {
+    const response = await axios.get(`/venues/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};
 //Add venues post method
 export const createVenue = async (data) => {
   const response = await axios.post("/venues", data);

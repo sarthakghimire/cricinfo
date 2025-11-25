@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "./Loading";
 import { getVenues } from "../api/api";
 import AnimatedCounter from "./AnimatedCounter";
+import { Link } from "react-router-dom";
 
 const Venues = () => {
   const {
@@ -56,7 +57,8 @@ const Venues = () => {
         {!isLoading && !isError && venues.length > 0 && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {venues.map((venue) => (
-              <div
+              <Link
+                to={`/venues/${venue._id}`}
                 key={venue._id}
                 className="group relative bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100"
               >
@@ -103,7 +105,7 @@ const Venues = () => {
                 </div>
 
                 <div className="absolute inset-0 border-4 border-transparent rounded-2xl group-hover:border-indigo-500/30 transition-all duration-500 pointer-events-none" />
-              </div>
+              </Link>
             ))}
           </div>
         )}

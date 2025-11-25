@@ -92,14 +92,17 @@ const TournamentInfo = () => {
                   Format
                 </h2>
                 <div className="grid grid-cols-2 gap-6">
-                  <div className="bg-blue-50 rounded-xl p-6 text-center">
+                  <Link
+                    to={`/match-info/${tournament.match_type._id}`}
+                    className="bg-blue-50 rounded-xl p-6 text-center"
+                  >
                     <p className="text-sm text-blue-600 font-medium">
                       Match Type
                     </p>
                     <p className="text-2xl font-bold text-blue-800">
                       {tournament.match_type.name}
                     </p>
-                  </div>
+                  </Link>
                   <div className="bg-indigo-50 rounded-xl p-6 text-center">
                     <p className="text-sm text-indigo-600 font-medium">Overs</p>
                     <p className="text-2xl font-bold text-indigo-800">

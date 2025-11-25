@@ -15,6 +15,7 @@ import MatchScore from "./pages/MatchScore";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Register from "./pages/Register";
+import VenuePage from "./pages/VenuePage";
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route path="/officials/:id" element={<OfficialInfo />} />
         <Route path="/players/:id" element={<PlayerDetail />} />
         <Route path="/teams/:id" element={<TeamDetail />} />
+        <Route path="/venues/:id" element={<VenuePage />} />
         <Route path="/" element={<Home />} />
         <Route
           path="/dashboard"
