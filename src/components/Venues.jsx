@@ -97,7 +97,7 @@ const Venues = () => {
                       duration={1800}
                       className="inline-block"
                     />
-                    <span className="text-3xl text-indigo-500 ml-1">+</span>
+                    +
                   </div>
                   <p className="text-gray-500 mt-4 text-sm">
                     {venue.address || "Legendary cricket ground"}
