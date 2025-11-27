@@ -4,14 +4,17 @@ import CreatePlayer from "../components/create/CreatePlayer";
 import CreateOfficial from "../components/create/CreateOfficial";
 import CreateVenue from "../components/create/CreateVenue";
 import CreateFormat from "../components/create/CreateFormat";
-
 import DeleteVenue from "../components/delete/DeleteVenue";
 import DeletePlayers from "../components/delete/DeletePlayers";
 import DeleteTeam from "../components/delete/DeleteTeam";
 import DeleteOfficial from "../components/delete/DeleteOfficial";
 import DeleteFormat from "../components/delete/DeleteFormat";
-
 import { useAuth } from "../context/AuthContext";
+import UpdatePlayer from "../components/update/UpdatePlayer";
+import UpdateTeam from "../components/update/UpdateTeam";
+import UpdateOfficial from "../components/update/UpdateOfficial";
+import UpdateVenue from "../components/update/UpdateVenue";
+import UpdateFormat from "../components/update/UpdateFormat";
 
 const Dashboard = () => {
   const { logout } = useAuth();
@@ -59,6 +62,34 @@ const Dashboard = () => {
     },
   ];
 
+  const updateSections = [
+    {
+      id: "updatePlayer",
+      title: "Update a Player",
+      component: <UpdatePlayer />,
+    },
+    {
+      id: "updateTeam",
+      title: "Update a Team",
+      component: <UpdateTeam />,
+    },
+    {
+      id: "updateOfficial",
+      title: "Update an Official",
+      component: <UpdateOfficial />,
+    },
+    {
+      id: "updateVenue",
+      title: "Update a Venue",
+      component: <UpdateVenue />,
+    },
+    {
+      id: "updateFormat",
+      title: "Update a Format",
+      component: <UpdateFormat />,
+    },
+  ];
+
   return (
     <div className="min-h-screen bg-gray-100">
       <div className="max-w-4xl mx-auto p-6">
@@ -90,6 +121,53 @@ const Dashboard = () => {
             >
               <div className="p-4 space-y-3">
                 {addSections.map((section) => (
+                  <div
+                    key={section.id}
+                    className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"
+                  >
+                    <button
+                      onClick={() => toggleSub(section.id)}
+                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-100 transition font-medium"
+                    >
+                      <span className="text-gray-800">{section.title}</span>
+                      <span className="text-xl text-gray-600">
+                        {openSub === section.id ? "−" : "+"}
+                      </span>
+                    </button>
+                    <div
+                      className={`transition-all duration-400 overflow-hidden ${
+                        openSub === section.id ? "max-h-[2500px]" : "max-h-0"
+                      }`}
+                    >
+                      <div className="p-6 bg-white border-t border-gray-200">
+                        {section.component}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* NEW: UPDATE RESOURCES - YELLOW */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <button
+              onClick={() => toggleMain("update")}
+              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-yellow-400 to-amber-500 text-white hover:from-yellow-700 hover:to-yellow-800 transition cursor-pointer"
+            >
+              <h2 className="text-2xl font-bold">Update Resources</h2>
+              <span className="text-3xl">
+                {openMain === "update" ? "−" : "+"}
+              </span>
+            </button>
+
+            <div
+              className={`transition-all duration-500 overflow-hidden ${
+                openMain === "update" ? "max-h-[3000px]" : "max-h-0"
+              }`}
+            >
+              <div className="p-4 space-y-3">
+                {updateSections.map((section) => (
                   <div
                     key={section.id}
                     className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"

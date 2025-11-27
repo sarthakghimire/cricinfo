@@ -1,7 +1,7 @@
 import React from "react";
 import { deleteTeam, getTeams } from "../../api/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Loading from "../Loading";
+import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
 
 const DeleteVenue = () => {

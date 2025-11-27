@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
 import { getPlayerById } from "./../api/api";
-import Loading from "../components/Loading";
+import Loading from "../components/animation/Loading";
 
 const PlayerDetail = () => {
   const { id } = useParams();

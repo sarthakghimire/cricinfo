@@ -2,8 +2,8 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getVenueById } from "../api/api";
-import Loading from "../components/Loading";
-import AnimatedCounter from "../components/AnimatedCounter";
+import Loading from "../components/animation/Loading";
+import AnimatedCounter from "../components/animation/AnimatedCounter";
 
 const VenuePage = () => {
   const { id } = useParams();

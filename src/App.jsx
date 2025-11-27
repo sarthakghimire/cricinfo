@@ -12,8 +12,8 @@ import MatchInfo from "./pages/MatchInfo";
 import TournamentStages from "./pages/TournamentStages";
 import Matches from "./pages/Matches";
 import MatchScore from "./pages/MatchScore";
-import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Footer from "./components/ui/Footer";
+import Header from "./components/ui/Header";
 import Register from "./pages/Register";
 import VenuePage from "./pages/VenuePage";
 

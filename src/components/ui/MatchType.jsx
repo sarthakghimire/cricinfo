@@ -1,31 +1,21 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getPlayers } from "./../api/api";
 import { Link } from "react-router-dom";
-import Loading from "./../components/Loading";
+import { getMatchType } from "../../api/api";
+import Loading from "../animation/Loading";
+import Image from "./../../assets/ball.jpg";
 
-const Players = () => {
+const MatchType = () => {
   const {
     data: response,
     isLoading,
     isError,
     error,
   } = useQuery({
-    queryKey: ["players"],
-    queryFn: getPlayers,
+    queryKey: ["match"],
+    queryFn: getMatchType,
   });
-
-  const players = response?.data ?? [];
-
-  const formatDOB = (iso) => {
-    const d = new Date(iso);
-    return d.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
-  };
-
+  const matches = response?.data ?? [];
   return (
     <section className="py-12 bg-gray-50">
       <h2
@@ -38,29 +28,25 @@ const Players = () => {
         drop-shadow-sm cursor-pointer
       "
       >
-        Players
+        Match Types
       </h2>
-
       {isLoading && <Loading />}
-
       {isError && (
         <p className="text-center text-red-600">
           {error?.response?.data?.message || "Failed to load players"}
         </p>
       )}
-
-      {!isLoading && !isError && players.length === 0 && (
-        <p className="text-center text-gray-500">No players found.</p>
+      {!isLoading && !isError && matches.length === 0 && (
+        <p className="text-center text-gray-500">No match types found.</p>
       )}
-
-      {!isLoading && !isError && players.length > 0 && (
+      {!isLoading && !isError && matches.length > 0 && (
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="overflow-x-auto">
-            <div className="flex gap-6 py-4 snap-x snap-mandatory">
-              {players.map((player) => (
+            <div className="flex gap-6 py-4 snap-x snap-mandatory justify-around">
+              {matches.map((match) => (
                 <Link
-                  key={player._id}
-                  to={`/players/${player._id}`}
+                  key={match._id}
+                  to={`/match-info/${match._id}`} //Change later
                   className="
                     flex-none w-64 sm:w-72 md:w-80
                     bg-white rounded-xl shadow-md overflow-hidden
@@ -69,21 +55,15 @@ const Players = () => {
                   "
                 >
                   <img
-                    src={player.image}
-                    alt={player.name}
-                    className="w-full h-56 object-cover rounded-t-xl"
+                    src={Image}
+                    alt={match.name}
+                    className="w-full h-56 object-contain rounded-t-xl"
                     loading="lazy"
                   />
                   <div className="p-5">
                     <h3 className="font-semibold text-lg text-gray-900 truncate">
-                      {player.name}
+                      {match.name}
                     </h3>
-                    <p className="text-sm text-gray-600 mt-1">
-                      DOB: {formatDOB(player.date_of_birth)}
-                    </p>
-                    <p className="text-xs text-gray-500 mt-2">
-                      Gender: {player.gender === "M" ? "Male" : "Female"}
-                    </p>
                   </div>
                 </Link>
               ))}
@@ -95,4 +75,4 @@ const Players = () => {
   );
 };
 
-export default Players;
+export default MatchType;

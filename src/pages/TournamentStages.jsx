@@ -7,7 +7,7 @@ import {
   getTournaments,
   getOfficials,
 } from "./../api/api";
-import Loading from "../components/Loading";
+import Loading from "../components/animation/Loading";
 
 const TournamentStages = () => {
   const { id } = useParams();

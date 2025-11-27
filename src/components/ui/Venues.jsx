@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "./Loading";
-import { getVenues } from "../api/api";
-import AnimatedCounter from "./AnimatedCounter";
+import Loading from "../animation/Loading";
+import { getVenues } from "../../api/api";
+import AnimatedCounter from "./../animation/AnimatedCounter";
 import { Link } from "react-router-dom";
 
 const Venues = () => {

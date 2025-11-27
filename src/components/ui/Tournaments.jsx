@@ -1,9 +1,9 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getTournaments } from "./../api/api";
+import { getTournaments } from "../../api/api";
 import { Link } from "react-router-dom";
 import Slider from "react-slick";
-import Loading from "./../components/Loading";
+import Loading from "../animation/Loading";
 
 const Tournaments = () => {
   const {

@@ -1,10 +1,10 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getOfficials } from "./../api/api";
+import { getOfficials } from "../../api/api";
 import { Link } from "react-router-dom";
-import Loading from "./../components/Loading";
-import Video from "./../assets/umpire.mp4";
-import umpireImage from "./../assets/umpire.png";
+import Loading from "../animation/Loading";
+import Video from "./../../assets/umpire.mp4";
+import umpireImage from "./../../assets/umpire.png";
 
 const Officials = () => {
   const {

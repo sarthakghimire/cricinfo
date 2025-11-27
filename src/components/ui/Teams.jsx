@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getTeams } from "./../api/api";
+import { getTeams } from "../../api/api";
 import { Link } from "react-router-dom";
-import Loading from "./Loading";
+import Loading from "../animation/Loading";
 
 const Teams = () => {
   const {

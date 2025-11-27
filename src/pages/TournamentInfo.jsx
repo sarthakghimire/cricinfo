@@ -1,6 +1,6 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import Loading from "../components/Loading";
+import Loading from "../components/animation/Loading";
 import { getTournamentById } from "../api/api";
 import { useParams, Link } from "react-router-dom";
 

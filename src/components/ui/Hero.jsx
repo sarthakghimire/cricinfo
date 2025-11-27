@@ -1,5 +1,5 @@
 import React from "react";
-import Banner from "./../assets/cricket_banner.jpg";
+import Banner from "./../../assets/cricket_banner.jpg";
 import { Link } from "react-router-dom";
 
 const Hero = () => {

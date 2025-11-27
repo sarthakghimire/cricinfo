@@ -1,10 +1,10 @@
-import Players from "../components/Players";
-import Hero from "../components/Hero";
-import Teams from "../components/Teams";
-import Officials from "../components/Officials";
-import Tournaments from "./../components/Tournaments";
-import Venues from "../components/Venues";
-import MatchType from "../components/MatchType";
+import Players from "../components/ui/Players";
+import Hero from "../components/ui/Hero";
+import Teams from "../components/ui/Teams";
+import Officials from "../components/ui/Officials";
+import Tournaments from "./../components/ui/Tournaments";
+import Venues from "../components/ui/Venues";
+import MatchType from "../components/ui/MatchType";
 
 const Home = () => {
   return (

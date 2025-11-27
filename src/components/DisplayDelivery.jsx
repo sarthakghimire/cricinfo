@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getDeliveries } from "../api/api";
-import Loading from "./Loading";
+import Loading from "./animation/Loading";
 import { useParams } from "react-router-dom";
 
 const DisplayDelivery = () => {
