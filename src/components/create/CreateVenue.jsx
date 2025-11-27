@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createVenue } from "../api/api";
+import { createVenue } from "../../api/api";
 import { toast } from "react-hot-toast";
 
 const CreateVenue = () => {

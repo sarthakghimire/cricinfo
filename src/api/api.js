@@ -126,6 +126,11 @@ export const getTeamById = async (id) => {
     throw error;
   }
 };
+export const deleteTeam = async (id) => {
+  const response = await axios.delete(`/teams/${id}`);
+  return response.data;
+  alert("Team deleted");
+};
 
 // Players
 export const createPlayer = async (data) => {
@@ -155,6 +160,12 @@ export const getPlayerById = async (id) => {
     console.error("GetPlayers Error:", error.response?.data || error.message);
     throw error;
   }
+};
+//Delete player
+export const deletePlayer = async (id) => {
+  const response = await axios.delete(`/players/${id}`);
+  return response.data;
+  alert("Player deleted");
 };
 
 //Umpires
@@ -187,6 +198,12 @@ export const createOfficial = async (data) => {
     throw error.response?.data || { message: "Failed to create official" };
   }
 };
+//Delete Official
+export const deleteOfficial = async (id) => {
+  const response = await axios.delete(`/officials/${id}`);
+  return response.data;
+  alert("Official deleted");
+};
 
 //Venues
 export const getVenues = async () => {
@@ -211,6 +228,12 @@ export const getVenueById = async (id) => {
 export const createVenue = async (data) => {
   const response = await axios.post("/venues", data);
   return response.data;
+};
+//Delete venue
+export const deleteVenue = async (id) => {
+  const response = await axios.delete(`/venues/${id}`);
+  return response.data;
+  alert("Venue deleted");
 };
 
 //Add match types (ODI/Test....)
@@ -299,6 +322,22 @@ export const registerUser = async (data) => {
 //Add new format
 export const addFormat = async (data) => {
   const response = await axios.post("/match-types", data);
+};
+//Get Formats
+export const getFormats = async () => {
+  try {
+    const response = await axios.get("/match-types");
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};
+//Delete format
+export const deleteFormat = async (id) => {
+  const response = await axios.delete(`/match-types/${id}`);
+  return response.data;
+  alert("Format deleted");
 };
 
 //Get deliveries

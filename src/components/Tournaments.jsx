@@ -18,7 +18,6 @@ const Tournaments = () => {
 
   const tournaments = response?.data || [];
 
-  // Custom Arrows (Tailwind only)
   const NextArrow = ({ onClick }) => (
     <button
       onClick={onClick}

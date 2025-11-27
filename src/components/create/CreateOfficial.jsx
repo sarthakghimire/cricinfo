@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createOfficial } from "../api/api";
+import { createOfficial } from "../../api/api";
 import { toast } from "react-hot-toast";
 
 const officialTypes = [

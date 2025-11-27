@@ -1,20 +1,33 @@
 import { useState } from "react";
-import CreateTeam from "../components/CreateTeam";
-import CreatePlayer from "../components/CreatePlayer";
-import CreateOfficial from "../components/CreateOfficial";
-import CreateVenue from "../components/CreateVenue";
-import CreateFormat from "../components/CreateFormat";
+import CreateTeam from "../components/create/CreateTeam";
+import CreatePlayer from "../components/create/CreatePlayer";
+import CreateOfficial from "../components/create/CreateOfficial";
+import CreateVenue from "../components/create/CreateVenue";
+import CreateFormat from "../components/create/CreateFormat";
+
+import DeleteVenue from "../components/delete/DeleteVenue";
+import DeletePlayers from "../components/delete/DeletePlayers";
+import DeleteTeam from "../components/delete/DeleteTeam";
+import DeleteOfficial from "../components/delete/DeleteOfficial";
+import DeleteFormat from "../components/delete/DeleteFormat";
+
 import { useAuth } from "../context/AuthContext";
 
 const Dashboard = () => {
   const { logout } = useAuth();
-  const [openSection, setOpenSection] = useState(null);
+  const [openMain, setOpenMain] = useState("add");
+  const [openSub, setOpenSub] = useState(null);
 
-  const toggleSection = (section) => {
-    setOpenSection(openSection === section ? null : section);
+  const toggleMain = (section) => {
+    setOpenMain(openMain === section ? null : section);
+    setOpenSub(null);
   };
 
-  const sections = [
+  const toggleSub = (id) => {
+    setOpenSub(openSub === id ? null : id);
+  };
+
+  const addSections = [
     { id: "player", title: "Add New Player", component: <CreatePlayer /> },
     { id: "team", title: "Add New Team", component: <CreateTeam /> },
     {
@@ -24,6 +37,26 @@ const Dashboard = () => {
     },
     { id: "venue", title: "Add New Venue", component: <CreateVenue /> },
     { id: "format", title: "Add New Format", component: <CreateFormat /> },
+  ];
+
+  const deleteSections = [
+    {
+      id: "deletePlayer",
+      title: "Delete a Player",
+      component: <DeletePlayers />,
+    },
+    { id: "deleteTeam", title: "Delete a Team", component: <DeleteTeam /> },
+    {
+      id: "deleteOfficial",
+      title: "Delete an Official",
+      component: <DeleteOfficial />,
+    },
+    { id: "deleteVenue", title: "Delete a Venue", component: <DeleteVenue /> },
+    {
+      id: "deleteFormat",
+      title: "Delete a Format",
+      component: <DeleteFormat />,
+    },
   ];
 
   return (
@@ -39,38 +72,98 @@ const Dashboard = () => {
           </button>
         </div>
 
-        <div className="space-y-4">
-          {sections.map((section) => (
-            <div
-              key={section.id}
-              className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300"
+        <div className="space-y-6">
+          {/* ADD SECTION */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <button
+              onClick={() => toggleMain("add")}
+              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-green-400 to-green-500 text-white hover:from-green-700 hover:to-green-800 transition"
             >
-              <button
-                onClick={() => toggleSection(section.id)}
-                className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 transition"
-              >
-                <h2 className="text-xl font-semibold text-gray-800">
-                  {section.title}
-                </h2>
-                <span className="text-2xl text-gray-600">
-                  {openSection === section.id ? "−" : "+"}
-                </span>
-              </button>
+              <h2 className="text-2xl font-bold">Add Resources</h2>
+              <span className="text-3xl">{openMain === "add" ? "−" : "+"}</span>
+            </button>
 
-              {/* Collapsible Content */}
-              <div
-                className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                  openSection === section.id
-                    ? "max-h-screen opacity-100"
-                    : "max-h-0 opacity-0"
-                }`}
-              >
-                <div className="p-6 border-t border-gray-200">
-                  {section.component}
-                </div>
+            <div
+              className={`transition-all duration-500 overflow-hidden ${
+                openMain === "add" ? "max-h-[3000px]" : "max-h-0"
+              }`}
+            >
+              <div className="p-4 space-y-3">
+                {addSections.map((section) => (
+                  <div
+                    key={section.id}
+                    className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"
+                  >
+                    <button
+                      onClick={() => toggleSub(section.id)}
+                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-100 transition font-medium"
+                    >
+                      <span className="text-gray-800">{section.title}</span>
+                      <span className="text-xl text-gray-600">
+                        {openSub === section.id ? "−" : "+"}
+                      </span>
+                    </button>
+                    <div
+                      className={`transition-all duration-400 overflow-hidden ${
+                        openSub === section.id ? "max-h-[2500px]" : "max-h-0"
+                      }`}
+                    >
+                      <div className="p-6 bg-white border-t border-gray-200">
+                        {section.component}
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* DELETE SECTION*/}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <button
+              onClick={() => toggleMain("delete")}
+              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-red-400 to-red-500 text-white hover:from-red-700 hover:to-red-800 transition"
+            >
+              <h2 className="text-2xl font-bold">Delete Resources</h2>
+              <span className="text-3xl">
+                {openMain === "delete" ? "−" : "+"}
+              </span>
+            </button>
+
+            <div
+              className={`transition-all duration-500 overflow-hidden ${
+                openMain === "delete" ? "max-h-[3000px]" : "max-h-0"
+              }`}
+            >
+              <div className="p-4 space-y-3">
+                {deleteSections.map((section) => (
+                  <div
+                    key={section.id}
+                    className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"
+                  >
+                    <button
+                      onClick={() => toggleSub(section.id)}
+                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-100 transition font-medium"
+                    >
+                      <span className="text-gray-800">{section.title}</span>
+                      <span className="text-xl text-gray-600">
+                        {openSub === section.id ? "−" : "+"}
+                      </span>
+                    </button>
+                    <div
+                      className={`transition-all duration-400 overflow-hidden ${
+                        openSub === section.id ? "max-h-[2500px]" : "max-h-0"
+                      }`}
+                    >
+                      <div className="p-6 bg-white border-t border-gray-200">
+                        {section.component}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
