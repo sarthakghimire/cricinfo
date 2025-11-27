@@ -77,7 +77,7 @@ const Dashboard = () => {
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <button
               onClick={() => toggleMain("add")}
-              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-green-400 to-green-500 text-white hover:from-green-700 hover:to-green-800 transition"
+              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-green-400 to-green-500 text-white hover:from-green-700 hover:to-green-800 transition cursor-pointer"
             >
               <h2 className="text-2xl font-bold">Add Resources</h2>
               <span className="text-3xl">{openMain === "add" ? "−" : "+"}</span>
@@ -122,7 +122,7 @@ const Dashboard = () => {
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <button
               onClick={() => toggleMain("delete")}
-              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-red-400 to-red-500 text-white hover:from-red-700 hover:to-red-800 transition"
+              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-red-400 to-red-500 text-white hover:from-red-700 hover:to-red-800 transition cursor-pointer"
             >
               <h2 className="text-2xl font-bold">Delete Resources</h2>
               <span className="text-3xl">

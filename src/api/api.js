@@ -1,6 +1,60 @@
 import axios from "./axiosConfig";
 
-// Tournaments
+// ================================================================
+// AUTH ENDPOINTS
+// ================================================================
+export const loginUser = async (email, password) => {
+  try {
+    const response = await axios.post("/auth/login", { email, password });
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.response?.data?.error ||
+        "Login failed"
+    );
+  }
+};
+
+export const registerUser = async (data) => {
+  try {
+    const response = await axios.post("/auth/register", data);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Registration failed"
+    );
+  }
+};
+
+export const getMe = async () => {
+  try {
+    const response = await axios.get("/auth/me");
+    return response.data.user;
+  } catch (error) {
+    const message =
+      error.response?.data?.message ||
+      error.response?.data?.error ||
+      error.message ||
+      "Failed to fetch user";
+    throw new Error(message);
+  }
+};
+
+export const logoutUser = async () => {
+  try {
+    await axios.post("/auth/logout");
+  } catch (error) {
+    console.warn("Logout API failed:", error.message);
+  }
+};
+
+// ================================================================
+// TOURNAMENTS
+// ================================================================
 export const getTournaments = async () => {
   try {
     const response = await axios.get("/tournaments");
@@ -66,7 +120,9 @@ export const deleteTournament = async (id) => {
   }
 };
 
-// Matches
+// ================================================================
+// MATCHES
+// ================================================================
 export const getMatches = async () => {
   try {
     const response = await axios.get("/matches");
@@ -97,7 +153,39 @@ export const createMatch = async (data) => {
   }
 };
 
-// Teams
+export const getStagesById = async (id) => {
+  try {
+    const response = await axios.get(`/stages/tournaments/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// ================================================================
+// TEAMS
+// ================================================================
+export const getTeams = async () => {
+  try {
+    const response = await axios.get("/teams");
+    return response.data;
+  } catch (error) {
+    console.error("GetTeams Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getTeamById = async (id) => {
+  try {
+    const response = await axios.get(`/teams/${id}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("GetTeam Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 export const createTeam = async (data) => {
   try {
     const response = await axios.post("/teams", data);
@@ -108,31 +196,35 @@ export const createTeam = async (data) => {
   }
 };
 
-export const getTeams = async () => {
-  try {
-    const response = await axios.get("/teams");
-    return response.data;
-  } catch (error) {
-    console.error("GetTeams Error:", error.response?.data || error.message);
-    throw error;
-  }
-};
-export const getTeamById = async (id) => {
-  try {
-    const response = await axios.get(`/teams/${id}`);
-    return response.data.data;
-  } catch (error) {
-    console.error("GetTeam Error:", error.response?.data || error.message);
-    throw error;
-  }
-};
 export const deleteTeam = async (id) => {
   const response = await axios.delete(`/teams/${id}`);
   return response.data;
   alert("Team deleted");
 };
 
-// Players
+// ================================================================
+// PLAYERS
+// ================================================================
+export const getPlayers = async () => {
+  try {
+    const response = await axios.get("/players");
+    return response.data;
+  } catch (error) {
+    console.error("GetPlayers Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getPlayerById = async (id) => {
+  try {
+    const response = await axios.get(`/players/${id}`);
+    return response.data.data;
+  } catch (error) {
+    console.error("GetPlayers Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 export const createPlayer = async (data) => {
   try {
     const response = await axios.post("/players", data);
@@ -143,32 +235,15 @@ export const createPlayer = async (data) => {
   }
 };
 
-export const getPlayers = async () => {
-  try {
-    const response = await axios.get("/players");
-    return response.data;
-  } catch (error) {
-    console.error("GetPlayers Error:", error.response?.data || error.message);
-    throw error;
-  }
-};
-export const getPlayerById = async (id) => {
-  try {
-    const response = await axios.get(`/players/${id}`);
-    return response.data.data;
-  } catch (error) {
-    console.error("GetPlayers Error:", error.response?.data || error.message);
-    throw error;
-  }
-};
-//Delete player
 export const deletePlayer = async (id) => {
   const response = await axios.delete(`/players/${id}`);
   return response.data;
   alert("Player deleted");
 };
 
-//Umpires
+// ================================================================
+// OFFICIALS / UMPIRES
+// ================================================================
 export const getOfficials = async () => {
   try {
     const response = await axios.get("/officials");
@@ -189,7 +264,6 @@ export const getOfficialById = async (id) => {
   }
 };
 
-//Creating umpires/officials
 export const createOfficial = async (data) => {
   try {
     const response = await axios.post("/officials", data);
@@ -198,14 +272,16 @@ export const createOfficial = async (data) => {
     throw error.response?.data || { message: "Failed to create official" };
   }
 };
-//Delete Official
+
 export const deleteOfficial = async (id) => {
   const response = await axios.delete(`/officials/${id}`);
   return response.data;
   alert("Official deleted");
 };
 
-//Venues
+// ================================================================
+// VENUES
+// ================================================================
 export const getVenues = async () => {
   try {
     const response = await axios.get("/venues");
@@ -215,6 +291,7 @@ export const getVenues = async () => {
     throw error;
   }
 };
+
 export const getVenueById = async (id) => {
   try {
     const response = await axios.get(`/venues/${id}`);
@@ -224,106 +301,21 @@ export const getVenueById = async (id) => {
     throw error;
   }
 };
-//Add venues post method
+
 export const createVenue = async (data) => {
   const response = await axios.post("/venues", data);
   return response.data;
 };
-//Delete venue
+
 export const deleteVenue = async (id) => {
   const response = await axios.delete(`/venues/${id}`);
   return response.data;
   alert("Venue deleted");
 };
 
-//Add match types (ODI/Test....)
-export const getMatchType = async () => {
-  try {
-    const response = await axios.get("/match-types");
-    return response.data;
-  } catch (error) {
-    console.error("Error: ", error.response?.data || error.message);
-    throw error;
-  }
-};
-//Fetch Match by ID
-export const getMatchTypeById = async (id) => {
-  try {
-    const response = await axios.get(`/match-types/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error: ", error.response?.data || error.message);
-    throw error;
-  }
-};
-//Fetch Stage Details
-export const getStagesById = async (id) => {
-  try {
-    const response = await axios.get(`/stages/tournaments/${id}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error: ", error.response?.data || error.message);
-    throw error;
-  }
-};
-
-//Auth
-//try..catch remove
-export const loginUser = async (email, password) => {
-  try {
-    const response = await axios.post("/auth/login", { email, password });
-    return response.data;
-  } catch (error) {
-    throw new Error(
-      error.response?.data?.message ||
-        error.response?.data?.error ||
-        "Login failed"
-    );
-  }
-};
-
-export const getMe = async () => {
-  try {
-    const response = await axios.get("/auth/me");
-    // return response.data;
-    return response.data.user;
-  } catch (error) {
-    const message =
-      error.response?.data?.message ||
-      error.response?.data?.error ||
-      error.message ||
-      "Failed to fetch user";
-    throw new Error(message);
-  }
-};
-
-export const logoutUser = async () => {
-  try {
-    await axios.post("/auth/logout");
-  } catch (error) {
-    console.warn("Logout API failed:", error.message);
-  }
-};
-
-export const registerUser = async (data) => {
-  try {
-    const response = await axios.post("/auth/register", data);
-    return response.data;
-  } catch (error) {
-    throw new Error(
-      error.response?.data?.message ||
-        error.response?.data?.error ||
-        error.message ||
-        "Registration failed"
-    );
-  }
-};
-
-//Add new format
-export const addFormat = async (data) => {
-  const response = await axios.post("/match-types", data);
-};
-//Get Formats
+// ================================================================
+// MATCH FORMATS / TYPES
+// ================================================================
 export const getFormats = async () => {
   try {
     const response = await axios.get("/match-types");
@@ -333,14 +325,40 @@ export const getFormats = async () => {
     throw error;
   }
 };
-//Delete format
+
+export const getMatchType = async () => {
+  try {
+    const response = await axios.get("/match-types");
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const getMatchTypeById = async (id) => {
+  try {
+    const response = await axios.get(`/match-types/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error: ", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const addFormat = async (data) => {
+  const response = await axios.post("/match-types", data);
+};
+
 export const deleteFormat = async (id) => {
   const response = await axios.delete(`/match-types/${id}`);
   return response.data;
   alert("Format deleted");
 };
 
-//Get deliveries
+// ================================================================
+// LIVE SCORING / DELIVERIES
+// ================================================================
 export const getDeliveries = async () => {
   try {
     const response = await axios.get("/deliveries");
