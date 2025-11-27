@@ -205,9 +205,9 @@ export const deleteTeam = async (id) => {
 // ================================================================
 // PLAYERS
 // ================================================================
-export const getPlayers = async () => {
+export const getPlayers = async (page = 1, limit = 100) => {
   try {
-    const response = await axios.get("/players");
+    const response = await axios.get(`/players?page=${page}&limit=${limit}`);
     return response.data;
   } catch (error) {
     console.error("GetPlayers Error:", error.response?.data || error.message);

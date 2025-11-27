@@ -3,7 +3,7 @@ import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
-import ProtectedRoute from "./components/ProtectedRoute";
+import ProtectedRoute from "./components/route/ProtectedRoute";
 import PlayerDetail from "./pages/PlayerDetail";
 import TeamDetail from "./pages/TeamDetail";
 import OfficialInfo from "./pages/OfficialInfo";

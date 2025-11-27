@@ -68,21 +68,13 @@ const Dashboard = () => {
       title: "Update a Player",
       component: <UpdatePlayer />,
     },
-    {
-      id: "updateTeam",
-      title: "Update a Team",
-      component: <UpdateTeam />,
-    },
+    { id: "updateTeam", title: "Update a Team", component: <UpdateTeam /> },
     {
       id: "updateOfficial",
       title: "Update an Official",
       component: <UpdateOfficial />,
     },
-    {
-      id: "updateVenue",
-      title: "Update a Venue",
-      component: <UpdateVenue />,
-    },
+    { id: "updateVenue", title: "Update a Venue", component: <UpdateVenue /> },
     {
       id: "updateFormat",
       title: "Update a Format",
@@ -116,7 +108,7 @@ const Dashboard = () => {
 
             <div
               className={`transition-all duration-500 overflow-hidden ${
-                openMain === "add" ? "max-h-[3000px]" : "max-h-0"
+                openMain === "add" ? "h-auto opacity-100" : "h-0 opacity-0"
               }`}
             >
               <div className="p-4 space-y-3">
@@ -136,7 +128,9 @@ const Dashboard = () => {
                     </button>
                     <div
                       className={`transition-all duration-400 overflow-hidden ${
-                        openSub === section.id ? "max-h-[2500px]" : "max-h-0"
+                        openSub === section.id
+                          ? "h-auto opacity-100"
+                          : "h-0 opacity-0"
                       }`}
                     >
                       <div className="p-6 bg-white border-t border-gray-200">
@@ -149,7 +143,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* NEW: UPDATE RESOURCES - YELLOW */}
+          {/* UPDATE SECTION */}
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <button
               onClick={() => toggleMain("update")}
@@ -163,7 +157,7 @@ const Dashboard = () => {
 
             <div
               className={`transition-all duration-500 overflow-hidden ${
-                openMain === "update" ? "max-h-[3000px]" : "max-h-0"
+                openMain === "update" ? "h-auto opacity-100" : "h-0 opacity-0"
               }`}
             >
               <div className="p-4 space-y-3">
@@ -183,7 +177,9 @@ const Dashboard = () => {
                     </button>
                     <div
                       className={`transition-all duration-400 overflow-hidden ${
-                        openSub === section.id ? "max-h-[2500px]" : "max-h-0"
+                        openSub === section.id
+                          ? "h-auto opacity-100"
+                          : "h-0 opacity-0"
                       }`}
                     >
                       <div className="p-6 bg-white border-t border-gray-200">
@@ -196,7 +192,7 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* DELETE SECTION*/}
+          {/* DELETE SECTION */}
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <button
               onClick={() => toggleMain("delete")}
@@ -210,7 +206,7 @@ const Dashboard = () => {
 
             <div
               className={`transition-all duration-500 overflow-hidden ${
-                openMain === "delete" ? "max-h-[3000px]" : "max-h-0"
+                openMain === "delete" ? "h-auto opacity-100" : "h-0 opacity-0"
               }`}
             >
               <div className="p-4 space-y-3">
@@ -230,7 +226,9 @@ const Dashboard = () => {
                     </button>
                     <div
                       className={`transition-all duration-400 overflow-hidden ${
-                        openSub === section.id ? "max-h-[2500px]" : "max-h-0"
+                        openSub === section.id
+                          ? "h-auto opacity-100"
+                          : "h-0 opacity-0"
                       }`}
                     >
                       <div className="p-6 bg-white border-t border-gray-200">
