@@ -11,8 +11,8 @@ const Players = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["players"],
-    queryFn: getPlayers,
+    queryKey: ["players", 1, 100],
+    queryFn: () => getPlayers(1, 100),
   });
 
   const players = response?.data ?? [];
