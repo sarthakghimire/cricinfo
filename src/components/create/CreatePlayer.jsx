@@ -93,7 +93,7 @@ const CreatePlayer = () => {
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="w-full py-2 px-4 bg-green-600 text-white font-medium rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:bg-gray-400"
+          className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {mutation.isPending ? "Creating..." : "Create Player"}
         </button>

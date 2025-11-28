@@ -1,7 +1,8 @@
-import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createTeam } from "../../api/api";
+import React, { useState } from "react";
+import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
+import { createTeam, getPlayers, getTeams } from "../../api/api";
 import { toast } from "react-hot-toast";
+import Loading from "../animation/Loading";
 
 const CreateTeam = () => {
   const queryClient = useQueryClient();
@@ -15,11 +16,36 @@ const CreateTeam = () => {
     players: [],
   });
 
+  // Fetch all players
+  const { data: playersRes, isLoading: loadingPlayers } = useQuery({
+    queryKey: ["players"],
+    queryFn: () => getPlayers(1, 500),
+  });
+
+  // Fetch all teams to know which players are already taken
+  const { data: teamsRes } = useQuery({
+    queryKey: ["teams"],
+    queryFn: getTeams,
+  });
+
+  const allPlayers = playersRes?.data || [];
+  const allTeams = teamsRes?.data || [];
+
+  // Get all player IDs already used in any team
+  const usedPlayerIds = new Set();
+  allTeams.forEach((team) => {
+    team.players?.forEach((p) => usedPlayerIds.add(p._id || p));
+  });
+
+  // Available players = all players - already used ones
+  const availablePlayers = allPlayers.filter((p) => !usedPlayerIds.has(p._id));
+
   const mutation = useMutation({
     mutationFn: createTeam,
     onSuccess: (data) => {
       toast.success(`${data.name} created successfully!`);
       queryClient.invalidateQueries({ queryKey: ["teams"] });
+      queryClient.invalidateQueries({ queryKey: ["players"] });
       setFormData({
         name: "",
         slogan: "",
@@ -40,17 +66,17 @@ const CreateTeam = () => {
   };
 
   const handlePlayersChange = (e) => {
-    const value = e.target.value;
-    const playerIds = value
-      .split(",")
-      .map((id) => id.trim())
-      .filter((id) => id.length === 24);
-
-    setFormData((prev) => ({ ...prev, players: playerIds }));
+    const selectedOptions = Array.from(e.target.selectedOptions);
+    const selectedIds = selectedOptions.map((opt) => opt.value);
+    setFormData((prev) => ({ ...prev, players: selectedIds }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (formData.players.length === 0) {
+      toast.error("Please select at least one player");
+      return;
+    }
 
     mutation.mutate({
       name: formData.name.trim(),
@@ -58,18 +84,22 @@ const CreateTeam = () => {
       description: formData.description.trim(),
       logo: formData.logo.trim(),
       banner_image: formData.banner_image.trim(),
-      players: formData.players.length > 0 ? formData.players : [],
+      players: formData.players,
     });
   };
 
-  return (
-    <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Add New Team</h2>
+  if (loadingPlayers) return <Loading />;
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+  return (
+    <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 mt-8">
+      <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+        Create New Team
+      </h2>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Team Name */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Team Name <span className="text-red-500">*</span>
           </label>
           <input
@@ -78,59 +108,43 @@ const CreateTeam = () => {
             value={formData.name}
             onChange={handleChange}
             placeholder="e.g. Sudurpaschim Royals"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
 
-        {/* Slogan */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
-            Slogan
-          </label>
-          <input
-            type="text"
-            name="slogan"
-            value={formData.slogan}
-            onChange={handleChange}
-            placeholder="e.g. Unite, Strike, Conquer"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
+        {/* Slogan & Description */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Slogan
+            </label>
+            <input
+              type="text"
+              name="slogan"
+              value={formData.slogan}
+              onChange={handleChange}
+              placeholder="Unite, Strike, Conquer"
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Logo URL
+            </label>
+            <input
+              type="url"
+              name="logo"
+              value={formData.logo}
+              onChange={handleChange}
+              placeholder="https://..."
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
         </div>
 
-        {/* Description */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
-            Description
-          </label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            rows={3}
-            placeholder="Short description about the team..."
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        {/* Logo URL */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
-            Logo URL
-          </label>
-          <input
-            type="url"
-            name="logo"
-            value={formData.logo}
-            onChange={handleChange}
-            placeholder="https://example.com/logo.png"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        {/* Banner Image URL */}
-        <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Banner Image URL
           </label>
           <input
@@ -138,32 +152,58 @@ const CreateTeam = () => {
             name="banner_image"
             value={formData.banner_image}
             onChange={handleChange}
-            placeholder="https://example.com/banner.jpg"
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="https://..."
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
-        {/* Players */}
         <div>
-          <label className="block text-sm font-semibold text-gray-700 mb-1">
-            Player IDs (comma-separated)
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Description
           </label>
-          <input
-            type="text"
-            value={formData.players.join(", ")}
-            onChange={handlePlayersChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-blue-500"
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            rows={3}
+            placeholder="About the team..."
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
-          <p className="text-xs text-gray-500 mt-1">
-            Current: {formData.players.length} players added
+        </div>
+
+        {/* Multi-Select Players */}
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Select Players <span className="text-red-500">*</span>
+          </label>
+          <select
+            multiple
+            value={formData.players}
+            onChange={handlePlayersChange}
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 h-48 text-sm"
+          >
+            {availablePlayers.length === 0 ? (
+              <option disabled>All players are already in teams</option>
+            ) : (
+              availablePlayers.map((player) => (
+                <option key={player._id} value={player._id}>
+                  {player.name} ({player.gender === "M" ? "Male" : "Female"})
+                </option>
+              ))
+            )}
+          </select>
+          <p className="text-xs text-gray-500 mt-2">
+            Hold <kbd>Ctrl</kbd> (or <kbd>Cmd</kbd>) to select multiple ·{" "}
+            <strong>{formData.players.length}</strong> selected ·{" "}
+            <strong>{availablePlayers.length}</strong> available
           </p>
         </div>
 
         {/* Submit */}
         <button
           type="submit"
-          disabled={mutation.isPending}
-          className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
+          disabled={mutation.isPending || formData.players.length === 0}
+          className="w-full bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
         >
           {mutation.isPending ? "Creating Team..." : "Create Team"}
         </button>

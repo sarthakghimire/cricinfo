@@ -1,4 +1,3 @@
-// components/Tournaments.jsx
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getTournaments } from "../../api/api";
@@ -43,9 +42,9 @@ const Tournaments = () => {
 
   if (isLoading) {
     return (
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-gray-100">
+      <section className="py-16 bg-linear-to-b from-gray-50 to-gray-100">
         <div className="max-w-7xl mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold text-center mb-12 bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
             Tournaments
           </h2>
           <div className="h-96 flex items-center justify-center">
@@ -58,9 +57,9 @@ const Tournaments = () => {
 
   if (isError || tournaments.length === 0) {
     return (
-      <section className="py-16 bg-gradient-to-b from-gray-50 to-gray-100">
+      <section className="py-16 bg-linear-to-b from-gray-50 to-gray-100">
         <div className="max-w-7xl mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+          <h2 className="text-4xl font-bold mb-8 bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
             Tournaments
           </h2>
           <p className="text-xl text-gray-600">
@@ -74,9 +73,9 @@ const Tournaments = () => {
   }
 
   return (
-    <section className="py-16 bg-gradient-to-b from-gray-50 to-gray-100">
+    <section className="py-16 bg-linear-to-b from-gray-50 to-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-4xl sm:text-5xl font-extrabold text-center mb-12 bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 bg-clip-text text-transparent">
+        <h2 className="text-4xl sm:text-5xl font-extrabold text-center mb-12 bg-linear-to-r from-blue-600 via-blue-700 to-indigo-700 bg-clip-text text-transparent">
           Tournaments
         </h2>
 
@@ -88,7 +87,7 @@ const Tournaments = () => {
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
               {tournaments.map((tournament) => (
-                <div key={tournament._id} className="w-full flex-shrink-0">
+                <div key={tournament._id} className="w-full shrink-0">
                   <Link to={`/tournaments/${tournament._id}`}>
                     <div className="relative group cursor-pointer">
                       <img
@@ -98,7 +97,7 @@ const Tournaments = () => {
                       />
 
                       {/* Dark Overlay */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent" />
+                      <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
 
                       {/* Text */}
                       <div className="absolute bottom-0 left-0 right-0 p-10 text-center">
@@ -111,7 +110,7 @@ const Tournaments = () => {
                       </div>
 
                       {/* Hover Glow */}
-                      <div className="absolute inset-0 bg-gradient-to-t from-yellow-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-linear-to-t from-yellow-500/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                     </div>
                   </Link>
                 </div>

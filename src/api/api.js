@@ -196,6 +196,23 @@ export const createTeam = async (data) => {
   }
 };
 
+export const updateTeam = async (teamId, updates) => {
+  try {
+    if (!teamId) throw new Error("Team ID is required");
+
+    const response = await axios.patch(`/teams/${teamId}`, updates, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Update Team Error:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
 export const deleteTeam = async (id) => {
   const response = await axios.delete(`/teams/${id}`);
   return response.data;
@@ -239,6 +256,11 @@ export const deletePlayer = async (id) => {
   const response = await axios.delete(`/players/${id}`);
   return response.data;
   alert("Player deleted");
+};
+
+export const updatePlayer = async (id, data) => {
+  const response = await axios.patch(`/players/${id}`, data);
+  return response.data;
 };
 
 // ================================================================
