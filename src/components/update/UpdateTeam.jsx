@@ -122,7 +122,7 @@ const UpdateTeam = () => {
 
   return (
     <div className="max-w-7xl mx-auto p-6 space-y-12">
-      <h2 className="text-4xl font-extrabold text-center bg-gradient-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
+      <h2 className="text-4xl font-extrabold text-center bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
         Update Team
       </h2>
 
