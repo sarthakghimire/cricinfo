@@ -1,19 +1,10 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getDeliveries } from "../../api/api";
 import Loading from "../animation/Loading";
 import { useParams } from "react-router-dom";
+import { useDeliveries } from "../../hooks/deliveries/useDeliveries";
 
 const DisplayDelivery = () => {
-  const {
-    data: response,
-    isLoading,
-    error,
-    isError,
-  } = useQuery({
-    queryKey: ["delivery"],
-    queryFn: getDeliveries,
-  });
+  const { data: response, isLoading, error, isError } = useDeliveries();
 
   const { id: matchId } = useParams();
   const deliveries = response?.data || [];

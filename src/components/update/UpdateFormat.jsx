@@ -1,7 +1,7 @@
 import React from "react";
-// import { useQuery, useMutation } from "@tanstack/react-query";
-import { getFormats } from "../../api/api";
+// import { useMutation } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
+import { useMatchTypes } from "../../hooks/matchTypes/useMatchTypes";
 
 const UpdateFormat = () => {
   // const queryClient = useQuery();
@@ -11,10 +11,7 @@ const UpdateFormat = () => {
   //   isLoading,
   //   error,
   //   isError,
-  // } = useQuery({
-  //   queryKey: ["formats"],
-  //   queryFn: getFormats,
-  // });
+  // } = useMatchTypes();
 
   // const formats = response?.data || [];
   // if (isLoading) return <Loading />;

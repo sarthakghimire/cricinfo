@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { createTeam, getPlayers, getTeams } from "../../api/api";
+import { createTeam } from "../../api/api";
 import { toast } from "react-hot-toast";
 import Loading from "../animation/Loading";
+import { useTeams } from "../../hooks/teams/useTeams";
+import { usePlayers } from "../../hooks/players/usePlayers";
 
 const CreateTeam = () => {
-  const queryClient = useQueryClient();
-
   const [formData, setFormData] = useState({
     name: "",
     slogan: "",
@@ -17,16 +17,10 @@ const CreateTeam = () => {
   });
 
   // Fetch all players
-  const { data: playersRes, isLoading: loadingPlayers } = useQuery({
-    queryKey: ["players"],
-    queryFn: () => getPlayers(1, 500),
-  });
+  const { data: playersRes, isLoading: loadingPlayers } = usePlayers(1, 100);
 
   // Fetch all teams to know which players are already taken
-  const { data: teamsRes } = useQuery({
-    queryKey: ["teams"],
-    queryFn: getTeams,
-  });
+  const { data: teamsRes } = useTeams();
 
   const allPlayers = playersRes?.data || [];
   const allTeams = teamsRes?.data || [];

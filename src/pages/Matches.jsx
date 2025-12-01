@@ -1,19 +1,10 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
-import { getMatches } from "../api/api";
-import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import Loading from "../components/animation/Loading";
+import { useMatches } from "./../hooks/matches/useMatches";
 
 const Matches = () => {
-  const {
-    data: response,
-    isLoading,
-    error,
-    isError,
-  } = useQuery({
-    queryKey: ["match"],
-    queryFn: getMatches,
-  });
+  const { data: response, isLoading, error, isError } = useMatches();
 
   const matches = response?.data || [];
 
@@ -26,7 +17,6 @@ const Matches = () => {
     <div className="h-screen">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {matches.map((match) => {
-          //Change
           if (!match.team_1 || !match.team_2) {
             return (
               <div key={match._id} className="text-center p-10 text-red-600">

@@ -1,24 +1,15 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
-import { getTeamById } from "../api/api";
 import Loading from "../components/animation/Loading";
 import Banner from "./../assets/npl_banner.png";
+import { useTeam } from "../hooks/teams/useTeam";
 
 const TeamDetail = () => {
   const handleError = (e) => {
     e.target.src = Banner;
   };
   const { id } = useParams();
-  const {
-    data: team,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["team", id],
-    queryFn: () => getTeamById(id),
-  });
+  const { data: team, isLoading, isError, error } = useTeam(id);
 
   if (isLoading) return <Loading />;
   if (isError)

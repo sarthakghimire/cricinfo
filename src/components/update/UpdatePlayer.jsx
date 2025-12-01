@@ -1,28 +1,25 @@
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getPlayers, getPlayerById, updatePlayer } from "../../api/api";
+import { updatePlayer } from "../../api/api";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
+import { usePlayers } from "../../hooks/players/usePlayers";
+import { usePlayer } from "../../hooks/players/usePlayer";
 
 const UpdatePlayer = () => {
   const queryClient = useQueryClient();
   const [selectedPlayerId, setSelectedPlayerId] = useState("");
 
   //all players
-  const { data: playersResponse, isLoading: loadingPlayers } = useQuery({
-    queryKey: ["players"],
-    queryFn: () => getPlayers(1, 100),
-  });
+  const { data: playersResponse, isLoading: loadingPlayers } = usePlayers(
+    1,
+    100
+  );
 
   const players = playersResponse?.data || [];
 
   //selected player from radio
-  const { data: player, isLoading: loadingPlayer } = useQuery({
-    queryKey: ["player", selectedPlayerId],
-    queryFn: () => getPlayerById(selectedPlayerId),
-    enabled: !!selectedPlayerId,
-    retry: false,
-  });
+  const { data: player, isLoading: loadingPlayer } = usePlayer(id);
 
   //mutate
   const mutation = useMutation({

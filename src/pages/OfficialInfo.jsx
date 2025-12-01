@@ -1,24 +1,14 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
-import { getOfficialById } from "../api/api";
 import Loading from "../components/animation/Loading";
 import umpireImage from "./../assets/umpire.png";
 import Video from "./../assets/umpire.mp4";
+import { useOfficial } from "../hooks/officials/useOfficial";
 
 const OfficialInfo = () => {
   const { id } = useParams();
 
-  const {
-    data: official,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["official", id],
-    queryFn: () => getOfficialById(id),
-    enabled: !!id,
-  });
+  const { data: official, isLoading, isError, error } = useOfficial(id);
 
   if (isLoading) {
     return (

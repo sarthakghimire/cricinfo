@@ -1,22 +1,12 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { getMatchTypeById } from "./../api/api";
 import Loading from "../components/animation/Loading";
+import { useMatchType } from "../hooks/matchTypes/useMatchType";
 
 const MatchInfo = () => {
   const { id } = useParams();
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["match-type", id],
-    queryFn: () => getMatchTypeById(id),
-    enabled: !!id,
-  });
+  const { data: response, isLoading, isError, error } = useMatchType(id);
 
   const formatData = response?.data;
 

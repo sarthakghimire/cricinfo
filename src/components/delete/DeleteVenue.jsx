@@ -1,21 +1,14 @@
 import React from "react";
-import { deleteVenue, getVenues } from "../../api/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteVenue } from "../../api/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
+import { useVenues } from "../../hooks/venues/useVenues";
 
 const DeleteVenue = () => {
   const queryClient = useQueryClient();
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["venues"],
-    queryFn: getVenues,
-  });
+  const { data: response, isLoading, isError, error } = useVenues();
 
   const mutation = useMutation({
     mutationFn: deleteVenue,

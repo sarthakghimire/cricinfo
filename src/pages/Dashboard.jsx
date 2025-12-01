@@ -9,15 +9,16 @@ import DeletePlayers from "../components/delete/DeletePlayers";
 import DeleteTeam from "../components/delete/DeleteTeam";
 import DeleteOfficial from "../components/delete/DeleteOfficial";
 import DeleteFormat from "../components/delete/DeleteFormat";
-import { useAuth } from "../context/AuthContext";
 import UpdatePlayer from "../components/update/UpdatePlayer";
 import UpdateTeam from "../components/update/UpdateTeam";
 import UpdateOfficial from "../components/update/UpdateOfficial";
 import UpdateVenue from "../components/update/UpdateVenue";
 import UpdateFormat from "../components/update/UpdateFormat";
+import { useLogout } from "../hooks/auth/useLogout";
 
 const Dashboard = () => {
-  const { logout } = useAuth();
+  const logoutMutation = useLogout();
+
   const [openMain, setOpenMain] = useState("add");
   const [openSub, setOpenSub] = useState(null);
 
@@ -28,6 +29,17 @@ const Dashboard = () => {
 
   const toggleSub = (id) => {
     setOpenSub(openSub === id ? null : id);
+  };
+
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        console.log("Logged out successfully");
+      },
+      onError: (error) => {
+        console.warn("Logout error", error);
+      },
+    });
   };
 
   const addSections = [
@@ -88,8 +100,9 @@ const Dashboard = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-gray-800">Admin Dashboard</h1>
           <button
-            onClick={logout}
-            className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-lg transition shadow-md"
+            onClick={handleLogout}
+            disabled={logoutMutation.isPending}
+            className="bg-red-600 hover:bg-red-700 disabled:bg-red-300  text-white font-bold px-6 py-3 rounded-lg transition shadow-md"
           >
             Log Out
           </button>

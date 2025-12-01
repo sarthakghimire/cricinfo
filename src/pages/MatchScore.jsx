@@ -1,22 +1,14 @@
 import React from "react";
-import { getMatchById } from "../api/api";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Loading from "../components/animation/Loading";
 import { useQuery } from "@tanstack/react-query";
 import DisplayDelivery from "../components/ui/DisplayDelivery";
+import { useMatch } from "../hooks/matches/useMatch";
 
 const MatchScore = () => {
   const { id } = useParams();
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["match", id],
-    queryFn: () => getMatchById(id),
-  });
+  const { data: response, isLoading, isError, error } = useMatch(id);
 
   const match = response?.data;
 

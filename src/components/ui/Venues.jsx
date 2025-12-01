@@ -1,20 +1,11 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
-import { getVenues } from "../../api/api";
 import AnimatedCounter from "./../animation/AnimatedCounter";
 import { Link } from "react-router-dom";
+import { useVenues } from "../../hooks/venues/useVenues";
 
 const Venues = () => {
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["venues"],
-    queryFn: getVenues,
-  });
+  const { data: response, isLoading, isError, error } = useVenues();
 
   const venues = response?.data || [];
 

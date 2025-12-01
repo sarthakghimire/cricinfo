@@ -1,19 +1,10 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getTeams } from "../../api/api";
 import { Link } from "react-router-dom";
 import Loading from "../animation/Loading";
+import { useTeams } from "../../hooks/teams/useTeams";
 
 const Teams = () => {
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["teams"],
-    queryFn: getTeams,
-  });
+  const { data: response, isLoading, isError, error } = useTeams();
 
   const teams = response?.data ?? [];
 

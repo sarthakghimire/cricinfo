@@ -1,13 +1,10 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
-import {
-  getStagesById,
-  getMatchType,
-  getTournaments,
-  getOfficials,
-} from "./../api/api";
 import Loading from "../components/animation/Loading";
+import { useStagesByTournament } from "./../hooks/matches/useStagesByTournament";
+import { useMatchTypes } from "./../hooks/matchTypes/useMatchTypes";
+import { useTournaments } from "./../hooks/tournaments/useTournaments";
+import { useOfficials } from "./../hooks/officials/useOfficials";
 
 const TournamentStages = () => {
   const { id } = useParams();
@@ -17,23 +14,11 @@ const TournamentStages = () => {
     isLoading: sLoad,
     isError: sErr,
     error: sError,
-  } = useQuery({
-    queryKey: ["stage", id],
-    queryFn: () => getStagesById(id),
-  });
+  } = useStagesByTournament(id);
 
-  const { data: matchTypes } = useQuery({
-    queryKey: ["match-types"],
-    queryFn: getMatchType,
-  });
-  const { data: tournamentTypes } = useQuery({
-    queryKey: ["tournament-types"],
-    queryFn: getTournaments,
-  });
-  const { data: officials } = useQuery({
-    queryKey: ["officials"],
-    queryFn: getOfficials,
-  });
+  const { data: matchTypes } = useMatchTypes();
+  const { data: tournamentTypes } = useTournaments();
+  const { data: officials } = useOfficials();
 
   const stages = stageRes?.data || [];
 

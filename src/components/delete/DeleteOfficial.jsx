@@ -1,21 +1,14 @@
 import React from "react";
-import { deleteOfficial, getOfficials } from "../../api/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deleteOfficial } from "../../api/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
+import { useOfficials } from "./../../hooks/officials/useOfficials";
 
 const DeleteOfficial = () => {
   const queryClient = useQueryClient();
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["officials"],
-    queryFn: getOfficials,
-  });
+  const { data: response, isLoading, isError, error } = useOfficials();
 
   const mutation = useMutation({
     mutationFn: deleteOfficial,

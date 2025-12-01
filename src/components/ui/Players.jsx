@@ -1,19 +1,10 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getPlayers } from "../../api/api";
 import { Link } from "react-router-dom";
 import Loading from "../animation/Loading";
+import { usePlayers } from "../../hooks/players/usePlayers";
 
 const Players = () => {
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["players", 1, 100],
-    queryFn: () => getPlayers(1, 100),
-  });
+  const { data: response, isLoading, isError, error } = usePlayers(1, 100);
 
   const players = response?.data ?? [];
 

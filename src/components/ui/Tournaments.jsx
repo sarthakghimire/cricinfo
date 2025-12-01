@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getTournaments } from "../../api/api";
 import { Link } from "react-router-dom";
 import Loading from "../animation/Loading";
+import { useTournaments } from "./../../hooks/tournaments/useTournaments";
 
 const Tournaments = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["tournaments"],
-    queryFn: getTournaments,
-  });
+  const { data: response, isLoading, isError, error } = useTournaments();
 
   const tournaments = response?.data || [];
 

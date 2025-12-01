@@ -1,20 +1,11 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { useParams, Link } from "react-router-dom";
-import { getPlayerById } from "./../api/api";
 import Loading from "../components/animation/Loading";
+import { usePlayer } from "../hooks/players/usePlayer";
 
 const PlayerDetail = () => {
   const { id } = useParams();
-  const {
-    data: player,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["player", id],
-    queryFn: () => getPlayerById(id),
-  });
+  const { data: player, isLoading, isError, error } = usePlayer(id);
 
   if (isLoading) return <Loading />;
   if (isError)

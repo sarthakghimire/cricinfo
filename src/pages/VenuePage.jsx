@@ -1,21 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import { getVenueById } from "../api/api";
 import Loading from "../components/animation/Loading";
 import AnimatedCounter from "../components/animation/AnimatedCounter";
+import { useVenue } from "../hooks/venues/useVenue";
 
 const VenuePage = () => {
   const { id } = useParams();
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["venue", id],
-    queryFn: () => getVenueById(id),
-  });
+  const { data: response, isLoading, isError } = useVenue(id);
 
   if (isLoading) return <Loading />;
   if (isError || !response?.success)

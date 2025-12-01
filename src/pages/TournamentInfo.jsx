@@ -1,21 +1,13 @@
 import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../components/animation/Loading";
-import { getTournamentById } from "../api/api";
 import { useParams, Link } from "react-router-dom";
+import { useTournament } from "./../hooks/tournaments/useTournament";
 
 const TournamentInfo = () => {
   const { id } = useParams();
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["tournament", id],
-    queryFn: () => getTournamentById(id),
-  });
+  const { data: response, isLoading, isError, error } = useTournament(id);
 
   const tournament = response?.data;
 

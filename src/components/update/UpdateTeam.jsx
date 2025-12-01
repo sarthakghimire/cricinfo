@@ -1,34 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getTeams, getTeamById, updateTeam, getPlayers } from "../../api/api";
+import { updateTeam } from "../../api/api";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
+import { useTeams } from "../../hooks/teams/useTeams";
+import { useTeam } from "../../hooks/teams/useTeam";
+import { usePlayers } from "../../hooks/players/usePlayers";
 
 const UpdateTeam = () => {
   const queryClient = useQueryClient();
   const [selectedTeamId, setSelectedTeamId] = useState("");
 
   // Fetch all teams for radio selection
-  const { data: teamsRes, isLoading: loadingTeams } = useQuery({
-    queryKey: ["teams"],
-    queryFn: getTeams,
-  });
+  const { data: teamsRes, isLoading: loadingTeams } = useTeams();
 
   const teams = teamsRes?.data || [];
 
   // Fetch selected team details
-  const { data: team, isLoading: loadingTeam } = useQuery({
-    queryKey: ["team", selectedTeamId],
-    queryFn: () => getTeamById(selectedTeamId),
-    enabled: !!selectedTeamId,
-    retry: false,
-  });
+  const { data: team, isLoading: loadingTeam } = useTeam();
 
   // Fetch all players
-  const { data: playersRes } = useQuery({
-    queryKey: ["players"],
-    queryFn: () => getPlayers(1, 500),
-  });
+  const { data: playersRes } = usePlayers(1, 100);
 
   const allPlayers = playersRes?.data || [];
 
@@ -59,7 +51,7 @@ const UpdateTeam = () => {
   });
 
   // Sync form when team loads
-  React.useEffect(() => {
+  useEffect(() => {
     if (team) {
       setFormData({
         name: team.name || "",

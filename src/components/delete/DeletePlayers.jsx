@@ -1,22 +1,15 @@
 import React, { useState } from "react";
-import { deletePlayer, getPlayers } from "./../../api/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { deletePlayer } from "./../../api/api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
+import { usePlayers } from "../../hooks/players/usePlayers";
 
 const DeletePlayers = () => {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
 
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["players", "all"],
-    queryFn: () => getPlayers(1, 100),
-  });
+  const { data: response, isLoading, isError, error } = usePlayers(1, 100);
 
   const mutation = useMutation({
     mutationFn: deletePlayer,

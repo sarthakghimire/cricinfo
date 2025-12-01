@@ -1,21 +1,12 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
-import { getOfficials } from "../../api/api";
 import { Link } from "react-router-dom";
 import Loading from "../animation/Loading";
 import Video from "./../../assets/umpire.mp4";
 import umpireImage from "./../../assets/umpire.png";
+import { useOfficials } from "./../../hooks/officials/useOfficials";
 
 const Officials = () => {
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["officials"],
-    queryFn: getOfficials,
-  });
+  const { data: response, isLoading, isError, error } = useOfficials();
 
   const officials = response?.data || [];
 

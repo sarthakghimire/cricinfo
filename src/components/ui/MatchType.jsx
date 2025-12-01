@@ -1,20 +1,11 @@
 import React from "react";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
-import { getMatchType } from "../../api/api";
 import Loading from "../animation/Loading";
 import Image from "./../../assets/ball.jpg";
+import { useMatchTypes } from "../../hooks/matchTypes/useMatchTypes";
 
 const MatchType = () => {
-  const {
-    data: response,
-    isLoading,
-    isError,
-    error,
-  } = useQuery({
-    queryKey: ["match"],
-    queryFn: getMatchType,
-  });
+  const { data: response, isLoading, isError, error } = useMatchTypes();
   const matches = response?.data ?? [];
   return (
     <section className="py-12 bg-gray-50">
