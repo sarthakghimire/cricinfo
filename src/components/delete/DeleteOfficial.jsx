@@ -1,32 +1,25 @@
-import React from "react";
-import { deleteOfficial } from "../../api/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
 import { useOfficials } from "./../../hooks/officials/useOfficials";
+import { useDeleteOfficial } from "../../hooks/officials/useDeleteOfficial";
 
 const DeleteOfficial = () => {
-  const queryClient = useQueryClient();
-
   const { data: response, isLoading, isError, error } = useOfficials();
 
-  const mutation = useMutation({
-    mutationFn: deleteOfficial,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["officials"] });
-      toast.success("Official deleted successfully");
-    },
-    onError: (err) => {
-      toast.error("Failed to delete official");
-      console.error(err);
-    },
-  });
+  const mutation = useDeleteOfficial();
 
   const officials = response?.data || [];
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this official?")) {
-      mutation.mutate(id);
+      mutation.mutate(id, {
+        onSuccess: () => {
+          toast.success("Official Deleted Successfully.");
+        },
+        onError: () => {
+          toast.error("Failed to Deleted Official.");
+        },
+      });
     }
   };
 

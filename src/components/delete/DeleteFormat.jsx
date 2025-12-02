@@ -1,32 +1,25 @@
-import React from "react";
-import { deleteFormat } from "../../api/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
 import { useMatchTypes } from "./../../hooks/matchTypes/useMatchTypes";
+import { useDeleteMatchType } from "../../hooks/matchTypes/useDeleteMatchType";
 
 const DeleteFormat = () => {
-  const queryClient = useQueryClient();
-
   const { data: response, isLoading, isError, error } = useMatchTypes();
 
-  const mutation = useMutation({
-    mutationFn: deleteFormat,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["formats"] });
-      toast.success("Format deleted successfully");
-    },
-    onError: (err) => {
-      toast.error("Failed to delete format");
-      console.error(err);
-    },
-  });
+  const mutation = useDeleteMatchType();
 
   const formats = response?.data || [];
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this format?")) {
-      mutation.mutate(id);
+      mutation.mutate(id, {
+        onSuccess: () => {
+          toast.success("Format Deleted Successfully");
+        },
+        onError: () => {
+          toast.error("Error Deleting Format");
+        },
+      });
     }
   };
 

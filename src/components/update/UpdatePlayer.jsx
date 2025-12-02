@@ -1,43 +1,74 @@
-import React, { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { updatePlayer } from "../../api/api";
+import React, { useState, useEffect } from "react";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
 import { usePlayers } from "../../hooks/players/usePlayers";
 import { usePlayer } from "../../hooks/players/usePlayer";
+import { useUpdatePlayer } from "../../hooks/players/useUpdatePlayer";
 
 const UpdatePlayer = () => {
-  const queryClient = useQueryClient();
   const [selectedPlayerId, setSelectedPlayerId] = useState("");
 
-  //all players
+  const [formData, setFormData] = useState({
+    name: "",
+    gender: "M",
+    date_of_birth: "",
+    image: "",
+  });
+
   const { data: playersResponse, isLoading: loadingPlayers } = usePlayers(
     1,
     100
   );
-
   const players = playersResponse?.data || [];
 
-  //selected player from radio
-  const { data: player, isLoading: loadingPlayer } = usePlayer(id);
+  const { data: player, isLoading: loadingPlayer } =
+    usePlayer(selectedPlayerId);
 
-  //mutate
-  const mutation = useMutation({
-    mutationFn: (updates) => updatePlayer(selectedPlayerId, updates),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["players"] });
-      queryClient.invalidateQueries({ queryKey: ["player", selectedPlayerId] });
-      toast.success("Player updated!");
-    },
-  });
+  useEffect(() => {
+    if (player) {
+      setFormData({
+        name: player.name || "",
+        gender: player.gender || "M",
+        date_of_birth: player.date_of_birth?.slice(0, 10) || "",
+        image: player.image || "",
+      });
+    }
+  }, [player]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const mutation = useUpdatePlayer();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const updates = Object.fromEntries(formData);
-    Object.keys(updates).forEach((key) => !updates[key] && delete updates[key]);
-    if (Object.keys(updates).length === 0) return toast("No changes");
-    mutation.mutate(updates);
+
+    const updates = {};
+    if (formData.name !== player?.name) updates.name = formData.name;
+    if (formData.gender !== player?.gender) updates.gender = formData.gender;
+    if (formData.date_of_birth !== (player?.date_of_birth?.slice(0, 10) || ""))
+      updates.date_of_birth = formData.date_of_birth;
+    if (formData.image !== player?.image) updates.image = formData.image;
+
+    if (Object.keys(updates).length === 0) {
+      return toast("No changes to save", { icon: "ℹ️" });
+    }
+
+    mutation.mutate(
+      { id: selectedPlayerId, data: updates },
+      {
+        onSuccess: () => {
+          toast.success(`${player.name} updated successfully!`);
+        },
+        onError: (error) => {
+          toast.error(
+            error.response?.data?.message || "Failed to update player"
+          );
+        },
+      }
+    );
   };
 
   if (loadingPlayers) return <Loading />;
@@ -48,7 +79,7 @@ const UpdatePlayer = () => {
         Update Player
       </h2>
 
-      {/* Responsive Player Grid */}
+      {/* Player Selection */}
       <div className="bg-white rounded-xl shadow-lg p-8">
         <h3 className="text-xl font-semibold mb-6 text-gray-800">
           Select Player to Edit
@@ -66,7 +97,7 @@ const UpdatePlayer = () => {
                 value={p._id}
                 checked={selectedPlayerId === p._id}
                 onChange={(e) => setSelectedPlayerId(e.target.value)}
-                className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                className="w-5 h-5 text-blue-600 focus:ring-blue-500"
               />
               <span className="text-gray-800 font-medium truncate">
                 {p.name}
@@ -84,49 +115,77 @@ const UpdatePlayer = () => {
               <Loading />
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
               <h3 className="text-2xl font-bold text-center text-gray-800">
                 Editing: <span className="text-blue-600">{player?.name}</span>
               </h3>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <input
-                  name="name"
-                  type="text"
-                  defaultValue={player?.name}
-                  placeholder="Name"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  name="image"
-                  type="text"
-                  defaultValue={player?.image}
-                  placeholder="Image URL"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                />
-                <input
-                  name="date_of_birth"
-                  type="date"
-                  defaultValue={player?.date_of_birth?.slice(0, 10)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg"
-                />
-                <select
-                  name="gender"
-                  defaultValue={player?.gender || "M"}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg"
-                >
-                  <option value="M">Male</option>
-                  <option value="F">Female</option>
-                </select>
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Full Name
+                  </label>
+                  <input
+                    name="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition text-lg"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Image URL
+                  </label>
+                  <input
+                    name="image"
+                    type="url"
+                    value={formData.image}
+                    onChange={handleChange}
+                    placeholder="https://example.com/player.jpg"
+                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 text-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Date of Birth
+                  </label>
+                  <input
+                    name="date_of_birth"
+                    type="date"
+                    value={formData.date_of_birth}
+                    onChange={handleChange}
+                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 text-lg"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                    Gender
+                  </label>
+                  <select
+                    name="gender"
+                    value={formData.gender}
+                    onChange={handleChange}
+                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 text-lg"
+                  >
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="O">Other</option>
+                  </select>
+                </div>
               </div>
 
-              <div className="text-center pt-4">
+              <div className="text-center pt-6">
                 <button
                   type="submit"
                   disabled={mutation.isPending}
                   className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {mutation.isPending ? "Saving..." : "Update Player"}
+                  {mutation.isPending ? "Saving Changes..." : "Update Player"}
                 </button>
               </div>
             </form>

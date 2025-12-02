@@ -1,24 +1,15 @@
 import React, { useState } from "react";
-import { deletePlayer } from "./../../api/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
 import { usePlayers } from "../../hooks/players/usePlayers";
+import { useDeletePlayer } from "./../../hooks/players/useDeletePlayer";
 
 const DeletePlayers = () => {
-  const queryClient = useQueryClient();
   const [search, setSearch] = useState("");
 
   const { data: response, isLoading, isError, error } = usePlayers(1, 100);
 
-  const mutation = useMutation({
-    mutationFn: deletePlayer,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["players"] });
-      toast.success("Player deleted");
-    },
-    onError: () => toast.error("Delete failed"),
-  });
+  const mutation = useDeletePlayer();
 
   const players = response?.data || [];
 
@@ -28,7 +19,14 @@ const DeletePlayers = () => {
 
   const handleDelete = (id) => {
     if (window.confirm("Delete this player?")) {
-      mutation.mutate(id);
+      mutation.mutate(id, {
+        onSuccess: () => {
+          toast.success("Player Deleted");
+        },
+        onError: (error) => {
+          toast.error("Failed to Delete Player");
+        },
+      });
     }
   };
 

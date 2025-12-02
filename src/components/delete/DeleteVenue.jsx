@@ -1,32 +1,25 @@
-import React from "react";
-import { deleteVenue } from "../../api/api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
 import { useVenues } from "../../hooks/venues/useVenues";
+import { useDeleteVenue } from "../../hooks/venues/useDeleteVenue";
 
 const DeleteVenue = () => {
-  const queryClient = useQueryClient();
-
   const { data: response, isLoading, isError, error } = useVenues();
 
-  const mutation = useMutation({
-    mutationFn: deleteVenue,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["venues"] });
-      toast.success("Venue deleted successfully");
-    },
-    onError: (err) => {
-      toast.error("Delete failed");
-      console.error(err);
-    },
-  });
+  const mutation = useDeleteVenue();
 
   const venues = response?.data || [];
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this venue?")) {
-      mutation.mutate(id);
+      mutation.mutate(id, {
+        onSuccess: () => {
+          toast.success("Venue Deleted Successfully");
+        },
+        onError: () => {
+          toast.error("Error Deleting the Venue");
+        },
+      });
     }
   };
 

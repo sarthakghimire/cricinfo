@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createOfficial } from "../../api/api";
 import { toast } from "react-hot-toast";
+import { useCreateOfficial } from "../../hooks/officials/useCreateOfficial";
 
 const officialTypes = [
   { value: "umpire", label: "Umpire" },
@@ -11,23 +10,13 @@ const officialTypes = [
 ];
 
 const CreateOfficial = () => {
-  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     name: "",
     type: "umpire",
     description: "",
   });
 
-  const mutation = useMutation({
-    mutationFn: createOfficial,
-    onSuccess: (data) => {
-      toast.success(`${data.name} (${data.type.replace("_", " ")}) created!`);
-      queryClient.invalidateQueries({ queryKey: ["officials"] });
-      setFormData({ name: "", type: "umpire", description: "" });
-    },
-    onError: (error) =>
-      toast.error(error.response?.data?.message || "Failed to create official"),
-  });
+  const mutation = useCreateOfficial();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,11 +27,24 @@ const CreateOfficial = () => {
     e.preventDefault();
     if (!formData.name.trim()) return toast.error("Name is required");
 
-    mutation.mutate({
-      name: formData.name.trim(),
-      type: formData.type,
-      description: formData.description.trim() || undefined,
-    });
+    mutation.mutate(
+      {
+        name: formData.name.trim(),
+        type: formData.type,
+        description: formData.description.trim() || undefined,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Official created successfully!");
+          setFormData({ name: "", type: "umpire", description: "" });
+        },
+        onError: (error) => {
+          toast.error(
+            error.response?.data?.message || "Failed to create official"
+          );
+        },
+      }
+    );
   };
 
   return (

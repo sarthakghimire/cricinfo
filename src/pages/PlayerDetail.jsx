@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, Link } from "react-router-dom";
 import Loading from "../components/animation/Loading";
 import { usePlayer } from "../hooks/players/usePlayer";

@@ -1,10 +1,8 @@
 import { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createPlayer } from "../../api/api";
 import { toast } from "react-hot-toast";
+import { useCreatePlayer } from "../../hooks/players/useCreatePlayer";
 
 const CreatePlayer = () => {
-  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     name: "",
     gender: "",
@@ -12,21 +10,19 @@ const CreatePlayer = () => {
     image: "",
   });
 
-  const mutation = useMutation({
-    mutationFn: (data) => createPlayer(data),
-    onSuccess: () => {
-      toast.success("Player created!");
-      queryClient.invalidateQueries(["players"]);
-      setFormData({ name: "", gender: "", date_of_birth: "", image: "" });
-    },
-    onError: (error) => {
-      toast.error(`Failed to create player: ${error.message}`);
-    },
-  });
+  const mutation = useCreatePlayer();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate(formData);
+    mutation.mutate(formData, {
+      onSuccess: () => {
+        toast.success("Player created successfully!");
+        setFormData({ name: "", gender: "", date_of_birth: "", image: "" });
+      },
+      onError: (error) => {
+        toast.error(error.response?.data?.message || "Failed to create player");
+      },
+    });
   };
 
   const handleChange = (e) => {

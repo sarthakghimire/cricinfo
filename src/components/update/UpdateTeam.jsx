@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateTeam } from "../../api/api";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
 import { useTeams } from "../../hooks/teams/useTeams";
 import { useTeam } from "../../hooks/teams/useTeam";
 import { usePlayers } from "../../hooks/players/usePlayers";
+import { useUpdateTeam } from "../../hooks/teams/useUpdateTeam";
 
 const UpdateTeam = () => {
-  const queryClient = useQueryClient();
   const [selectedTeamId, setSelectedTeamId] = useState("");
 
   // Fetch all teams for radio selection
@@ -64,14 +62,7 @@ const UpdateTeam = () => {
     }
   }, [team]);
 
-  const mutation = useMutation({
-    mutationFn: (updates) => updateTeam(selectedTeamId, updates),
-    onSuccess: () => {
-      toast.success("Team updated successfully!");
-      queryClient.invalidateQueries({ queryKey: ["teams"] });
-      queryClient.invalidateQueries({ queryKey: ["team", selectedTeamId] });
-    },
-  });
+  const mutation = useUpdateTeam(selectedTeamId);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -107,7 +98,17 @@ const UpdateTeam = () => {
       return;
     }
 
-    mutation.mutate(updates);
+    mutation.mutate(
+      { id: selectedTeamId, data: updates },
+      {
+        onSuccess: () => {
+          toast.success("Team Details Updated.");
+        },
+        onError: () => {
+          toast.error("Error Updating Team");
+        },
+      }
+    );
   };
 
   if (loadingTeams) return <Loading />;

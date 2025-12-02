@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { useMutation, useQueryClient, useQuery } from "@tanstack/react-query";
-import { createTeam } from "../../api/api";
 import { toast } from "react-hot-toast";
 import Loading from "../animation/Loading";
 import { useTeams } from "../../hooks/teams/useTeams";
 import { usePlayers } from "../../hooks/players/usePlayers";
+import { useCreateTeam } from "./../../hooks/teams/useCreateTeam";
 
 const CreateTeam = () => {
   const [formData, setFormData] = useState({
@@ -34,25 +33,7 @@ const CreateTeam = () => {
   // Available players = all players - already used ones
   const availablePlayers = allPlayers.filter((p) => !usedPlayerIds.has(p._id));
 
-  const mutation = useMutation({
-    mutationFn: createTeam,
-    onSuccess: (data) => {
-      toast.success(`${data.name} created successfully!`);
-      queryClient.invalidateQueries({ queryKey: ["teams"] });
-      queryClient.invalidateQueries({ queryKey: ["players"] });
-      setFormData({
-        name: "",
-        slogan: "",
-        description: "",
-        logo: "",
-        banner_image: "",
-        players: [],
-      });
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to create team");
-    },
-  });
+  const mutation = useCreateTeam();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -67,19 +48,33 @@ const CreateTeam = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (formData.players.length === 0) {
-      toast.error("Please select at least one player");
-      return;
-    }
 
-    mutation.mutate({
-      name: formData.name.trim(),
-      slogan: formData.slogan.trim(),
-      description: formData.description.trim(),
-      logo: formData.logo.trim(),
-      banner_image: formData.banner_image.trim(),
-      players: formData.players,
-    });
+    mutation.mutate(
+      {
+        name: formData.name.trim(),
+        slogan: formData.slogan.trim() || undefined,
+        description: formData.description.trim() || undefined,
+        logo: formData.logo.trim() || undefined,
+        banner_image: formData.banner_image.trim() || undefined,
+        players: formData.players,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Team created successfully!");
+          setFormData({
+            name: "",
+            slogan: "",
+            description: "",
+            logo: "",
+            banner_image: "",
+            players: [],
+          });
+        },
+        onError: (error) => {
+          toast.error(error.response?.data?.message || "Failed to create team");
+        },
+      }
+    );
   };
 
   if (loadingPlayers) return <Loading />;
@@ -196,7 +191,7 @@ const CreateTeam = () => {
         {/* Submit */}
         <button
           type="submit"
-          disabled={mutation.isPending || formData.players.length === 0}
+          disabled={mutation.isPending}
           className="w-full bg-linear-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
         >
           {mutation.isPending ? "Creating Team..." : "Create Team"}

@@ -1,32 +1,25 @@
-import React from "react";
-import { deleteTeam } from "../../api/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Loading from "../animation/Loading";
 import toast from "react-hot-toast";
 import { useTeams } from "../../hooks/teams/useTeams";
+import { useDeleteTeam } from "./../../hooks/teams/useDeleteTeam";
 
-const DeleteVenue = () => {
-  const queryClient = useQueryClient();
-
+const DeleteTeam = () => {
   const { data: response, isLoading, isError, error } = useTeams();
 
-  const mutation = useMutation({
-    mutationFn: deleteTeam,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["teams"] });
-      toast.success("Team deleted successfully");
-    },
-    onError: (err) => {
-      toast.error("Delete failed");
-      console.error(err);
-    },
-  });
+  const mutation = useDeleteTeam();
 
   const teams = response?.data || [];
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this team?")) {
-      mutation.mutate(id);
+      mutation.mutate(id, {
+        onSuccess: () => {
+          toast.success("Team Deleted Successfully");
+        },
+        onError: () => {
+          toast.error("Failed to Delete Team");
+        },
+      });
     }
   };
 
@@ -63,4 +56,4 @@ const DeleteVenue = () => {
   );
 };
 
-export default DeleteVenue;
+export default DeleteTeam;

@@ -1,4 +1,3 @@
-import React from "react";
 import Loading from "../animation/Loading";
 import AnimatedCounter from "./../animation/AnimatedCounter";
 import { Link } from "react-router-dom";

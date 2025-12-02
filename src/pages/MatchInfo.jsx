@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/animation/Loading";
 import { useMatchType } from "../hooks/matchTypes/useMatchType";

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect } from "react";
 import { useLogin } from "./../hooks/auth/useLogin";
-import { useLogout } from "./../hooks/auth/useLogout"; //
+import { useLogout } from "./../hooks/auth/useLogout";
 import { useMe } from "./../hooks/auth/useMe";
 import { useRegister } from "./../hooks/auth/useRegister";
 

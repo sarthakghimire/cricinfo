@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import Loading from "../animation/Loading";
 import { useTeams } from "../../hooks/teams/useTeams";

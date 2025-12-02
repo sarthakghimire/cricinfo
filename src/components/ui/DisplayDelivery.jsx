@@ -1,4 +1,3 @@
-import React from "react";
 import Loading from "../animation/Loading";
 import { useParams } from "react-router-dom";
 import { useDeliveries } from "../../hooks/deliveries/useDeliveries";

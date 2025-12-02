@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addFormat } from "../../api/api";
 import { toast } from "react-hot-toast";
+import { useCreateMatchType } from "../../hooks/matchTypes/useCreateMatchType";
 
 const CreateFormat = () => {
-  const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -13,23 +11,7 @@ const CreateFormat = () => {
     power_play_overs: "",
   });
 
-  const mutation = useMutation({
-    mutationFn: addFormat,
-    onSuccess: () => {
-      toast.success("Format created successfully!");
-      queryClient.invalidateQueries({ queryKey: ["formats"] });
-      setFormData({
-        name: "",
-        description: "",
-        total_overs: "",
-        balls_per_over: "6",
-        power_play_overs: "",
-      });
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to create format");
-    },
-  });
+  const mutation = useCreateMatchType();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -38,13 +20,33 @@ const CreateFormat = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    mutation.mutate({
-      name: formData.name,
-      description: formData.description,
-      total_overs: Number(formData.total_overs),
-      balls_per_over: Number(formData.balls_per_over),
-      power_play_overs: Number(formData.power_play_overs),
-    });
+
+    mutation.mutate(
+      {
+        name: formData.name.trim(),
+        description: formData.description.trim() || undefined,
+        total_overs: Number(formData.total_overs),
+        balls_per_over: Number(formData.balls_per_over),
+        power_play_overs: Number(formData.power_play_overs),
+      },
+      {
+        onSuccess: () => {
+          toast.success("Match format created successfully!");
+          setFormData({
+            name: "",
+            description: "",
+            total_overs: "",
+            balls_per_over: "6",
+            power_play_overs: "",
+          });
+        },
+        onError: (error) => {
+          toast.error(
+            error.response?.data?.message || "Failed to create format"
+          );
+        },
+      }
+    );
   };
 
   return (

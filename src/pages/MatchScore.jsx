@@ -1,7 +1,5 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import Loading from "../components/animation/Loading";
-import { useQuery } from "@tanstack/react-query";
 import DisplayDelivery from "../components/ui/DisplayDelivery";
 import { useMatch } from "../hooks/matches/useMatch";
 

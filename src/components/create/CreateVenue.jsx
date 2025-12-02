@@ -1,28 +1,15 @@
 import React, { useState } from "react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createVenue } from "../../api/api";
 import { toast } from "react-hot-toast";
+import { useCreateVenue } from "../../hooks/venues/useCreateVenue";
 
 const CreateVenue = () => {
-  const queryClient = useQueryClient();
-
   const [formData, setFormData] = useState({
     name: "",
     address: "",
     capacity: "",
   });
 
-  const mutation = useMutation({
-    mutationFn: createVenue,
-    onSuccess: () => {
-      toast.success("Venue created successfully!");
-      queryClient.invalidateQueries({ queryKey: ["venues"] });
-      setFormData({ name: "", address: "", capacity: "" });
-    },
-    onError: (error) => {
-      toast.error(error.response?.data?.message || "Failed to create venue");
-    },
-  });
+  const mutation = useCreateVenue();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -37,11 +24,21 @@ const CreateVenue = () => {
       return;
     }
 
-    mutation.mutate({
-      name: formData.name.trim(),
-      address: formData.address.trim(),
-      capacity: parseInt(formData.capacity),
-    });
+    mutation.mutate(
+      {
+        name: formData.name.trim(),
+        address: formData.address.trim(),
+        capacity: parseInt(formData.capacity),
+      },
+      {
+        onSuccess: () => {
+          toast.success("Venue Created Successfully.");
+        },
+        onError: () => {
+          toast.error("Error Creating Venue.");
+        },
+      }
+    );
   };
 
   return (
