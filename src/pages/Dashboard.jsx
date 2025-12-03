@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLogout } from "../hooks/auth/useLogout";
 import CreateTeam from "../components/create/CreateTeam";
 import CreatePlayer from "../components/create/CreatePlayer";
 import CreateOfficial from "../components/create/CreateOfficial";
@@ -13,8 +14,13 @@ import UpdatePlayer from "../components/update/UpdatePlayer";
 import UpdateTeam from "../components/update/UpdateTeam";
 import UpdateOfficial from "../components/update/UpdateOfficial";
 import UpdateVenue from "../components/update/UpdateVenue";
-import { useLogout } from "../hooks/auth/useLogout";
 import UpdateMatchType from "../components/update/UpdateMatchType";
+import CreateStage from "../components/create/CreateStage";
+import DeleteStage from "../components/delete/DeleteStage";
+import UpdateStage from "../components/update/UpdateStage";
+import CreateTournament from "../components/create/CreateTournament";
+import DeleteTournament from "../components/delete/DeleteTournament";
+import UpdateTournament from "../components/update/UpdateTournament";
 
 const Dashboard = () => {
   const logoutMutation = useLogout();
@@ -43,55 +49,73 @@ const Dashboard = () => {
   };
 
   const addSections = [
-    { id: "player", title: "Add New Player", component: <CreatePlayer /> },
-    { id: "team", title: "Add New Team", component: <CreateTeam /> },
+    { id: "format", title: "Add New Format", component: <CreateFormat /> },
     {
       id: "official",
       title: "Add New Official",
       component: <CreateOfficial />,
     },
+    { id: "player", title: "Add New Player", component: <CreatePlayer /> },
+    { id: "stage", title: "Add New Stage", component: <CreateStage /> },
+    { id: "team", title: "Add New Team", component: <CreateTeam /> },
+    {
+      id: "tournament",
+      title: "Add New Tournament",
+      component: <CreateTournament />,
+    },
     { id: "venue", title: "Add New Venue", component: <CreateVenue /> },
-    { id: "format", title: "Add New Format", component: <CreateFormat /> },
   ];
 
   const deleteSections = [
-    {
-      id: "deletePlayer",
-      title: "Delete a Player",
-      component: <DeletePlayers />,
-    },
-    { id: "deleteTeam", title: "Delete a Team", component: <DeleteTeam /> },
-    {
-      id: "deleteOfficial",
-      title: "Delete an Official",
-      component: <DeleteOfficial />,
-    },
-    { id: "deleteVenue", title: "Delete a Venue", component: <DeleteVenue /> },
     {
       id: "deleteFormat",
       title: "Delete a Format",
       component: <DeleteFormat />,
     },
+    {
+      id: "deleteOfficial",
+      title: "Delete an Official",
+      component: <DeleteOfficial />,
+    },
+    {
+      id: "deletePlayer",
+      title: "Delete a Player",
+      component: <DeletePlayers />,
+    },
+    { id: "deleteStage", title: "Delete a Stage", component: <DeleteStage /> },
+    { id: "deleteTeam", title: "Delete a Team", component: <DeleteTeam /> },
+    {
+      id: "deleteTournament",
+      title: "Delete a Tournament",
+      component: <DeleteTournament />,
+    },
+    { id: "deleteVenue", title: "Delete a Venue", component: <DeleteVenue /> },
   ];
 
   const updateSections = [
-    {
-      id: "updatePlayer",
-      title: "Update a Player",
-      component: <UpdatePlayer />,
-    },
-    { id: "updateTeam", title: "Update a Team", component: <UpdateTeam /> },
-    {
-      id: "updateOfficial",
-      title: "Update an Official",
-      component: <UpdateOfficial />,
-    },
-    { id: "updateVenue", title: "Update a Venue", component: <UpdateVenue /> },
     {
       id: "updateMatchType",
       title: "Update a Format",
       component: <UpdateMatchType />,
     },
+    {
+      id: "updateOfficial",
+      title: "Update an Official",
+      component: <UpdateOfficial />,
+    },
+    {
+      id: "updatePlayer",
+      title: "Update a Player",
+      component: <UpdatePlayer />,
+    },
+    { id: "updateStage", title: "Update a Stage", component: <UpdateStage /> },
+    { id: "updateTeam", title: "Update a Team", component: <UpdateTeam /> },
+    {
+      id: "updateTournament",
+      title: "Update a Tournament",
+      component: <UpdateTournament />,
+    },
+    { id: "updateVenue", title: "Update a Venue", component: <UpdateVenue /> },
   ];
 
   return (

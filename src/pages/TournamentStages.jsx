@@ -29,87 +29,67 @@ const TournamentStages = () => {
 
   const getName = (id, list) =>
     list?.data?.find((x) => x._id === id)?.name || "N/A";
-  const getOfficialNames = (ids) =>
-    ids
-      ?.map((id) => getName(id, officials))
-      .filter(Boolean)
-      .join(" • ") || "Not Assigned";
 
   return (
-    <>
-      <div className="min-h-screen bg-linear-to-br from-gray-50 via-white to-blue-50 py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-6xl font-extrabold text-center mb-12 bg-linear-to-r from-red-600 via-yellow-400 to-blue-600 bg-clip-text text-transparent">
-            Tournament Stages
-          </h1>
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-4xl font-bold text-center text-gray-800 mb-10">
+          Tournament Stages
+        </h1>
 
+        <div className="space-y-8">
           {stages.map((stage) => {
             const t = stage.tournament;
             const matchTypeName = getName(t.match_type, matchTypes);
-            const tournamentTypeName = getName(
-              t.tournament_type,
-              tournamentTypes
-            );
-            const officialNames = getOfficialNames(t.officials);
 
             return (
               <div
                 key={stage._id}
-                className="bg-white rounded-3xl shadow-2xl overflow-hidden mb-16 border-4 border-gray-200"
+                className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden"
               >
-                {/* Banner */}
-                <div
-                  className="h-72 bg-cover bg-center relative"
-                  style={{
-                    backgroundImage: `url(${
-                      t.banner_image || "/npl_banner.png"
-                    })`,
-                  }}
-                >
-                  <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/40 to-transparent" />
-                  <div className="absolute bottom-8 left-8 text-white">
-                    <h2 className="text-5xl font-extrabold drop-shadow-2xl">
-                      {stage.name}
-                    </h2>
-                    <p className="text-2xl mt-2 font-medium opacity-90">
-                      {t.season}
-                    </p>
-                  </div>
+                {/* Stage Header */}
+                <div className="bg-blue-600 text-white p-6">
+                  <h2 className="text-3xl font-bold">{stage.name}</h2>
+                  <p className="text-xl mt-1 opacity-90">
+                    {t.name} • {t.season}
+                  </p>
                 </div>
 
                 {/* Content */}
-                <div className="p-10">
-                  <p className="text-xl text-gray-700 mb-10 leading-relaxed italic">
-                    "{t.description}"
-                  </p>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                    <Link
-                      to={`/match-info/${t.match_type}`}
-                      className="bg-blue-50 rounded-2xl p-8 border-4 border-blue-200 text-center"
-                    >
-                      <p className="text-blue-600 font-bold text-lg">Format</p>
-                      <p className="text-4xl font-extrabold text-blue-800 mt-2">
+                <div className="p-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-600">
+                        Format
+                      </p>
+                      <p className="text-2xl font-bold text-blue-700 mt-1">
                         {matchTypeName}
                       </p>
-                    </Link>
-                    <div className="bg-green-50 rounded-2xl p-8 border-4 border-green-200 text-center">
-                      <p className="text-green-600 font-bold text-lg">
-                        Total Overs
-                      </p>
-                      <p className="text-4xl font-extrabold text-green-800 mt-2">
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-600">Overs</p>
+                      <p className="text-2xl font-bold text-green-700 mt-1">
                         {t.total_overs}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-sm font-medium text-gray-600">
+                        Balls/Over
+                      </p>
+                      <p className="text-2xl font-bold text-purple-700 mt-1">
+                        {t.balls_per_over || 6}
                       </p>
                     </div>
                   </div>
 
-                  <div className="bg-yellow-50 rounded-2xl p-8 border-4 border-yellow-200">
-                    <p className="text-yellow-800 font-bold text-xl mb-6">
-                      Officials
-                    </p>
-                    <div className="flex flex-wrap gap-3">
-                      {t.officials && t.officials.length > 0 ? (
-                        t.officials.map((officialId) => {
+                  {/* Officials */}
+                  {t.officials && t.officials.length > 0 ? (
+                    <div>
+                      <p className="text-sm font-semibold text-gray-700 mb-3">
+                        Assigned Officials
+                      </p>
+                      <div className="flex flex-wrap gap-3">
+                        {t.officials.map((officialId) => {
                           const official = officials?.data?.find(
                             (o) => o._id === officialId
                           );
@@ -119,39 +99,31 @@ const TournamentStages = () => {
                             <Link
                               key={official._id}
                               to={`/officials/${official._id}`}
-                              className="inline-flex items-center gap-3 bg-white rounded-full px-6 py-4 shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 border-2 border-yellow-300 hover:border-yellow-500 group"
+                              className="inline-flex items-center gap-3 bg-gray-100 rounded-full px-5 py-3 hover:bg-gray-200 transition"
                             >
-                              <div className="w-12 h-12 rounded-full bg-linear-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-lg">
+                              <div className="w-10 h-10 rounded-full bg-blue-600 text-white flex items-center justify-center font-bold">
                                 {official.name.charAt(0)}
                               </div>
-                              <div>
-                                <p className="font-bold text-gray-800 group-hover:text-yellow-700">
-                                  {official.name}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                  {official.role || "Official"}
-                                </p>
-                              </div>
-                              <span className="text-yellow-600 group-hover:text-yellow-800 text-xs">
-                                View Profile →
+                              <span className="font-medium text-gray-800">
+                                {official.name}
                               </span>
                             </Link>
                           );
-                        })
-                      ) : (
-                        <p className="text-gray-600 italic">
-                          No officials assigned
-                        </p>
-                      )}
+                        })}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    <p className="text-gray-500 italic">
+                      No officials assigned
+                    </p>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
