@@ -13,8 +13,8 @@ import UpdatePlayer from "../components/update/UpdatePlayer";
 import UpdateTeam from "../components/update/UpdateTeam";
 import UpdateOfficial from "../components/update/UpdateOfficial";
 import UpdateVenue from "../components/update/UpdateVenue";
-import UpdateFormat from "../components/update/UpdateFormat";
 import { useLogout } from "../hooks/auth/useLogout";
+import UpdateMatchType from "../components/update/UpdateMatchType";
 
 const Dashboard = () => {
   const logoutMutation = useLogout();
@@ -88,9 +88,9 @@ const Dashboard = () => {
     },
     { id: "updateVenue", title: "Update a Venue", component: <UpdateVenue /> },
     {
-      id: "updateFormat",
+      id: "updateMatchType",
       title: "Update a Format",
-      component: <UpdateFormat />,
+      component: <UpdateMatchType />,
     },
   ];
 
