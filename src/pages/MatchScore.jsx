@@ -20,10 +20,10 @@ const MatchScore = () => {
   const team2 = match.team_2;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 py-12 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="bg-white rounded-3xl shadow-2xl p-12 text-center mb-12">
-          <h1 className="text-6xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
+          <h1 className="text-6xl font-extrabold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
             {team1?.name} vs {team2?.name}
           </h1>
           <p className="text-2xl text-gray-700">
