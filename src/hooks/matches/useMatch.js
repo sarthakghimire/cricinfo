@@ -1,15 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "./../../api/axiosConfig";
+import axios from "../../api/axiosConfig";
 
-const getMatchById = async (id) => {
-  const { data } = await axios.get(`/matches/${id}`);
+const fetchMatch = async (matchId) => {
+  const { data } = await axios.get(`/matches/${matchId}`);
   return data;
 };
 
-export const useMatch = (id) => {
+export const useMatch = (matchId) => {
   return useQuery({
-    queryKey: ["match", id],
-    queryFn: () => getMatchById(id),
-    enabled: !!id,
+    queryKey: ["match", matchId],
+    queryFn: () => fetchMatch(matchId),
+    enabled: !!matchId,
+    select: (response) => response?.data,
+    staleTime: 1000 * 60 * 5,
   });
 };

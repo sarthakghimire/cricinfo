@@ -21,6 +21,9 @@ import UpdateStage from "../components/update/UpdateStage";
 import CreateTournament from "../components/create/CreateTournament";
 import DeleteTournament from "../components/delete/DeleteTournament";
 import UpdateTournament from "../components/update/UpdateTournament";
+import CreateMatch from "../components/create/CreateMatch";
+import DeleteMatch from "../components/delete/DeleteMatch";
+import UpdateMatch from "../components/update/UpdateMatch";
 
 const Dashboard = () => {
   const logoutMutation = useLogout();
@@ -50,6 +53,7 @@ const Dashboard = () => {
 
   const addSections = [
     { id: "format", title: "Add New Format", component: <CreateFormat /> },
+    { id: "match", title: "Add New Match", component: <CreateMatch /> },
     {
       id: "official",
       title: "Add New Official",
@@ -71,6 +75,11 @@ const Dashboard = () => {
       id: "deleteFormat",
       title: "Delete a Format",
       component: <DeleteFormat />,
+    },
+    {
+      id: "deleteMatch",
+      title: "Delete a Match",
+      component: <DeleteMatch />,
     },
     {
       id: "deleteOfficial",
@@ -97,6 +106,11 @@ const Dashboard = () => {
       id: "updateMatchType",
       title: "Update a Format",
       component: <UpdateMatchType />,
+    },
+    {
+      id: "updateMatch",
+      title: "Update a Match",
+      component: <UpdateMatch />,
     },
     {
       id: "updateOfficial",
