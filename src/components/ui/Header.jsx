@@ -28,7 +28,7 @@ const Header = () => {
   };
 
   return (
-    <header className="bg-linear-to-r from-blue-900 to-indigo-900 text-white shadow-lg h-16 relative z-50">
+    <header className="bg-gradient-to-r from-blue-950 to-black text-white shadow-lg h-16 relative z-50">
       <div className="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
         <Link to="/" className="text-3xl font-black">
           <span className="text-yellow-400">cricINFO</span>
@@ -111,7 +111,7 @@ const Header = () => {
 
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
-        <div className="md:hidden absolute top-16 left-0 w-full bg-indigo-900 border-t border-indigo-800 shadow-xl p-6 flex flex-col gap-6 animate-fade-in">
+        <div className="md:hidden absolute top-16 left-0 w-full bg-blue-950/95 border-t border-blue-900 backdrop-blur-md shadow-xl p-6 flex flex-col gap-6 animate-fade-in">
           {!user ? (
             <>
               <form onSubmit={handleLogin} className="flex flex-col gap-4">
