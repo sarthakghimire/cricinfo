@@ -43,26 +43,18 @@ const DeleteStage = () => {
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
-      <h2 className="text-3xl font-bold text-center text-red-700">
-        Delete Stage
-      </h2>
-
-      {/* buttons */}
+      {/* Select Tournament */}
       <div className="bg-white rounded-xl shadow-lg p-8">
-        <h3 className="text-xl font-semibold mb-6 text-gray-800">
-          Select Tournament
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-h-96 overflow-y-auto">
+        <h2 className="text-xl font-bold text-gray-800 mb-6">Select Tournament</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto pr-2">
           {tournaments.map((t) => (
             <label
               key={t._id}
-              className={`flex items-center space-x-3 p-4 rounded-lg border-2 cursor-pointer transition
-                ${
-                  selectedTournamentId === t._id
-                    ? "border-red-500 bg-red-50"
-                    : "border-gray-200 hover:bg-gray-50"
-                }`}
+              className={`flex items-center space-x-3 cursor-pointer p-4 rounded-lg border transition-all ${
+                selectedTournamentId === t._id
+                  ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500"
+                  : "border-gray-200 hover:bg-gray-50 hover:border-blue-400"
+              }`}
             >
               <input
                 type="radio"
@@ -70,11 +62,11 @@ const DeleteStage = () => {
                 value={t._id}
                 checked={selectedTournamentId === t._id}
                 onChange={(e) => setSelectedTournamentId(e.target.value)}
-                className="w-5 h-5 text-red-600"
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500"
               />
-              <div>
-                <p className="font-semibold">{t.name}</p>
-                <p className="text-sm text-gray-600">{t.season}</p>
+              <div className="min-w-0">
+                 <p className="font-medium text-gray-800 truncate">{t.name}</p>
+                 <p className="text-xs text-gray-500">{t.season}</p>
               </div>
             </label>
           ))}
@@ -83,52 +75,49 @@ const DeleteStage = () => {
 
       {/* Stages List */}
       {selectedTournamentId && (
-        <>
+        <div className="bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Delete Stage</h2>
+          
           {loadingStages ? (
-            <Loading />
+            <div className="text-center py-8"><Loading /></div>
           ) : isError ? (
             <p className="text-red-600 text-center">Error loading stages</p>
           ) : (
-            <div className="space-y-6">
-              {/* Search */}
-              <input
-                type="text"
-                placeholder="Search stage name..."
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-indigo-500 text-lg"
-              />
+            <>
+               <div className="mb-6">
+                <input
+                  type="text"
+                  placeholder="Search stage name..."
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
 
-              {/* Stages */}
-              <div className="space-y-3">
-                {filteredStages.length > 0 ? (
-                  filteredStages.map((stage) => (
+               <div className="space-y-4">
+                 {filteredStages.map((stage) => (
                     <div
                       key={stage._id}
-                      className="flex justify-between items-center bg-white p-4 rounded-lg shadow hover:shadow-md transition"
+                      className="flex justify-between items-center bg-gray-50 border border-gray-100 p-4 rounded-lg hover:shadow-md transition"
                     >
-                      <p className="font-semibold text-lg">{stage.name}</p>
-
+                      <p className="font-semibold text-lg text-gray-800">{stage.name}</p>
+                      
                       <button
                         onClick={() => handleDelete(stage._id, stage.name)}
                         disabled={mutation.isPending}
-                        className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg disabled:bg-red-400 transition font-medium"
+                        className="bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white font-bold px-5 py-2 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
                       >
-                        {mutation.isPending ? "Deleting..." : "Delete"}
+                         {mutation.isPending ? "Deleting..." : "Delete"}
                       </button>
                     </div>
-                  ))
-                ) : (
-                  <p className="text-center text-gray-500 py-8">
-                    {search
-                      ? "No stages match your search"
-                      : "No stages in this tournament"}
-                  </p>
-                )}
-              </div>
-            </div>
+                 ))}
+                 {filteredStages.length === 0 && (
+                    <p className="text-center text-gray-500 py-4">No stages found</p>
+                 )}
+               </div>
+            </>
           )}
-        </>
+        </div>
       )}
 
       {/* No tournament selected */}

@@ -32,10 +32,11 @@ const CreatePlayer = () => {
 
   return (
     <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <h3 className="text-lg font-bold">Create Player</h3>
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">Create Player</h2>
+
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Name
           </label>
           <input
@@ -43,25 +44,25 @@ const CreatePlayer = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Gender(M/F/O)
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Gender (M/F/O)
           </label>
           <input
             type="text"
             name="gender"
             value={formData.gender}
             onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Date of Birth
           </label>
           <input
@@ -69,12 +70,12 @@ const CreatePlayer = () => {
             name="date_of_birth"
             value={formData.date_of_birth}
             onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Image URL
           </label>
           <input
@@ -82,14 +83,14 @@ const CreatePlayer = () => {
             name="image"
             value={formData.image}
             onChange={handleChange}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             placeholder="https://example.com/image.jpg"
           />
         </div>
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
         >
           {mutation.isPending ? "Creating..." : "Create Player"}
         </button>

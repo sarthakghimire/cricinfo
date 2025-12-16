@@ -99,18 +99,21 @@ const UpdateMatchType = () => {
   if (loadingList) return <Loading />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-10">
-      <h2 className="text-4xl font-extrabold text-center bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
-        Update Match Format
-      </h2>
-
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      {/* Select Format Card */}
       <div className="bg-white rounded-xl shadow-lg p-8">
-        <h3 className="text-xl font-semibold mb-6">Select Format</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto">
+        <h2 className="text-xl font-bold text-gray-800 mb-6">
+          Select Format to Update
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto pr-2">
           {matchTypes.map((type) => (
             <label
               key={type._id}
-              className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-4 rounded-lg border transition"
+              className={`flex items-center space-x-3 cursor-pointer p-4 rounded-lg border transition-all ${
+                selectedId === type._id
+                  ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500"
+                  : "border-gray-200 hover:bg-gray-50 hover:border-blue-400"
+              }`}
             >
               <input
                 type="radio"
@@ -118,9 +121,9 @@ const UpdateMatchType = () => {
                 value={type._id}
                 checked={selectedId === type._id}
                 onChange={(e) => setSelectedId(e.target.value)}
-                className="w-5 h-5 text-blue-600"
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500"
               />
-              <span className="font-medium">
+              <span className="font-medium text-gray-800">
                 {type.name} ({type.total_overs || "?"} overs)
               </span>
             </label>
@@ -128,71 +131,93 @@ const UpdateMatchType = () => {
         </div>
       </div>
 
+      {/* Edit Form */}
       {selectedId && (
         <div className="bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Format Details</h2>
+
           {loadingOne ? (
-            <div className="text-center py-12">
-              <Loading />
-            </div>
+            <div className="text-center py-8"><Loading /></div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
-              <h3 className="text-2xl font-bold text-center">
-                Editing:{" "}
-                <span className="text-blue-600">
-                  {formData?.name || "Loading..."}
-                </span>
-              </h3>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Format Name
+                  </label>
+                  <input
+                    name="name"
+                    type="text"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Description
+                  </label>
+                  <input
+                    name="description"
+                    type="text"
+                    value={formData.description}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+              </div>
 
-              <input
-                name="name"
-                type="text"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="Name"
-                required
-                className="w-full p-3 border rounded-lg"
-              />
-              <input
-                name="description"
-                type="text"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Description (optional)"
-                className="w-full p-3 border rounded-lg"
-              />
-              <input
-                name="total_overs"
-                type="number"
-                value={formData.total_overs}
-                onChange={handleChange}
-                placeholder="Total Overs"
-                required
-                className="w-full p-3 border rounded-lg"
-              />
-              <input
-                name="balls_per_over"
-                type="number"
-                value={formData.balls_per_over}
-                onChange={handleChange}
-                placeholder="Balls per over (default 6)"
-                className="w-full p-3 border rounded-lg"
-              />
-              <input
-                name="power_play_overs"
-                type="number"
-                value={formData.power_play_overs}
-                onChange={handleChange}
-                placeholder="Powerplay overs (optional)"
-                className="w-full p-3 border rounded-lg"
-              />
+              <div className="grid md:grid-cols-3 gap-6">
+                 <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Total Overs
+                    </label>
+                    <input
+                      name="total_overs"
+                      type="number"
+                      value={formData.total_overs}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                      required
+                    />
+                 </div>
+                 <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Balls Per Over
+                    </label>
+                    <input
+                      name="balls_per_over"
+                      type="number"
+                      value={formData.balls_per_over}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    />
+                 </div>
+                 <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Powerplay Overs
+                    </label>
+                    <input
+                      name="power_play_overs"
+                      type="number"
+                      value={formData.power_play_overs}
+                      onChange={handleChange}
+                      className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                    />
+                 </div>
+              </div>
 
-              <button
-                type="submit"
-                disabled={mutation.isPending}
-                className="w-full bg-blue-600 text-white font-bold py-4 rounded-lg hover:bg-blue-700 disabled:opacity-60"
-              >
-                {mutation.isPending ? "Saving..." : "Update Format"}
-              </button>
+              <div className="text-center pt-4">
+                <button
+                  type="submit"
+                  disabled={mutation.isPending}
+                  className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-bold py-3 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  {mutation.isPending ? "Updating..." : "Update Format"}
+                </button>
+              </div>
             </form>
           )}
         </div>

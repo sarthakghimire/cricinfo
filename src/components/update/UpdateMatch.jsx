@@ -56,24 +56,19 @@ const UpdateMatch = () => {
   if (loadingMatches) return <Loading />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-10">
-      <h2 className="text-4xl font-extrabold text-center bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
-        Update Match
-      </h2>
-
-      <div className="bg-white rounded-2xl shadow-xl p-8">
-        <h3 className="text-xl font-semibold mb-6">Select Match</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      {/* Select Match Card */}
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-xl font-bold text-gray-800 mb-6">Select Match to Update</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-96 overflow-y-auto pr-2">
           {matches.map((m) => (
             <label
               key={m._id}
-              className={`p-5 rounded-xl border-2 cursor-pointer transition
-                ${
-                  selectedMatchId === m._id
-                    ? "border-blue-600 bg-blue-50"
-                    : "border-gray-200 hover:bg-gray-50"
-                }
-              `}
+              className={`p-5 rounded-lg border cursor-pointer transition-all ${
+                selectedMatchId === m._id
+                  ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500"
+                  : "border-gray-200 hover:bg-gray-50 hover:border-blue-400"
+              }`}
             >
               <input
                 type="radio"
@@ -81,10 +76,10 @@ const UpdateMatch = () => {
                 value={m._id}
                 checked={selectedMatchId === m._id}
                 onChange={(e) => setSelectedMatchId(e.target.value)}
-                className="w-5 h-5 text-blue-600"
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500"
               />
               <div className="mt-3">
-                <p className="font-bold">
+                <p className="font-bold text-gray-800">
                   {m.team_1.name} vs {m.team_2.name}
                 </p>
                 <p className="text-sm text-gray-600">
@@ -96,27 +91,21 @@ const UpdateMatch = () => {
         </div>
       </div>
 
+      {/* Update Form Card */}
       {selectedMatchId && selectedMatch && (
-        <div className="bg-white rounded-2xl shadow-xl p-10">
-          <h3 className="text-3xl font-bold text-center mb-10">
-            Editing Match {selectedMatch.match_number}
-          </h3>
-          <form
-            onSubmit={handleSubmit}
-            className="bg-white rounded-2xl shadow-xl p-10 space-y-8"
-          >
-            {/* Teams */}
+        <div className="bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Match Details</h2>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <label className="block text-lg font-semibold mb-3">
-                  Team 1
-                </label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Team 1</label>
                 <select
                   name="team_1"
                   value={formData.team_1}
                   onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   required
-                  className="w-full px-5 py-4 border-2 rounded-xl"
                 >
                   <option value="">-- Select Team 1 --</option>
                   {teams.map((t) => (
@@ -127,15 +116,13 @@ const UpdateMatch = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-lg font-semibold mb-3">
-                  Team 2
-                </label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Team 2</label>
                 <select
                   name="team_2"
                   value={formData.team_2}
                   onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   required
-                  className="w-full px-5 py-4 border-2 rounded-xl"
                 >
                   <option value="">-- Select Team 2 --</option>
                   {teams.map((t) => (
@@ -147,67 +134,15 @@ const UpdateMatch = () => {
               </div>
             </div>
 
-            {/* Tournament & Stage */}
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <label className="block text-lg font-semibold mb-3">
-                  Tournament
-                </label>
-                <select
-                  name="tournament"
-                  value={formData.tournament}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-5 py-4 border-2 rounded-xl"
-                >
-                  <option value="">-- Select Tournament --</option>
-                  {tournaments.map((t) => (
-                    <option key={t._id} value={t._id}>
-                      {t.name} ({t.season})
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-lg font-semibold mb-3">
-                  Stage
-                </label>
-                {sLoading ? (
-                  <p className="text-gray-500">Loading stages...</p>
-                ) : stages.length === 0 ? (
-                  <p className="text-red-500">No stages in this tournament</p>
-                ) : (
-                  <select
-                    name="stage"
-                    value={formData.stage}
-                    onChange={handleChange}
-                    required
-                    className="w-full px-5 py-4 border-2 rounded-xl"
-                  >
-                    <option value="">-- Select Stage --</option>
-                    {stages.map((s) => (
-                      <option key={s._id} value={s._id}>
-                        {s.name}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              </div>
-            </div>
-
-            {/* Venue & Date */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <div>
-                <label className="block text-lg font-semibold mb-3">
-                  Venue
-                </label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Venue</label>
                 <select
                   name="venue"
                   value={formData.venue}
                   onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   required
-                  className="w-full px-5 py-4 border-2 rounded-xl"
                 >
                   <option value="">-- Select Venue --</option>
                   {venues.map((v) => (
@@ -218,7 +153,7 @@ const UpdateMatch = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-lg font-semibold mb-3">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Match Date & Time
                 </label>
                 <input
@@ -226,37 +161,41 @@ const UpdateMatch = () => {
                   name="date"
                   value={formData.date}
                   onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   required
-                  className="w-full px-5 py-4 border-2 rounded-xl"
                 />
               </div>
             </div>
 
-            <input
-              name="match_number"
-              type="number"
-              placeholder="Match Number (e.g. 1)"
-              value={formData.match_number}
-              onChange={handleChange}
-              required
-              className="w-full px-5 py-4 border-2 rounded-xl"
-            />
+             <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Match Number</label>
+                <input
+                  name="match_number"
+                  type="number"
+                  value={formData.match_number}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+             </div>
 
-            <textarea
-              name="description"
-              placeholder="Match description (optional)"
-              value={formData.description}
-              onChange={handleChange}
-              rows={3}
-              className="w-full px-5 py-4 border-2 rounded-xl"
-            />
+             <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                />
+             </div>
 
             <button
               type="submit"
               disabled={mutation.isPending}
-              className="w-full bg-linear-to-r from-green-600 to-emerald-700 text-white font-bold py-6 rounded-2xl text-2xl hover:from-green-700 hover:to-emerald-800 transition shadow-lg"
+              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-bold py-3 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {mutation.isPending ? "Updating Match..." : "Update Match"}
+              {mutation.isPending ? "Updating..." : "Update Match"}
             </button>
           </form>
         </div>

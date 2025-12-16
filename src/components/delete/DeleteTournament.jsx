@@ -29,40 +29,42 @@ const DeleteTournament = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-8">
-      <h2 className="text-3xl font-bold text-center text-red-700">
-        Delete Tournament
-      </h2>
+    <div className="max-w-4xl mx-auto p-6 mt-8">
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Delete Tournament</h2>
 
-      <input
-        type="text"
-        placeholder="Search tournament..."
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        className="w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-red-500"
-      />
+        <div className="mb-6">
+          <input
+            type="text"
+            placeholder="Search tournament..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-      <div className="space-y-3">
-        {filtered.map((t) => (
-          <div
-            key={t._id}
-            className="flex justify-between items-center bg-white p-4 rounded-lg shadow hover:shadow-md transition"
-          >
-            <div>
-              <p className="font-semibold text-lg">{t.name}</p>
-              <p className="text-sm text-gray-600">
-                {t.season} • {t.total_overs} overs
-              </p>
-            </div>
-            <button
-              onClick={() => handleDelete(t._id, t.name)}
-              disabled={mutation.isPending}
-              className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg disabled:opacity-60"
+        <div className="space-y-4">
+          {filtered.map((t) => (
+            <div
+              key={t._id}
+              className="flex justify-between items-center bg-gray-50 border border-gray-100 p-4 rounded-lg hover:shadow-md transition"
             >
-              Delete
-            </button>
-          </div>
-        ))}
+              <div>
+                <p className="font-semibold text-lg text-gray-800">{t.name}</p>
+                <p className="text-sm text-gray-500">
+                  {t.season} • {t.total_overs || "?"} overs
+                </p>
+              </div>
+              <button
+                onClick={() => handleDelete(t._id, t.name)}
+                disabled={mutation.isPending}
+                className="bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white font-bold px-5 py-2 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {mutation.isPending ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

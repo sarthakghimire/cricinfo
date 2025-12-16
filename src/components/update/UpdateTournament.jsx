@@ -79,24 +79,19 @@ const UpdateTournament = () => {
   if (isLoading) return <Loading />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-10">
-      <h2 className="text-4xl font-extrabold text-center bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
-        Update Tournament
-      </h2>
-
-      {/* SELECT TOURNAMENT */}
-      <div className="bg-white rounded-2xl shadow-xl p-8">
-        <h3 className="text-xl font-semibold mb-6">Select Tournament</h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-96 overflow-y-auto">
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      {/* Select Tournament Card */}
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-xl font-bold text-gray-800 mb-6">Select Tournament to Update</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 max-h-96 overflow-y-auto pr-2">
           {tournaments.map((t) => (
             <label
               key={t._id}
-              className={`flex items-center space-x-4 p-6 rounded-xl border-2 cursor-pointer transition-all
-                ${
-                  selectedId === t._id
-                    ? "border-blue-600 bg-blue-50 shadow-lg"
-                    : "border-gray-200 hover:border-blue-400 hover:bg-gray-50"
-                }`}
+              className={`flex items-center space-x-4 p-5 rounded-xl border cursor-pointer transition-all ${
+                selectedId === t._id
+                  ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500"
+                  : "border-gray-200 hover:border-blue-400 hover:bg-gray-50"
+              }`}
             >
               <input
                 type="radio"
@@ -104,52 +99,38 @@ const UpdateTournament = () => {
                 value={t._id}
                 checked={selectedId === t._id}
                 onChange={(e) => setSelectedId(e.target.value)}
-                className="w-6 h-6 text-blue-600"
+                className="w-5 h-5 text-blue-600 focus:ring-blue-500"
               />
-              <div className="flex-1">
-                <div className="font-bold text-gray-800">{t.name}</div>
-                <div className="text-sm text-gray-600">{t.season}</div>
+              <div>
+                <p className="font-bold text-gray-800">{t.name}</p>
+                <p className="text-sm text-gray-600 italic">Season: {t.season}</p>
               </div>
             </label>
           ))}
         </div>
       </div>
 
-      {/* EDIT FORM */}
+      {/* Update Form Card */}
       {selectedId && selectedTournament && (
-        <div className="bg-white rounded-2xl shadow-xl p-10">
-          <h3 className="text-3xl font-bold text-center mb-10">
-            Editing:{" "}
-            <span className="text-blue-600">{selectedTournament.name}</span>
-          </h3>
-
-          <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl mx-auto">
-            {/* Logo & Banner Image URLs */}
+        <div className="bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Tournament Details</h2>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="grid md:grid-cols-2 gap-8">
               <div>
-                <label className="block text-lg font-semibold mb-3">
-                  Logo URL
-                </label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Logo URL</label>
                 <input
                   type="url"
                   name="logo"
                   value={formData.logo}
                   onChange={handleChange}
-                  placeholder="https://example.com/logo.png"
-                  className="w-full px-5 py-4 border-2 rounded-xl focus:border-blue-500"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="https://..."
                 />
-                {formData.logo && (
-                  <img
-                    src={formData.logo}
-                    alt="Logo preview"
-                    className="mt-4 h-40 mx-auto rounded-lg shadow-lg object-contain bg-white"
-                    onError={(e) => (e.target.style.display = "none")}
-                  />
-                )}
               </div>
 
               <div>
-                <label className="block text-lg font-semibold mb-3">
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
                   Banner Image URL
                 </label>
                 <input
@@ -157,95 +138,109 @@ const UpdateTournament = () => {
                   name="banner_image"
                   value={formData.banner_image}
                   onChange={handleChange}
-                  placeholder="https://example.com/banner.jpg"
-                  className="w-full px-5 py-4 border-2 rounded-xl focus:border-blue-500"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                  placeholder="https://..."
                 />
-                {formData.banner_image && (
-                  <img
-                    src={formData.banner_image}
-                    alt="Banner preview"
-                    className="mt-4 w-full h-64 object-cover rounded-xl shadow-lg"
-                    onError={(e) => (e.target.style.display = "none")}
-                  />
-                )}
               </div>
             </div>
 
-            {/* Basic Fields */}
-            <input
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Tournament Name"
-              required
-              className="w-full px-5 py-4 border-2 rounded-xl"
-            />
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              placeholder="Description (optional)"
-              rows={4}
-              className="w-full px-5 py-4 border-2 rounded-xl"
-            />
-            <input
-              name="season"
-              type="text"
-              value={formData.season}
-              onChange={handleChange}
-              placeholder="Season (e.g. 2025)"
-              required
-              className="w-full px-5 py-4 border-2 rounded-xl"
-            />
-
-            <div className="grid md:grid-cols-2 gap-6">
-              <input
-                name="total_overs"
-                type="number"
-                value={formData.total_overs}
+            {/* Basic Info */}
+            <div>
+               <label className="block text-sm font-semibold text-gray-700 mb-2">Tournament Name</label>
+               <input
+                name="name"
+                type="text"
+                value={formData.name}
                 onChange={handleChange}
-                placeholder="Total Overs"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                placeholder="Tournament Name"
                 required
-                className="w-full px-5 py-4 border-2 rounded-xl"
               />
-              <select
-                name="balls_per_over"
-                value={formData.balls_per_over}
-                onChange={handleChange}
-                className="w-full px-5 py-4 border-2 rounded-xl"
-              >
-                <option value="6">6 balls per over</option>
-                <option value="8">8 balls per over</option>
-              </select>
             </div>
 
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-              className="w-full px-5 py-4 border-2 rounded-xl"
-            >
-              <option value="M">Men's</option>
-              <option value="F">Women's</option>
-              <option value="Mixed">Mixed</option>
-            </select>
+            <div>
+               <label className="block text-sm font-semibold text-gray-700 mb-2">Description</label>
+               <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows={4}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                placeholder="Description"
+              />
+            </div>
+            
+            <div>
+               <label className="block text-sm font-semibold text-gray-700 mb-2">Season</label>
+               <input
+                name="season"
+                type="text"
+                value={formData.season}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                placeholder="Season (e.g. 2025)"
+                required
+              />
+            </div>
 
-            <input
-              name="locations"
-              type="text"
-              value={formData.locations}
-              onChange={handleChange}
-              placeholder="Locations (comma separated)"
-              className="w-full px-5 py-4 border-2 rounded-xl"
-            />
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Total Overs</label>
+                <input
+                  name="total_overs"
+                  type="number"
+                  value={formData.total_overs}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Balls Per Over</label>
+                <select
+                  name="balls_per_over"
+                  value={formData.balls_per_over}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="6">6 balls per over</option>
+                  <option value="8">8 balls per over</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Gender</label>
+                <select
+                  name="gender"
+                  value={formData.gender}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="M">Men's</option>
+                  <option value="F">Women's</option>
+                  <option value="Mixed">Mixed</option>
+                </select>
+            </div>
+
+            <div>
+               <label className="block text-sm font-semibold text-gray-700 mb-2">Locations</label>
+               <input
+                name="locations"
+                type="text"
+                value={formData.locations}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                placeholder="Locations (comma separated)"
+              />
+            </div>
 
             <button
               type="submit"
               disabled={mutation.isPending}
-              className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-6 rounded-2xl text-2xl hover:from-blue-700 hover:to-indigo-800 disabled:opacity-60 transition shadow-xl"
+              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-bold py-3 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {mutation.isPending ? "Saving Changes..." : "Update Tournament"}
+              {mutation.isPending ? "Updating..." : "Update Tournament"}
             </button>
           </form>
         </div>

@@ -80,8 +80,8 @@ const CreateTeam = () => {
   if (loadingPlayers) return <Loading />;
 
   return (
-    <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 mt-8">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">
         Create New Team
       </h2>
 
@@ -97,7 +97,7 @@ const CreateTeam = () => {
             value={formData.name}
             onChange={handleChange}
             placeholder="e.g. Sudurpaschim Royals"
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             required
           />
         </div>
@@ -114,7 +114,7 @@ const CreateTeam = () => {
               value={formData.slogan}
               onChange={handleChange}
               placeholder="Unite, Strike, Conquer"
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
@@ -127,7 +127,7 @@ const CreateTeam = () => {
               value={formData.logo}
               onChange={handleChange}
               placeholder="https://..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
@@ -142,7 +142,7 @@ const CreateTeam = () => {
             value={formData.banner_image}
             onChange={handleChange}
             placeholder="https://..."
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -156,7 +156,7 @@ const CreateTeam = () => {
             onChange={handleChange}
             rows={3}
             placeholder="About the team..."
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
 
@@ -169,7 +169,7 @@ const CreateTeam = () => {
             multiple
             value={formData.players}
             onChange={handlePlayersChange}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 h-48 text-sm"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 h-48 text-sm"
           >
             {availablePlayers.length === 0 ? (
               <option disabled>All players are already in teams</option>
@@ -192,7 +192,7 @@ const CreateTeam = () => {
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="w-full bg-linear-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
         >
           {mutation.isPending ? "Creating Team..." : "Create Team"}
         </button>

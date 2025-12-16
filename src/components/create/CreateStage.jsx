@@ -55,7 +55,7 @@ const CreateStage = () => {
   return (
     <div className="max-w-4xl mx-auto space-y-10 p-6">
       {/* Tournament Selection */}
-      <div className="bg-white p-8 rounded-xl shadow-lg">
+      <div className="bg-white p-8 rounded-xl shadow-lg mt-8">
         <h2 className="text-2xl font-bold text-gray-800 mb-6">
           Select Tournament
         </h2>
@@ -89,7 +89,7 @@ const CreateStage = () => {
 
       {/*Form */}
       {selectedTournamentId && (
-        <div className="max-w-md mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg mt-8">
           <h2 className="text-2xl font-bold text-gray-800 mb-2">
             Create Stage
           </h2>
@@ -100,9 +100,9 @@ const CreateStage = () => {
             </span>
           </p>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium mb-1">
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
                 Stage Name
               </label>
               <input
@@ -110,7 +110,7 @@ const CreateStage = () => {
                 value={stageName}
                 onChange={(e) => setStageName(e.target.value)}
                 placeholder="e.g. Group Stage, Quarter Final, Final"
-                className="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 required
               />
             </div>
@@ -118,7 +118,7 @@ const CreateStage = () => {
             <button
               type="submit"
               disabled={mutation.isPending}
-              className="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 disabled:opacity-60 transition"
+              className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
             >
               {mutation.isPending ? "Creating..." : "Create Stage"}
             </button>

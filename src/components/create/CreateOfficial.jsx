@@ -103,7 +103,7 @@ const CreateOfficial = () => {
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
         >
           {mutation.isPending ? "Creating..." : "Create Official"}
         </button>

@@ -76,22 +76,22 @@ const UpdateOfficial = () => {
   if (loadingOfficials) return <Loading />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-10">
-      <h2 className="text-4xl font-extrabold text-center bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
-        Update Official
-      </h2>
-
-      {/* Selection Grid */}
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      {/* Select Official Card */}
       <div className="bg-white rounded-xl shadow-lg p-8">
-        <h3 className="text-xl font-semibold mb-6 text-gray-800">
-          Select Official to Edit
-        </h3>
+        <h2 className="text-xl font-bold text-gray-800 mb-6">
+          Select Official to Update
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto pr-2">
           {officials.map((o) => (
             <label
               key={o._id}
-              className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-4 rounded-lg border transition hover:border-blue-300"
+              className={`flex items-center space-x-3 cursor-pointer p-4 rounded-lg border transition-all ${
+                selectedOfficialId === o._id
+                  ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500"
+                  : "border-gray-200 hover:bg-gray-50 hover:border-blue-400"
+              }`}
             >
               <input
                 type="radio"
@@ -99,12 +99,11 @@ const UpdateOfficial = () => {
                 value={o._id}
                 checked={selectedOfficialId === o._id}
                 onChange={(e) => setSelectedOfficialId(e.target.value)}
-                className="w-5 h-5 text-blue-600 focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500"
               />
-              <div className="flex-1">
-                <div className="font-medium text-gray-800 truncate">
-                  {o.name}
-                </div>
+              <div className="min-w-0">
+                <p className="font-medium text-gray-800 truncate">{o.name}</p>
+                <p className="text-xs text-gray-500 capitalize">{o.type}</p>
               </div>
             </label>
           ))}
@@ -112,73 +111,64 @@ const UpdateOfficial = () => {
       </div>
 
       {/* Edit Form */}
-      {selectedOfficialId && (
+      {selectedOfficialId && official && (
         <div className="bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Official Details</h2>
+            
           {loadingOne ? (
-            <div className="text-center py-12">
-              <Loading />
-            </div>
+            <div className="text-center py-8"><Loading /></div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <h3 className="text-2xl font-bold text-center text-gray-800">
-                Editing: <span className="text-blue-600">{official?.name}</span>
-              </h3>
-
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Full Name
-                  </label>
-                  <input
-                    name="name"
-                    type="text"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition text-lg"
-                    required
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Role
-                  </label>
-                  <select
-                    name="type"
-                    value={formData.type}
-                    onChange={handleChange}
-                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 text-lg"
-                  >
-                    <option value="umpire">Umpire</option>
-                    <option value="match_refree">Match Referee</option>
-                    <option value="third_umpire">Third Umpire</option>
-                    <option value="tv_umpire">TV Umpire</option>
-                    <option value="reserve_umpire">Reserve Umpire</option>
-                  </select>
-                </div>
-
-                <div className="md:col-span-2">
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
-                    Description
-                  </label>
-                  <textarea
-                    name="description"
-                    value={formData.description}
-                    onChange={handleChange}
-                    rows={3}
-                    placeholder="e.g. Elite panel umpire from ICC."
-                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition text-lg resize-none"
-                  />
-                </div>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Full Name
+                </label>
+                <input
+                  name="name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                  required
+                />
               </div>
 
-              <div className="text-center pt-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Role Type
+                </label>
+                <select
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="umpire">Umpire</option>
+                  <option value="referee">Referee</option>
+                  <option value="scorer">Scorer</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Description
+                </label>
+                <textarea
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={3}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <div className="text-center pt-4">
                 <button
                   type="submit"
                   disabled={mutation.isPending}
-                  className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-4 rounded-xl hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-60 disabled:cursor-not-allowed shadow-lg"
+                  className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-bold py-3 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {mutation.isPending ? "Saving Changes..." : "Update Official"}
+                  {mutation.isPending ? "Updating..." : "Update Official"}
                 </button>
               </div>
             </form>

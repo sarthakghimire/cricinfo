@@ -101,25 +101,22 @@ const CreateTournament = () => {
   if (loadingOfficials || loadingMT || loadingTT) return <Loading />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
+    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">
         Create New Tournament
       </h2>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white rounded-2xl shadow-xl p-10 space-y-8"
-      >
+      <form onSubmit={handleSubmit} className="space-y-6">
         <div className="grid md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-lg font-semibold mb-3">Logo URL</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Logo URL</label>
             <input
               type="url"
               name="logo"
               placeholder="https://example.com/logo.png"
               value={formData.logo}
               onChange={handleChange}
-              className="w-full px-5 py-4 border-2 rounded-xl focus:border-green-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
             {formData.logo && (
               <img
@@ -132,7 +129,7 @@ const CreateTournament = () => {
           </div>
 
           <div>
-            <label className="block text-lg font-semibold mb-3">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Banner Image URL
             </label>
             <input
@@ -141,7 +138,7 @@ const CreateTournament = () => {
               placeholder="https://example.com/banner.jpg"
               value={formData.banner_image}
               onChange={handleChange}
-              className="w-full px-5 py-4 border-2 rounded-xl focus:border-green-500"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
             {formData.banner_image && (
               <img
@@ -155,104 +152,151 @@ const CreateTournament = () => {
         </div>
 
         {/* Basic Info */}
-        <input
-          name="name"
-          type="text"
-          placeholder="Tournament Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-4 border-2 rounded-xl text-lg"
-        />
-        <textarea
-          name="description"
-          placeholder="Description (optional)"
-          value={formData.description}
-          onChange={handleChange}
-          rows={4}
-          className="w-full px-5 py-4 border-2 rounded-xl"
-        />
-        <input
-          name="season"
-          type="text"
-          placeholder="Season (e.g. 2025)"
-          value={formData.season}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-4 border-2 rounded-xl"
-        />
-
-        <div className="grid md:grid-cols-2 gap-6">
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Tournament Name
+          </label>
           <input
-            name="total_overs"
-            type="number"
-            placeholder="Total Overs"
-            value={formData.total_overs}
+            name="name"
+            type="text"
+            placeholder="Tournament Name"
+            value={formData.name}
             onChange={handleChange}
             required
-            className="w-full px-5 py-4 border-2 rounded-xl"
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           />
-          <select
-            name="balls_per_over"
-            value={formData.balls_per_over}
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+           Description
+          </label>
+          <textarea
+            name="description"
+            placeholder="Description (optional)"
+            value={formData.description}
             onChange={handleChange}
-            className="w-full px-5 py-4 border-2 rounded-xl"
+            rows={4}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Season
+          </label>
+          <input
+            name="season"
+            type="text"
+            placeholder="Season (e.g. 2025)"
+            value={formData.season}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+
+        <div className="grid md:grid-cols-2 gap-6">
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Total Overs
+            </label>
+            <input
+              name="total_overs"
+              type="number"
+              placeholder="Total Overs"
+              value={formData.total_overs}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Balls Per Over
+            </label>
+            <select
+              name="balls_per_over"
+              value={formData.balls_per_over}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="6">6 balls per over</option>
+              <option value="8">8 balls per over</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Gender
+          </label>
+          <select
+            name="gender"
+            value={formData.gender}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
           >
-            <option value="6">6 balls per over</option>
-            <option value="8">8 balls per over</option>
+            <option value="M">Men's</option>
+            <option value="F">Women's</option>
+            <option value="Mixed">Mixed</option>
           </select>
         </div>
 
-        <select
-          name="gender"
-          value={formData.gender}
-          onChange={handleChange}
-          className="w-full px-5 py-4 border-2 rounded-xl"
-        >
-          <option value="M">Men's</option>
-          <option value="F">Women's</option>
-          <option value="Mixed">Mixed</option>
-        </select>
-
-        <input
-          name="locations"
-          type="text"
-          placeholder="Locations (e.g. Kathmandu, Pokhara)"
-          value={formData.locations}
-          onChange={handleChange}
-          className="w-full px-5 py-4 border-2 rounded-xl"
-        />
+        <div>
+           <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Locations
+          </label>
+          <input
+            name="locations"
+            type="text"
+            placeholder="Locations (e.g. Kathmandu, Pokhara)"
+            value={formData.locations}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
         {/* Match & Tournament Type */}
         <div className="grid md:grid-cols-2 gap-6">
-          <select
-            name="match_type"
-            value={formData.match_type}
-            onChange={handleChange}
-            required
-            className="w-full px-5 py-4 border-2 rounded-xl"
-          >
-            <option value="">-- Select Match Type --</option>
-            {matchTypes.map((mt) => (
-              <option key={mt._id} value={mt._id}>
-                {mt.name}
-              </option>
-            ))}
-          </select>
-          <select
-            name="tournament_type"
-            value={formData.tournament_type}
-            onChange={handleChange}
-            required
-            className="w-full px-5 py-4 border-2 rounded-xl"
-          >
-            <option value="">-- Select Tournament Type --</option>
-            {tournamentTypes.map((tt) => (
-              <option key={tt._id} value={tt._id}>
-                {tt.name}
-              </option>
-            ))}
-          </select>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Match Type
+            </label>
+            <select
+              name="match_type"
+              value={formData.match_type}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">-- Select Match Type --</option>
+              {matchTypes.map((mt) => (
+                <option key={mt._id} value={mt._id}>
+                  {mt.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
+              Tournament Type
+            </label>
+            <select
+              name="tournament_type"
+              value={formData.tournament_type}
+              onChange={handleChange}
+              required
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">-- Select Tournament Type --</option>
+              {tournamentTypes.map((tt) => (
+                <option key={tt._id} value={tt._id}>
+                  {tt.name}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Officials */}
@@ -260,11 +304,11 @@ const CreateTournament = () => {
           <label className="block text-lg font-semibold mb-4">
             Assign Officials
           </label>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-64 overflow-y-auto p-4 bg-gray-50 rounded-xl">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-64 overflow-y-auto p-4 bg-gray-50 rounded-xl border">
             {officials.map((official) => (
               <label
                 key={official._id}
-                className="flex items-center space-x-3 p-4 bg-white rounded-lg cursor-pointer hover:shadow-md transition"
+                className="flex items-center space-x-3 p-4 bg-white rounded-lg cursor-pointer hover:shadow-md transition border"
               >
                 <input
                   type="checkbox"
@@ -287,7 +331,7 @@ const CreateTournament = () => {
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="w-full bg-linear-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-indigo-800 disabled:from-gray-400 disabled:to-gray-500 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
         >
           {mutation.isPending ? "Creating Tournament..." : "Create Tournament"}
         </button>

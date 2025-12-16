@@ -63,25 +63,22 @@ const CreateMatch = () => {
   if (tLoading || teamLoading || vLoading) return <Loading />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
-      <h2 className="text-4xl font-extrabold text-center text-green-700 mb-12">
+    <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-8 mt-8">
+      <h2 className="text-2xl font-bold text-gray-800 mb-6">
         Create New Match
       </h2>
 
-      <form
-        onSubmit={handleSubmit}
-        className="bg-white rounded-2xl shadow-xl p-10 space-y-8"
-      >
+      <form onSubmit={handleSubmit} className="space-y-6">
         {/* Teams */}
         <div className="grid md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-lg font-semibold mb-3">Team 1</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Team 1</label>
             <select
               name="team_1"
               value={formData.team_1}
               onChange={handleChange}
               required
-              className="w-full px-5 py-4 border-2 rounded-xl"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="">-- Select Team 1 --</option>
               {teams.map((t) => (
@@ -92,13 +89,13 @@ const CreateMatch = () => {
             </select>
           </div>
           <div>
-            <label className="block text-lg font-semibold mb-3">Team 2</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Team 2</label>
             <select
               name="team_2"
               value={formData.team_2}
               onChange={handleChange}
               required
-              className="w-full px-5 py-4 border-2 rounded-xl"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="">-- Select Team 2 --</option>
               {teams.map((t) => (
@@ -113,7 +110,7 @@ const CreateMatch = () => {
         {/* Tournament & Stage */}
         <div className="grid md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-lg font-semibold mb-3">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Tournament
             </label>
             <select
@@ -121,7 +118,7 @@ const CreateMatch = () => {
               value={formData.tournament}
               onChange={handleChange}
               required
-              className="w-full px-5 py-4 border-2 rounded-xl"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="">-- Select Tournament --</option>
               {tournaments.map((t) => (
@@ -133,7 +130,7 @@ const CreateMatch = () => {
           </div>
 
           <div>
-            <label className="block text-lg font-semibold mb-3">Stage</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Stage</label>
             {sLoading ? (
               <p className="text-gray-500">Loading stages...</p>
             ) : stages.length === 0 ? (
@@ -144,7 +141,7 @@ const CreateMatch = () => {
                 value={formData.stage}
                 onChange={handleChange}
                 required
-                className="w-full px-5 py-4 border-2 rounded-xl"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               >
                 <option value="">-- Select Stage --</option>
                 {stages.map((s) => (
@@ -160,13 +157,13 @@ const CreateMatch = () => {
         {/* Venue & Date */}
         <div className="grid md:grid-cols-2 gap-8">
           <div>
-            <label className="block text-lg font-semibold mb-3">Venue</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-2">Venue</label>
             <select
               name="venue"
               value={formData.venue}
               onChange={handleChange}
               required
-              className="w-full px-5 py-4 border-2 rounded-xl"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             >
               <option value="">-- Select Venue --</option>
               {venues.map((v) => (
@@ -177,7 +174,7 @@ const CreateMatch = () => {
             </select>
           </div>
           <div>
-            <label className="block text-lg font-semibold mb-3">
+            <label className="block text-sm font-semibold text-gray-700 mb-2">
               Match Date & Time
             </label>
             <input
@@ -186,34 +183,44 @@ const CreateMatch = () => {
               value={formData.date}
               onChange={handleChange}
               required
-              className="w-full px-5 py-4 border-2 rounded-xl"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
             />
           </div>
         </div>
 
-        <input
-          name="match_number"
-          type="number"
-          placeholder="Match Number (e.g. 1)"
-          value={formData.match_number}
-          onChange={handleChange}
-          required
-          className="w-full px-5 py-4 border-2 rounded-xl"
-        />
+        <div>
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Match Number
+          </label>
+          <input
+            name="match_number"
+            type="number"
+            placeholder="Match Number (e.g. 1)"
+            value={formData.match_number}
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-        <textarea
-          name="description"
-          placeholder="Match description (optional)"
-          value={formData.description}
-          onChange={handleChange}
-          rows={3}
-          className="w-full px-5 py-4 border-2 rounded-xl"
-        />
+        <div>
+           <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Description
+          </label>
+          <textarea
+            name="description"
+            placeholder="Match description (optional)"
+            value={formData.description}
+            onChange={handleChange}
+            rows={3}
+            className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
         <button
           type="submit"
           disabled={mutation.isPending}
-          className="w-full bg-linear-to-r from-green-600 to-emerald-700 text-white font-bold py-6 rounded-2xl text-2xl hover:from-green-700 hover:to-emerald-800 transition shadow-lg"
+          className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition transform hover:scale-105 disabled:scale-100"
         >
           {mutation.isPending ? "Creating Match..." : "Create Match"}
         </button>

@@ -29,29 +29,33 @@ const DeleteTeam = () => {
     return <p className="text-gray-500">No teams found</p>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6 space-y-4">
-      <h2 className="text-2xl font-bold mb-6">Delete Teams</h2>
-      {teams.map((team) => (
-        <div
-          key={team._id}
-          className="flex justify-between items-center bg-white p-4 rounded-lg shadow hover:shadow-md transition"
-        >
-          <div>
-            <p className="font-semibold text-lg">{team.name}</p>
-            {team.address && (
-              <p className="text-gray-600 text-sm">{team.address}</p>
-            )}
-          </div>
+    <div className="max-w-4xl mx-auto p-6 mt-8">
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">Delete Team</h2>
+        <div className="space-y-4">
+          {teams.map((team) => (
+            <div
+              key={team._id}
+              className="flex justify-between items-center bg-gray-50 border border-gray-100 p-4 rounded-lg hover:shadow-md transition"
+            >
+              <div>
+                <p className="font-semibold text-lg text-gray-800">{team.name}</p>
+                {team.address && (
+                  <p className="text-gray-500 text-sm">{team.address}</p>
+                )}
+              </div>
 
-          <button
-            onClick={() => handleDelete(team._id)}
-            disabled={mutation.isPending}
-            className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg disabled:bg-red-400 transition"
-          >
-            {mutation.isPending ? "Deleting..." : "Delete"}
-          </button>
+              <button
+                onClick={() => handleDelete(team._id)}
+                disabled={mutation.isPending}
+                className="bg-red-600 hover:bg-red-700 disabled:bg-red-400 text-white font-bold px-5 py-2 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
+              >
+                {mutation.isPending ? "Deleting..." : "Delete"}
+              </button>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 };

@@ -74,22 +74,22 @@ const UpdatePlayer = () => {
   if (loadingPlayers) return <Loading />;
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-10">
-      <h2 className="text-4xl font-extrabold text-center bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
-        Update Player
-      </h2>
-
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
       {/* Player Selection */}
       <div className="bg-white rounded-xl shadow-lg p-8">
-        <h3 className="text-xl font-semibold mb-6 text-gray-800">
-          Select Player to Edit
-        </h3>
+        <h2 className="text-xl font-bold text-gray-800 mb-6">
+          Select Player to Update
+        </h2>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto pr-2">
           {players.map((p) => (
             <label
               key={p._id}
-              className="flex items-center space-x-3 cursor-pointer hover:bg-gray-50 p-3 rounded-lg transition"
+              className={`flex items-center space-x-3 cursor-pointer p-3 rounded-lg border transition-all ${
+                selectedPlayerId === p._id
+                  ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500"
+                  : "border-gray-200 hover:bg-gray-50 hover:border-blue-400"
+              }`}
             >
               <input
                 type="radio"
@@ -97,7 +97,7 @@ const UpdatePlayer = () => {
                 value={p._id}
                 checked={selectedPlayerId === p._id}
                 onChange={(e) => setSelectedPlayerId(e.target.value)}
-                className="w-5 h-5 text-blue-600 focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500"
               />
               <span className="text-gray-800 font-medium truncate">
                 {p.name}
@@ -115,14 +115,14 @@ const UpdatePlayer = () => {
               <Loading />
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <h3 className="text-2xl font-bold text-center text-gray-800">
-                Editing: <span className="text-blue-600">{player?.name}</span>
-              </h3>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6">
+                Update Player Details
+              </h2>
 
               <div className="grid md:grid-cols-2 gap-8">
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Full Name
                   </label>
                   <input
@@ -130,13 +130,13 @@ const UpdatePlayer = () => {
                     type="text"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 transition text-lg"
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                     required
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Image URL
                   </label>
                   <input
@@ -145,12 +145,12 @@ const UpdatePlayer = () => {
                     value={formData.image}
                     onChange={handleChange}
                     placeholder="https://example.com/player.jpg"
-                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 text-lg"
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Date of Birth
                   </label>
                   <input
@@ -158,19 +158,19 @@ const UpdatePlayer = () => {
                     type="date"
                     value={formData.date_of_birth}
                     onChange={handleChange}
-                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 text-lg"
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-bold text-gray-700 mb-2">
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
                     Gender
                   </label>
                   <select
                     name="gender"
                     value={formData.gender}
                     onChange={handleChange}
-                    className="w-full px-5 py-3 border-2 border-gray-300 rounded-xl focus:border-blue-500 text-lg"
+                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="M">Male</option>
                     <option value="F">Female</option>
@@ -183,9 +183,9 @@ const UpdatePlayer = () => {
                 <button
                   type="submit"
                   disabled={mutation.isPending}
-                  className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
+                  className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-bold py-3 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                  {mutation.isPending ? "Saving Changes..." : "Update Player"}
+                  {mutation.isPending ? "Updating..." : "Update Player"}
                 </button>
               </div>
             </form>

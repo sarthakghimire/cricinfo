@@ -114,21 +114,19 @@ const UpdateTeam = () => {
   if (loadingTeams) return <Loading />;
 
   return (
-    <div className="max-w-7xl mx-auto p-6 space-y-12">
-      <h2 className="text-4xl font-extrabold text-center bg-linear-to-r from-blue-600 to-indigo-700 bg-clip-text text-transparent">
-        Update Team
-      </h2>
-
-      {/* Team Selection Grid */}
-      <div className="bg-white rounded-2xl shadow-xl p-8">
-        <h3 className="text-2xl font-bold mb-6 text-gray-800">
-          Select Team to Edit
-        </h3>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      {/* Select Team Card */}
+      <div className="bg-white rounded-xl shadow-lg p-8">
+        <h2 className="text-xl font-bold text-gray-800 mb-6">Select Team to Update</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-h-96 overflow-y-auto pr-2">
           {teams.map((t) => (
             <label
               key={t._id}
-              className="flex items-center space-x-4 cursor-pointer hover:bg-gray-50 p-4 rounded-xl transition border-2 border-gray-200 hover:border-blue-400"
+              className={`flex items-center space-x-3 p-4 rounded-lg border cursor-pointer transition-all ${
+                selectedTeamId === t._id
+                  ? "border-blue-500 bg-blue-50 ring-1 ring-blue-500"
+                  : "border-gray-200 hover:bg-gray-50"
+              }`}
             >
               <input
                 type="radio"
@@ -136,135 +134,128 @@ const UpdateTeam = () => {
                 value={t._id}
                 checked={selectedTeamId === t._id}
                 onChange={(e) => setSelectedTeamId(e.target.value)}
-                className="w-5 h-5 text-blue-600 focus:ring-blue-500"
+                className="w-4 h-4 text-blue-600 focus:ring-blue-500"
               />
-              <div>
-                <div className="font-bold text-lg text-gray-800">{t.name}</div>
-                {t.slogan && (
-                  <div className="text-sm text-gray-600 italic">{t.slogan}</div>
-                )}
-                <div className="text-xs text-gray-500 mt-1">
-                  {t.players?.length || 0} players
-                </div>
-              </div>
+              <span className="font-medium text-gray-700">{t.name}</span>
             </label>
           ))}
         </div>
       </div>
 
-      {/* Edit Form */}
-      {selectedTeamId && (
-        <div className="bg-white rounded-2xl shadow-xl p-10">
-          {loadingTeam ? (
-            <div className="text-center py-16">
-              <Loading />
+      {/* Update Form Card */}
+      {selectedTeamId && team && (
+        <div className="bg-white rounded-xl shadow-lg p-8">
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Team Details</h2>
+          
+          <form onSubmit={handleSubmit} className="space-y-6">
+            {/* Team Name */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Team Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                required
+              />
             </div>
-          ) : (
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <h3 className="text-3xl font-bold text-center text-gray-800">
-                Editing: <span className="text-blue-600">{team?.name}</span>
-              </h3>
 
-              <div className="grid md:grid-cols-2 gap-8">
+            {/* Slogan & Description */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Slogan
+                </label>
                 <input
-                  name="name"
                   type="text"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-5 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="Team Name"
-                  required
-                />
-                <input
                   name="slogan"
-                  type="text"
                   value={formData.slogan}
                   onChange={handleChange}
-                  className="w-full px-5 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="Slogan"
-                />
-                <input
-                  name="logo"
-                  type="url"
-                  value={formData.logo}
-                  onChange={handleChange}
-                  className="w-full px-5 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="Logo URL"
-                />
-                <input
-                  name="banner_image"
-                  type="url"
-                  value={formData.banner_image}
-                  onChange={handleChange}
-                  className="w-full px-5 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                  placeholder="Banner URL"
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                 />
               </div>
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Logo URL
+                </label>
+                <input
+                  type="url"
+                  name="logo"
+                  value={formData.logo}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
 
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Banner Image URL
+              </label>
+              <input
+                type="url"
+                name="banner_image"
+                value={formData.banner_image}
+                onChange={handleChange}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Description
+              </label>
               <textarea
                 name="description"
                 value={formData.description}
                 onChange={handleChange}
-                rows={4}
-                className="w-full px-5 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
-                placeholder="Team description..."
+                rows={3}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               />
+            </div>
 
-              {/* Players Section */}
-              <div className="grid md:grid-cols-2 gap-8">
-                <div>
-                  <p className="font-semibold mb-3">
-                    Current Players ({currentTeamPlayers.length})
-                  </p>
-                  <div className="space-y-2 max-h-64 overflow-y-auto bg-gray-50 p-4 rounded-lg">
-                    {currentTeamPlayers.map((p) => (
-                      <div
-                        key={p._id}
-                        onClick={() =>
-                          setFormData((prev) => ({
-                            ...prev,
-                            players: prev.players.filter((id) => id !== p._id),
-                          }))
-                        }
-                        className="bg-white px-4 py-2 rounded cursor-pointer hover:bg-red-50 flex justify-between"
-                      >
-                        <span>{p.name}</span>
-                        <span className="text-red-500 text-xs">Remove</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+            {/* Players Selection */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Manage Players (Hold Ctrl/Cmd to select multiple)
+              </label>
+              <select
+                multiple
+                value={formData.players}
+                onChange={handlePlayersChange}
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 h-64 text-sm"
+              >
+                <optgroup label="Current Team Players">
+                  {currentTeamPlayers.map((p) => (
+                    <option key={p._id} value={p._id}>
+                      {p.name} (Current)
+                    </option>
+                  ))}
+                </optgroup>
+                <optgroup label="Available Players">
+                  {availablePlayers.map((p) => (
+                    <option key={p._id} value={p._id}>
+                      {p.name} ({p.gender === "M" ? "Male" : "Female"})
+                    </option>
+                  ))}
+                </optgroup>
+              </select>
+              <p className="text-xs text-gray-500 mt-2">
+                Selected: <strong>{formData.players.length}</strong> players.
+              </p>
+            </div>
 
-                <div>
-                  <p className="font-semibold mb-3">
-                    Add Players ({availablePlayers.length} available)
-                  </p>
-                  <select
-                    multiple
-                    value={formData.players}
-                    onChange={handlePlayersChange}
-                    className="w-full h-64 px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 text-sm"
-                  >
-                    {availablePlayers.map((p) => (
-                      <option key={p._id} value={p._id}>
-                        {p.name} ({p.gender === "M" ? "Male" : "Female"})
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              </div>
-
-              <div className="text-center pt-6">
-                <button
-                  type="submit"
-                  disabled={mutation.isPending}
-                  className="w-full bg-linear-to-r from-blue-600 to-indigo-700 text-white font-bold py-3 rounded-lg hover:from-blue-700 hover:to-indigo-800 transition disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  {mutation.isPending ? "Updating..." : "Update Team"}
-                </button>
-              </div>
-            </form>
-          )}
+            <button
+              type="submit"
+              disabled={mutation.isPending}
+              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-400 text-white font-bold py-3 rounded-lg transition disabled:opacity-60 disabled:cursor-not-allowed"
+            >
+              {mutation.isPending ? "Updating..." : "Update Team"}
+            </button>
+          </form>
         </div>
       )}
     </div>
