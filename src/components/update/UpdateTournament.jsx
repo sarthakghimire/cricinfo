@@ -51,20 +51,39 @@ const UpdateTournament = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const updates = {
-      name: formData.name.trim(),
-      description: formData.description.trim() || undefined,
-      season: formData.season.trim(),
-      total_overs: Number(formData.total_overs),
-      balls_per_over: Number(formData.balls_per_over),
-      gender: formData.gender,
-      locations: formData.locations
-        .split(",")
-        .map((l) => l.trim())
-        .filter(Boolean),
-      logo: formData.logo.trim() || undefined,
-      banner_image: formData.banner_image.trim() || undefined,
-    };
+    const updates = {};
+
+    // Only include changed fields
+    if (formData.name.trim() !== selectedTournament.name)
+      updates.name = formData.name.trim();
+    if (formData.description.trim() !== (selectedTournament.description || ""))
+      updates.description = formData.description.trim() || undefined;
+    if (formData.season.trim() !== selectedTournament.season)
+      updates.season = formData.season.trim();
+    if (Number(formData.total_overs) !== selectedTournament.total_overs)
+      updates.total_overs = Number(formData.total_overs);
+    if (Number(formData.balls_per_over) !== selectedTournament.balls_per_over)
+      updates.balls_per_over = Number(formData.balls_per_over);
+    if (formData.gender !== selectedTournament.gender)
+      updates.gender = formData.gender;
+    
+    const newLocations = formData.locations
+      .split(",")
+      .map((l) => l.trim())
+      .filter(Boolean);
+    const oldLocations = selectedTournament.locations || [];
+    if (JSON.stringify(newLocations.sort()) !== JSON.stringify(oldLocations.sort()))
+      updates.locations = newLocations;
+    
+    if (formData.logo.trim() !== (selectedTournament.logo || ""))
+      updates.logo = formData.logo.trim() || undefined;
+    if (formData.banner_image.trim() !== (selectedTournament.banner_image || ""))
+      updates.banner_image = formData.banner_image.trim() || undefined;
+
+    if (Object.keys(updates).length === 0) {
+      toast("No changes detected", { icon: "ℹ️" });
+      return;
+    }
 
     mutation.mutate(
       { id: selectedId, data: updates },

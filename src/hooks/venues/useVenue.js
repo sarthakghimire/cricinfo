@@ -3,7 +3,7 @@ import axios from "./../../api/axiosConfig";
 
 const getVenueById = async (id) => {
   const { data } = await axios.get(`/venues/${id}`);
-  return data;
+  return data.data;
 };
 
 export const useVenue = (id) => {

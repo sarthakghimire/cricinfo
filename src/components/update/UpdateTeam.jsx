@@ -15,7 +15,7 @@ const UpdateTeam = () => {
   const teams = teamsRes?.data || [];
 
   // Fetch selected team details
-  const { data: team, isLoading: loadingTeam } = useTeam();
+  const { data: team, isLoading: loadingTeam } = useTeam(selectedTeamId);
 
   // Fetch all players
   const { data: playersRes } = usePlayers(1, 100);
@@ -62,7 +62,7 @@ const UpdateTeam = () => {
     }
   }, [team]);
 
-  const mutation = useUpdateTeam(selectedTeamId);
+  const mutation = useUpdateTeam();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -99,7 +99,7 @@ const UpdateTeam = () => {
     }
 
     mutation.mutate(
-      { id: selectedTeamId, data: updates },
+      { teamId: selectedTeamId, updates: updates },
       {
         onSuccess: () => {
           toast.success("Team Details Updated.");

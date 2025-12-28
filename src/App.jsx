@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { Toaster } from "react-hot-toast";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
@@ -21,7 +20,6 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       <Header />
-      <Toaster position="top-right" />
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/matches" element={<Matches />} />

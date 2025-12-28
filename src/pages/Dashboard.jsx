@@ -5,16 +5,19 @@ import CreatePlayer from "../components/create/CreatePlayer";
 import CreateOfficial from "../components/create/CreateOfficial";
 import CreateVenue from "../components/create/CreateVenue";
 import CreateFormat from "../components/create/CreateFormat";
+import CreateTournamentType from "../components/create/CreateTournamentType";
 import DeleteVenue from "../components/delete/DeleteVenue";
 import DeletePlayers from "../components/delete/DeletePlayers";
 import DeleteTeam from "../components/delete/DeleteTeam";
 import DeleteOfficial from "../components/delete/DeleteOfficial";
 import DeleteFormat from "../components/delete/DeleteFormat";
+import DeleteTournamentType from "../components/delete/DeleteTournamentType";
 import UpdatePlayer from "../components/update/UpdatePlayer";
 import UpdateTeam from "../components/update/UpdateTeam";
 import UpdateOfficial from "../components/update/UpdateOfficial";
 import UpdateVenue from "../components/update/UpdateVenue";
 import UpdateMatchType from "../components/update/UpdateMatchType";
+import UpdateTournamentType from "../components/update/UpdateTournamentType";
 import CreateStage from "../components/create/CreateStage";
 import DeleteStage from "../components/delete/DeleteStage";
 import UpdateStage from "../components/update/UpdateStage";
@@ -67,6 +70,11 @@ const Dashboard = () => {
       title: "Add New Tournament",
       component: <CreateTournament />,
     },
+    {
+      id: "tournamentType",
+      title: "Add New Tournament Type",
+      component: <CreateTournamentType />,
+    },
     { id: "venue", title: "Add New Venue", component: <CreateVenue /> },
   ];
 
@@ -98,6 +106,11 @@ const Dashboard = () => {
       title: "Delete a Tournament",
       component: <DeleteTournament />,
     },
+    {
+      id: "deleteTournamentType",
+      title: "Delete a Tournament Type",
+      component: <DeleteTournamentType />,
+    },
     { id: "deleteVenue", title: "Delete a Venue", component: <DeleteVenue /> },
   ];
 
@@ -128,6 +141,11 @@ const Dashboard = () => {
       id: "updateTournament",
       title: "Update a Tournament",
       component: <UpdateTournament />,
+    },
+    {
+      id: "updateTournamentType",
+      title: "Update a Tournament Type",
+      component: <UpdateTournamentType />,
     },
     { id: "updateVenue", title: "Update a Venue", component: <UpdateVenue /> },
   ];

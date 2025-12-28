@@ -135,7 +135,7 @@ const UpdateOfficial = () => {
 
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Role Type
+                  Official Type
                 </label>
                 <select
                   name="type"
@@ -144,8 +144,9 @@ const UpdateOfficial = () => {
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="umpire">Umpire</option>
-                  <option value="referee">Referee</option>
-                  <option value="scorer">Scorer</option>
+                  <option value="match_refree">Match Referee</option>
+                  <option value="tv_umpire">TV Umpire</option>
+                  <option value="reserve_umpire">Reserve Umpire</option>
                 </select>
               </div>
 

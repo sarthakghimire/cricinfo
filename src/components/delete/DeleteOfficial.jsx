@@ -49,12 +49,12 @@ const DeleteOfficial = () => {
                 )}
                 <div>
                   <p className="font-semibold text-lg text-gray-800">{official.name}</p>
-                  {official.role && (
-                    <p className="text-gray-500 text-sm capitalize">{official.role}</p>
+                  {official.type && (
+                    <p className="text-gray-500 text-sm capitalize">{official.type.replace(/_/g, ' ')}</p>
                   )}
-                  {official.license && (
+                  {official.description && (
                     <p className="text-gray-400 text-xs">
-                      License: {official.license}
+                      {official.description}
                     </p>
                   )}
                 </div>

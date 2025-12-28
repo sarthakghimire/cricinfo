@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
           <div className="text-center md:text-left">
             <h2 className="text-3xl font-black tracking-wider">
-              <span className="text-yellow-400">cricInfo</span>
+              <span className="text-yellow-400">WicketEsque</span>
               <p> {currentYear}</p>
             </h2>
             <div className="flex justify-center md:justify-start gap-4 mt-6">

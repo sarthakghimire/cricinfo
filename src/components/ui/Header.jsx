@@ -31,7 +31,7 @@ const Header = () => {
     <header className="bg-gradient-to-r from-blue-950 to-black text-white shadow-lg h-16 relative z-50">
       <div className="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
         <Link to="/" className="text-3xl font-black">
-          <span className="text-yellow-400">cricINFO</span>
+          <span className="text-yellow-400">WicketEsque</span>
         </Link>
 
         {/* Desktop View */}
