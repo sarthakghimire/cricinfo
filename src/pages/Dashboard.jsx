@@ -27,6 +27,7 @@ import UpdateTournament from "../components/update/UpdateTournament";
 import CreateMatch from "../components/create/CreateMatch";
 import DeleteMatch from "../components/delete/DeleteMatch";
 import UpdateMatch from "../components/update/UpdateMatch";
+import ManageMatch from "../components/matchManagement/ManageMatch";
 
 const Dashboard = () => {
   const logoutMutation = useLogout();
@@ -112,6 +113,10 @@ const Dashboard = () => {
       component: <DeleteTournamentType />,
     },
     { id: "deleteVenue", title: "Delete a Venue", component: <DeleteVenue /> },
+  ];
+
+  const matchManagementSections = [
+    { id: "manageMatch", title: "Manage Match", component: <ManageMatch /> },
   ];
 
   const updateSections = [
@@ -280,6 +285,55 @@ const Dashboard = () => {
             >
               <div className="p-4 space-y-3">
                 {deleteSections.map((section) => (
+                  <div
+                    key={section.id}
+                    className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"
+                  >
+                    <button
+                      onClick={() => toggleSub(section.id)}
+                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-100 transition font-medium"
+                    >
+                      <span className="text-gray-800">{section.title}</span>
+                      <span className="text-xl text-gray-600">
+                        {openSub === section.id ? "−" : "+"}
+                      </span>
+                    </button>
+                    <div
+                      className={`transition-all duration-400 overflow-hidden ${
+                        openSub === section.id
+                          ? "h-auto opacity-100"
+                          : "h-0 opacity-0"
+                      }`}
+                    >
+                      <div className="p-6 bg-white border-t border-gray-200">
+                        {section.component}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* MATCH MANAGEMENT SECTION */}
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            <button
+              onClick={() => toggleMain("matchManagement")}
+              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-purple-400 to-indigo-500 text-white hover:from-purple-700 hover:to-indigo-800 transition cursor-pointer"
+            >
+              <h2 className="text-2xl font-bold">Match Management</h2>
+              <span className="text-3xl">
+                {openMain === "matchManagement" ? "−" : "+"}
+              </span>
+            </button>
+
+            <div
+              className={`transition-all duration-500 overflow-hidden ${
+                openMain === "matchManagement" ? "h-auto opacity-100" : "h-0 opacity-0"
+              }`}
+            >
+              <div className="p-4 space-y-3">
+                {matchManagementSections.map((section) => (
                   <div
                     key={section.id}
                     className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"

@@ -1,11 +1,67 @@
 import { useParams } from "react-router-dom";
+import { useState, useMemo } from "react";
 import Loading from "../components/animation/Loading";
 import { useMatch } from "../hooks/matches/useMatch";
+import { useInningsByMatch } from "../hooks/innings/useInningsByMatch";
+import { useDeliveriesByInning } from "../hooks/deliveries/useDeliveriesByInning";
+import { usePlayers } from "../hooks/players/usePlayers";
 
 const MatchScore = () => {
-  const { matchId } = useParams();
+  const { id } = useParams();
+  const [isLive, setIsLive] = useState(true); // Always show as live when auto-polling
 
-  const { data: match, isLoading, isError } = useMatch(matchId);
+  const { data: match, isLoading, isError } = useMatch(id, {
+    refetchInterval: 3000, // Auto-refresh every 3 seconds
+  });
+  const { data: inningsData, isLoading: loadingInnings } = useInningsByMatch(id, {
+    refetchInterval: 3000, // Auto-refresh every 3 seconds
+  });
+  
+  // Fetch all players to map IDs to names
+  const { data: playersData } = usePlayers(1, 500);
+  
+  // Create a player lookup map
+  const playerMap = useMemo(() => {
+    if (!playersData?.data) return {};
+    return playersData.data.reduce((map, player) => {
+      map[player._id] = player;
+      return map;
+    }, {});
+  }, [playersData]);
+
+  const innings = inningsData?.data || [];
+
+  // Calculate scores from deliveries for each innings
+  const calculateScoreFromDeliveries = (deliveries) => {
+    if (!deliveries || deliveries.length === 0) {
+      return { runs: 0, wickets: 0, overs: "0.0" };
+    }
+
+    const totalRuns = deliveries.reduce((sum, d) => {
+      return sum + (d.runs?.total || d.runs?.batter || 0) + (d.runs?.extras || 0);
+    }, 0);
+
+    const wickets = deliveries.filter(d => d.wicket).length;
+
+    // Calculate overs from ball count
+    const totalBalls = deliveries.length;
+    const completedOvers = Math.floor(totalBalls / 6);
+    const remainingBalls = totalBalls % 6;
+    const overs = remainingBalls > 0 ? `${completedOvers}.${remainingBalls}` : `${completedOvers}.0`;
+
+    return { runs: totalRuns, wickets, overs };
+  };
+  
+  // Helper to get player name from ID or object
+  const getPlayerName = (player) => {
+    if (!player) return "N/A";
+    if (typeof player === 'string') {
+      // It's an ID, look it up in playerMap
+      return playerMap[player]?.name || "N/A";
+    }
+    // It's already an object with name
+    return player.name || "N/A";
+  };
 
   if (isLoading) return <Loading />;
   if (isError || !match) {
@@ -20,10 +76,18 @@ const MatchScore = () => {
   const team2 = match.team_2;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-blue-50 to-indigo-100 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="bg-white rounded-3xl shadow-2xl p-12 text-center mb-12">
-          <h1 className="text-6xl font-extrabold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
+        <div className="bg-white rounded-3xl shadow-2xl p-12 text-center mb-12 relative">
+          {/* LIVE Indicator */}
+          {isLive && (
+            <div className="absolute top-6 right-6 flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full animate-pulse">
+              <span className="w-3 h-3 bg-white rounded-full animate-ping"></span>
+              <span className="font-bold">LIVE</span>
+            </div>
+          )}
+          
+          <h1 className="text-6xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
             {team1?.name} vs {team2?.name}
           </h1>
           <p className="text-2xl text-gray-700">
@@ -33,6 +97,24 @@ const MatchScore = () => {
             {match.venue?.name} • {new Date(match.date).toLocaleDateString()}
           </p>
         </div>
+
+        {/* Match Outcome */}
+        {match.match_outcome && (
+          <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-xl p-8 mb-12 text-center">
+            <h2 className="text-3xl font-bold text-white">{match.match_outcome}</h2>
+          </div>
+        )}
+
+        {/* Innings Scorecards */}
+        {loadingInnings ? (
+          <Loading />
+        ) : innings.length > 0 ? (
+          <div className="space-y-6 mb-12">
+            {innings.map((inning) => (
+              <InningsScorecard key={inning._id} inning={inning} calculateScore={calculateScoreFromDeliveries} getPlayerName={getPlayerName} />
+            ))}
+          </div>
+        ) : null}
 
         {/* Toss */}
         <div className="bg-white rounded-2xl shadow-xl p-10 mb-12 text-center">
@@ -80,6 +162,120 @@ const MatchScore = () => {
           ))}
         </div>
       </div>
+    </div>
+  );
+};
+
+// Separate component to fetch deliveries and display scorecard
+const InningsScorecard = ({ inning, calculateScore, getPlayerName }) => {
+  const { data: deliveriesData, isLoading } = useDeliveriesByInning(inning._id, {
+    refetchInterval: 3000, // Auto-refresh every 3 seconds
+  });
+  const deliveries = deliveriesData?.data || [];
+  
+  const score = calculateScore(deliveries);
+  const recentDeliveries = deliveries.slice(-6).reverse(); // Last 6 deliveries
+
+  return (
+    <div className="bg-white rounded-2xl shadow-xl p-8">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-3xl font-bold text-gray-800">
+          {inning.batting_team?.name} - Innings {inning.inning_number}
+        </h2>
+        {inning.is_completed && (
+          <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
+            Completed
+          </span>
+        )}
+      </div>
+
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <>
+          <div className="text-center">
+            <p className="text-6xl font-bold text-indigo-600 mb-2">
+              {score.runs}/{score.wickets}
+            </p>
+            <p className="text-2xl text-gray-600">in {score.overs} overs</p>
+          </div>
+
+          <div className="grid grid-cols-3 gap-4 mt-6">
+            <div className="text-center p-4 bg-blue-50 rounded-lg">
+              <p className="text-sm text-gray-600 mb-1">Runs</p>
+              <p className="text-2xl font-bold text-blue-600">{score.runs}</p>
+            </div>
+            <div className="text-center p-4 bg-red-50 rounded-lg">
+              <p className="text-sm text-gray-600 mb-1">Wickets</p>
+              <p className="text-2xl font-bold text-red-600">{score.wickets}</p>
+            </div>
+            <div className="text-center p-4 bg-green-50 rounded-lg">
+              <p className="text-sm text-gray-600 mb-1">Overs</p>
+              <p className="text-2xl font-bold text-green-600">{score.overs}</p>
+            </div>
+          </div>
+
+          {/* Recent Deliveries */}
+          {recentDeliveries.length > 0 && (
+            <div className="mt-8">
+              <h3 className="text-lg font-bold text-gray-800 mb-4">Recent Deliveries</h3>
+              <div className="space-y-2">
+                {recentDeliveries.map((delivery, index) => (
+                  <div
+                    key={delivery._id}
+                    className={`flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
+                      index === 0
+                        ? "border-green-500 bg-green-50 animate-pulse"
+                        : "border-gray-200 bg-gray-50"
+                    }`}
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-mono font-bold text-gray-700">
+                          {delivery.over}.{delivery.ball_number}
+                        </span>
+                      </div>
+                      <div className="text-sm text-gray-600">
+                        <span className="font-semibold text-gray-800">{getPlayerName(delivery.batter)} (S)</span>
+                        {" • "}
+                        <span>{getPlayerName(delivery.non_striker)} (NS)</span>
+                        {" • "}
+                        <span>vs {getPlayerName(delivery.bowler)} (B)</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {delivery.wicket ? (
+                        <span className="px-3 py-1 bg-red-600 text-white font-bold rounded-full">
+                          W
+                        </span>
+                      ) : (
+                        <span className={`px-3 py-1 font-bold rounded-full ${
+                          (delivery.runs?.batter || 0) >= 4
+                            ? "bg-green-600 text-white"
+                            : "bg-blue-100 text-blue-800"
+                        }`}>
+                          {delivery.runs?.total || delivery.runs?.batter || 0}
+                        </span>
+                      )}
+                      {delivery.runs?.extras > 0 && (
+                        <span className="text-xs text-orange-600 font-semibold">
+                          +{delivery.runs.extras}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {deliveries.length > 0 && (
+            <div className="mt-6 text-sm text-gray-500 text-center">
+              Calculated from {deliveries.length} deliveries • Updates in real-time
+            </div>
+          )}
+        </>
+      )}
     </div>
   );
 };
