@@ -47,10 +47,10 @@ const Dashboard = () => {
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        console.log("Logged out successfully");
+        // Logged out successfully
       },
       onError: (error) => {
-        console.warn("Logout error", error);
+        // Logout error
       },
     });
   };

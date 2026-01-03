@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     try {
       await logoutMutation.mutateAsync();
     } catch (err) {
-      console.warn("Logout API failed, clearing locally anyway");
+      // Logout API failed, clearing locally anyway
     } finally {
       localStorage.removeItem("token");
     }

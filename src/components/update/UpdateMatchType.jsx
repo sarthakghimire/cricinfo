@@ -24,9 +24,7 @@ const UpdateMatchType = () => {
   // THIS IS THE MAGIC LINE — forces re-run when ID changes
   useEffect(() => {
     if (matchType) {
-      console.log("Auto-filling form with:", matchType); // You see this → now form WILL update
       const playerData = matchType.data;
-      console.log(playerData);
       setFormData({
         name: playerData.name || "",
         description: playerData.description || "",

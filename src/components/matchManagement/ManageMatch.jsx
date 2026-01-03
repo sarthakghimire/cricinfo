@@ -684,7 +684,6 @@ const ManageMatch = () => {
                           {inning.batting_team?.name} - Innings {inning.inning_number}
                         </p>
                         <p className="text-gray-600 text-sm mt-1">
-                          {inning.total_runs || 0}/{inning.wickets || 0} in {inning.overs || 0} overs
                           {inning.is_completed && (
                             <span className="ml-2 text-green-600 font-semibold">(Completed)</span>
                           )}
