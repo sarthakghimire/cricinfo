@@ -13,7 +13,7 @@ const Matches = () => {
     return <p className="text-red-500">No matches found</p>;
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen py-8 px-4">
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {matches.map((match) => {
           if (!match.team_1 || !match.team_2) {
