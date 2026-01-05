@@ -6,15 +6,13 @@ import { useVenue } from "../hooks/venues/useVenue";
 const VenuePage = () => {
   const { id } = useParams();
 
-  const { data: response, isLoading, isError } = useVenue(id);
+  const { data: venue, isLoading, isError } = useVenue(id);
 
   if (isLoading) return <Loading />;
-  if (isError || !response?.success)
+  if (isError || !venue)
     return (
       <p className="text-center py-32 text-red-600 text-xl">Venue not found</p>
     );
-
-  const venue = response.data;
 
   return (
     <div className="min-h-screen bg-gray-50">
