@@ -5,8 +5,8 @@ import { toast } from "react-hot-toast";
 
 const Header = () => {
   const { user, login, logout } = useAuth();
-  const [email, setEmail] = useState("sarthak@gmail.com");
-  const [password, setPassword] = useState("Sarthak123@");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
