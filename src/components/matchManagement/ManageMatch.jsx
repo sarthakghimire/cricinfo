@@ -68,17 +68,24 @@ const ManageMatch = () => {
   const { data: matchDetails } = useMatch(selectedMatch?._id);
   const { data: teamsRes } = useTeams();
   const { data: playersRes } = usePlayers(1, 200);
-  
-  // Define currentMatch before its usage in other hooks
+
+  // Define currentMatch
   const currentMatch = matchDetails || selectedMatch;
 
-  const { data: inningsRes, isLoading: loadingInnings } = useInningsByMatch(selectedMatch?._id);
-  const { data: deliveriesRes, isLoading: loadingDeliveries } = useDeliveriesByInning(selectedInningId);
+  const { data: inningsRes, isLoading: loadingInnings } = useInningsByMatch(
+    selectedMatch?._id
+  );
+  const { data: deliveriesRes, isLoading: loadingDeliveries } =
+    useDeliveriesByInning(selectedInningId);
   const { data: matchPlayersRes } = useMatchPlayers(selectedMatch?._id);
-  
+
   // Fetch full team data with players for Playing XI
-  const { data: team1Data } = useTeam(currentMatch?.team_1?._id || currentMatch?.team_1);
-  const { data: team2Data } = useTeam(currentMatch?.team_2?._id || currentMatch?.team_2);
+  const { data: team1Data } = useTeam(
+    currentMatch?.team_1?._id || currentMatch?.team_1
+  );
+  const { data: team2Data } = useTeam(
+    currentMatch?.team_2?._id || currentMatch?.team_2
+  );
 
   const allMatches = matchesRes?.data || [];
   const tournaments = tournamentsRes?.data || [];
@@ -87,23 +94,30 @@ const ManageMatch = () => {
   const innings = inningsRes?.data || [];
   const deliveries = deliveriesRes?.data || [];
   const matchPlayers = matchPlayersRes || [];
-  
+
   // Filter matches by selected tournament
-  const matches = selectedTournament 
-    ? allMatches.filter(match => match.tournament?._id === selectedTournament || match.tournament === selectedTournament)
+  const matches = selectedTournament
+    ? allMatches.filter(
+        (match) =>
+          match.tournament?._id === selectedTournament ||
+          match.tournament === selectedTournament
+      )
     : allMatches;
 
   // Get all players for a specific team (no Playing XI filtering)
   const getTeamPlayers = (teamId) => {
     if (!currentMatch || !teamId) return [];
-    
+
     // Determine which team and return their players
     if (currentMatch.team_1?._id === teamId || currentMatch.team_1 === teamId) {
       return team1Data?.players || [];
-    } else if (currentMatch.team_2?._id === teamId || currentMatch.team_2 === teamId) {
+    } else if (
+      currentMatch.team_2?._id === teamId ||
+      currentMatch.team_2 === teamId
+    ) {
       return team2Data?.players || [];
     }
-    
+
     return [];
   };
 
@@ -137,13 +151,19 @@ const ManageMatch = () => {
 
   const handleUpdateToss = (e) => {
     e.preventDefault();
-    
+
     // Determine which team bats first based on toss decision
-    const battingFirstTeam = tossForm.decision === "BAT" ? tossForm.winner : 
-      (tossForm.winner === selectedMatch.team_1?._id ? selectedMatch.team_2?._id : selectedMatch.team_1?._id);
-    
-    const battingSecondTeam = battingFirstTeam === selectedMatch.team_1?._id ? 
-      selectedMatch.team_2?._id : selectedMatch.team_1?._id;
+    const battingFirstTeam =
+      tossForm.decision === "BAT"
+        ? tossForm.winner
+        : tossForm.winner === selectedMatch.team_1?._id
+        ? selectedMatch.team_2?._id
+        : selectedMatch.team_1?._id;
+
+    const battingSecondTeam =
+      battingFirstTeam === selectedMatch.team_1?._id
+        ? selectedMatch.team_2?._id
+        : selectedMatch.team_1?._id;
 
     updateTossMutation.mutate(
       {
@@ -156,7 +176,7 @@ const ManageMatch = () => {
       {
         onSuccess: () => {
           toast.success("Toss updated successfully!");
-          
+
           // Automatically create both innings
           createInningMutation.mutate(
             {
@@ -178,13 +198,19 @@ const ManageMatch = () => {
                       toast.success("Both innings created automatically!");
                     },
                     onError: (error) => {
-                      toast.error(error.response?.data?.message || "Failed to create 2nd innings");
+                      toast.error(
+                        error.response?.data?.message ||
+                          "Failed to create 2nd innings"
+                      );
                     },
                   }
                 );
               },
               onError: (error) => {
-                toast.error(error.response?.data?.message || "Failed to create 1st innings");
+                toast.error(
+                  error.response?.data?.message ||
+                    "Failed to create 1st innings"
+                );
               },
             }
           );
@@ -197,7 +223,11 @@ const ManageMatch = () => {
   };
 
   const handleDeleteMatch = () => {
-    if (window.confirm(`Delete match "${selectedMatch.team_1?.name} vs ${selectedMatch.team_2?.name}"? This will delete all innings and deliveries. This cannot be undone.`)) {
+    if (
+      window.confirm(
+        `Delete match "${selectedMatch.team_1?.name} vs ${selectedMatch.team_2?.name}"? This will delete all innings and deliveries. This cannot be undone.`
+      )
+    ) {
       deleteMatchMutation.mutate(selectedMatch._id, {
         onSuccess: () => {
           setSelectedMatch(null);
@@ -222,7 +252,9 @@ const ManageMatch = () => {
           setInningForm({ batting_team: "", inning_number: "1" });
         },
         onError: (error) => {
-          toast.error(error.response?.data?.message || "Failed to create innings");
+          toast.error(
+            error.response?.data?.message || "Failed to create innings"
+          );
         },
       }
     );
@@ -286,25 +318,25 @@ const ManageMatch = () => {
     createDeliveryMutation.mutate(deliveryData, {
       onSuccess: () => {
         toast.success("Delivery recorded!");
-        
+
         // Determine if strikers should swap based on cricket rules
         const runs = Number(deliveryForm.runs);
         const isWide = deliveryForm.is_wide;
         const isNoBall = deliveryForm.is_no_ball;
         const currentBall = Number(deliveryForm.ball);
-        
+
         let shouldSwap = false;
-        
-        // Rule 1: Odd runs (1, 3, 5) = swap strikers (only for legal deliveries)
+
+        // Rule 1: Odd runs (1, 3, 5) = swap strikers
         if (!isWide && runs % 2 === 1) {
           shouldSwap = true;
         }
-        
+
         // Rule 2: End of over (ball 6) = swap strikers
         if (currentBall === 6 && !isWide && !isNoBall) {
           shouldSwap = !shouldSwap; // Toggle the swap
         }
-        
+
         // Update striker/non-striker for next delivery
         if (shouldSwap) {
           setCurrentStriker(deliveryForm.non_striker);
@@ -341,7 +373,9 @@ const ManageMatch = () => {
         }
       },
       onError: (error) => {
-        toast.error(error.response?.data?.message || "Failed to record delivery");
+        toast.error(
+          error.response?.data?.message || "Failed to record delivery"
+        );
       },
     });
   };
@@ -362,8 +396,10 @@ const ManageMatch = () => {
     return (
       <div className="max-w-6xl mx-auto p-6">
         <div className="bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Select a Match</h2>
-          
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            Select a Match
+          </h2>
+
           {/* Tournament Filter */}
           <div className="mb-6">
             <label className="block text-sm font-semibold text-gray-700 mb-2">
@@ -377,7 +413,8 @@ const ManageMatch = () => {
               <option value="">All Tournaments</option>
               {tournaments.map((tournament) => (
                 <option key={tournament._id} value={tournament._id}>
-                  {tournament.name} {tournament.season ? `(${tournament.season})` : ""}
+                  {tournament.name}{" "}
+                  {tournament.season ? `(${tournament.season})` : ""}
                 </option>
               ))}
             </select>
@@ -400,14 +437,18 @@ const ManageMatch = () => {
                       </h3>
                       <div className="space-y-1 text-sm text-gray-600">
                         <p>
-                          <span className="font-semibold">Tournament:</span> {match.tournament?.name || "N/A"}
+                          <span className="font-semibold">Tournament:</span>{" "}
+                          {match.tournament?.name || "N/A"}
                         </p>
                         <p>
-                          <span className="font-semibold">Venue:</span> {match.venue?.name || "N/A"}
+                          <span className="font-semibold">Venue:</span>{" "}
+                          {match.venue?.name || "N/A"}
                         </p>
                         <p>
                           <span className="font-semibold">Date:</span>{" "}
-                          {match.match_date ? new Date(match.match_date).toLocaleDateString() : "N/A"}
+                          {match.match_date
+                            ? new Date(match.match_date).toLocaleDateString()
+                            : "N/A"}
                         </p>
                       </div>
                     </div>
@@ -448,7 +489,11 @@ const ManageMatch = () => {
             </p>
             {currentMatch?.toss_result && (
               <p className="text-sm text-green-600 font-semibold mt-2">
-                Toss: {currentMatch.toss_result.winner === selectedMatch.team_1?._id ? selectedMatch.team_1?.name : selectedMatch.team_2?.name} won, chose to {currentMatch.toss_result.decision}
+                Toss:{" "}
+                {currentMatch.toss_result.winner === selectedMatch.team_1?._id
+                  ? selectedMatch.team_1?.name
+                  : selectedMatch.team_2?.name}{" "}
+                won, chose to {currentMatch.toss_result.decision}
               </p>
             )}
           </div>
@@ -512,7 +557,9 @@ const ManageMatch = () => {
         {/* Toss Tab */}
         {activeTab === "toss" && (
           <div className="p-8">
-            <h3 className="text-xl font-bold text-gray-800 mb-6">Update Toss Result</h3>
+            <h3 className="text-xl font-bold text-gray-800 mb-6">
+              Update Toss Result
+            </h3>
             <form onSubmit={handleUpdateToss} className="space-y-6">
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-3">
@@ -531,11 +578,15 @@ const ManageMatch = () => {
                       name="winner"
                       value={selectedMatch.team_1?._id}
                       checked={tossForm.winner === selectedMatch.team_1?._id}
-                      onChange={(e) => setTossForm({ ...tossForm, winner: e.target.value })}
+                      onChange={(e) =>
+                        setTossForm({ ...tossForm, winner: e.target.value })
+                      }
                       className="sr-only"
                       required
                     />
-                    <span className="text-lg">{selectedMatch.team_1?.name}</span>
+                    <span className="text-lg">
+                      {selectedMatch.team_1?.name}
+                    </span>
                   </label>
                   <label
                     className={`flex items-center justify-center p-6 rounded-lg border-2 cursor-pointer transition ${
@@ -549,11 +600,15 @@ const ManageMatch = () => {
                       name="winner"
                       value={selectedMatch.team_2?._id}
                       checked={tossForm.winner === selectedMatch.team_2?._id}
-                      onChange={(e) => setTossForm({ ...tossForm, winner: e.target.value })}
+                      onChange={(e) =>
+                        setTossForm({ ...tossForm, winner: e.target.value })
+                      }
                       className="sr-only"
                       required
                     />
-                    <span className="text-lg">{selectedMatch.team_2?.name}</span>
+                    <span className="text-lg">
+                      {selectedMatch.team_2?.name}
+                    </span>
                   </label>
                 </div>
               </div>
@@ -575,7 +630,9 @@ const ManageMatch = () => {
                       name="decision"
                       value="BAT"
                       checked={tossForm.decision === "BAT"}
-                      onChange={(e) => setTossForm({ ...tossForm, decision: e.target.value })}
+                      onChange={(e) =>
+                        setTossForm({ ...tossForm, decision: e.target.value })
+                      }
                       className="sr-only"
                     />
                     <span className="text-lg">BAT</span>
@@ -592,7 +649,9 @@ const ManageMatch = () => {
                       name="decision"
                       value="BOWL"
                       checked={tossForm.decision === "BOWL"}
-                      onChange={(e) => setTossForm({ ...tossForm, decision: e.target.value })}
+                      onChange={(e) =>
+                        setTossForm({ ...tossForm, decision: e.target.value })
+                      }
                       className="sr-only"
                     />
                     <span className="text-lg">BOWL</span>
@@ -616,7 +675,9 @@ const ManageMatch = () => {
           <div className="p-8 space-y-8">
             {/* Create Innings */}
             <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Create New Innings</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">
+                Create New Innings
+              </h3>
               <form onSubmit={handleCreateInning} className="space-y-4">
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
@@ -625,7 +686,12 @@ const ManageMatch = () => {
                     </label>
                     <select
                       value={inningForm.batting_team}
-                      onChange={(e) => setInningForm({ ...inningForm, batting_team: e.target.value })}
+                      onChange={(e) =>
+                        setInningForm({
+                          ...inningForm,
+                          batting_team: e.target.value,
+                        })
+                      }
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                       required
                     >
@@ -644,7 +710,12 @@ const ManageMatch = () => {
                     </label>
                     <select
                       value={inningForm.inning_number}
-                      onChange={(e) => setInningForm({ ...inningForm, inning_number: e.target.value })}
+                      onChange={(e) =>
+                        setInningForm({
+                          ...inningForm,
+                          inning_number: e.target.value,
+                        })
+                      }
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                     >
                       <option value="1">1st Innings</option>
@@ -660,18 +731,24 @@ const ManageMatch = () => {
                   disabled={createInningMutation.isPending}
                   className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-bold py-3 rounded-lg transition"
                 >
-                  {createInningMutation.isPending ? "Creating..." : "Create Innings"}
+                  {createInningMutation.isPending
+                    ? "Creating..."
+                    : "Create Innings"}
                 </button>
               </form>
             </div>
 
             {/* View Innings */}
             <div>
-              <h3 className="text-xl font-bold text-gray-800 mb-4">Innings List</h3>
+              <h3 className="text-xl font-bold text-gray-800 mb-4">
+                Innings List
+              </h3>
               {loadingInnings ? (
                 <Loading />
               ) : innings.length === 0 ? (
-                <p className="text-gray-500 text-center py-4">No innings created yet</p>
+                <p className="text-gray-500 text-center py-4">
+                  No innings created yet
+                </p>
               ) : (
                 <div className="space-y-3">
                   {innings.map((inning) => (
@@ -681,11 +758,14 @@ const ManageMatch = () => {
                     >
                       <div>
                         <p className="font-semibold text-lg text-gray-800">
-                          {inning.batting_team?.name} - Innings {inning.inning_number}
+                          {inning.batting_team?.name} - Innings{" "}
+                          {inning.inning_number}
                         </p>
                         <p className="text-gray-600 text-sm mt-1">
                           {inning.is_completed && (
-                            <span className="ml-2 text-green-600 font-semibold">(Completed)</span>
+                            <span className="ml-2 text-green-600 font-semibold">
+                              (Completed)
+                            </span>
                           )}
                         </p>
                       </div>
@@ -730,12 +810,15 @@ const ManageMatch = () => {
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
               >
                 <option value="">Select Innings</option>
-                {innings.filter((i) => !i.is_completed).map((inning) => (
-                  <option key={inning._id} value={inning._id}>
-                    {inning.batting_team?.name} - Innings {inning.inning_number} ({inning.total_runs || 0}/
-                    {inning.wickets || 0})
-                  </option>
-                ))}
+                {innings
+                  .filter((i) => !i.is_completed)
+                  .map((inning) => (
+                    <option key={inning._id} value={inning._id}>
+                      {inning.batting_team?.name} - Innings{" "}
+                      {inning.inning_number} ({inning.total_runs || 0}/
+                      {inning.wickets || 0})
+                    </option>
+                  ))}
               </select>
             </div>
 
@@ -783,18 +866,24 @@ const ManageMatch = () => {
 
                 {/* Record Delivery Form */}
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">Record Delivery</h3>
-                  
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">
+                    Record Delivery
+                  </h3>
+
                   {/* Current Batsmen Display */}
                   {(currentStriker || currentNonStriker) && (
-                    <div className="bg-gradient-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-lg p-4 mb-6">
+                    <div className="bg-linear-to-r from-green-50 to-blue-50 border-2 border-green-300 rounded-lg p-4 mb-6">
                       <div className="grid md:grid-cols-2 gap-4">
                         <div className="flex items-center gap-3">
                           <div className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-bold">
                             ON STRIKE
                           </div>
                           <span className="font-bold text-gray-800">
-                            {players.find(p => p._id === (currentStriker || deliveryForm.batter))?.name || "Select Batter"}
+                            {players.find(
+                              (p) =>
+                                p._id ===
+                                (currentStriker || deliveryForm.batter)
+                            )?.name || "Select Batter"}
                           </span>
                         </div>
                         <div className="flex items-center gap-3">
@@ -802,13 +891,17 @@ const ManageMatch = () => {
                             NON-STRIKER
                           </div>
                           <span className="font-bold text-gray-800">
-                            {players.find(p => p._id === (currentNonStriker || deliveryForm.non_striker))?.name || "Select Non-striker"}
+                            {players.find(
+                              (p) =>
+                                p._id ===
+                                (currentNonStriker || deliveryForm.non_striker)
+                            )?.name || "Select Non-striker"}
                           </span>
                         </div>
                       </div>
                     </div>
                   )}
-                  
+
                   <form onSubmit={handleRecordDelivery} className="space-y-6">
                     {/* Over and Ball */}
                     <div className="space-y-4">
@@ -818,7 +911,10 @@ const ManageMatch = () => {
                           Select Over (1-{totalOvers})
                         </label>
                         <div className="grid grid-cols-5 sm:grid-cols-10 gap-2 max-h-48 overflow-y-auto p-2 bg-gray-50 rounded-lg">
-                          {Array.from({ length: totalOvers }, (_, i) => i + 1).map((over) => (
+                          {Array.from(
+                            { length: totalOvers },
+                            (_, i) => i + 1
+                          ).map((over) => (
                             <label
                               key={over}
                               className={`flex items-center justify-center p-2 rounded-lg border-2 cursor-pointer transition ${
@@ -832,7 +928,12 @@ const ManageMatch = () => {
                                 name="over"
                                 value={over}
                                 checked={deliveryForm.over === String(over)}
-                                onChange={(e) => setDeliveryForm({ ...deliveryForm, over: e.target.value })}
+                                onChange={(e) =>
+                                  setDeliveryForm({
+                                    ...deliveryForm,
+                                    over: e.target.value,
+                                  })
+                                }
                                 className="sr-only"
                                 required
                               />
@@ -862,7 +963,12 @@ const ManageMatch = () => {
                                 name="ball"
                                 value={ball}
                                 checked={deliveryForm.ball === String(ball)}
-                                onChange={(e) => setDeliveryForm({ ...deliveryForm, ball: e.target.value })}
+                                onChange={(e) =>
+                                  setDeliveryForm({
+                                    ...deliveryForm,
+                                    ball: e.target.value,
+                                  })
+                                }
                                 className="sr-only"
                                 required
                               />
@@ -876,16 +982,24 @@ const ManageMatch = () => {
                     {/* Batters and Bowler */}
                     <div className="grid md:grid-cols-3 gap-4">
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Batter (On Strike)</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Batter (On Strike)
+                        </label>
                         <select
                           value={deliveryForm.batter}
-                          onChange={(e) => setDeliveryForm({ ...deliveryForm, batter: e.target.value })}
+                          onChange={(e) =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              batter: e.target.value,
+                            })
+                          }
                           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
                           required
                         >
                           <option value="">Select</option>
                           {getTeamPlayers(
-                            innings.find((i) => i._id === selectedInningId)?.batting_team?._id
+                            innings.find((i) => i._id === selectedInningId)
+                              ?.batting_team?._id
                           ).map((p) => (
                             <option key={p._id} value={p._id}>
                               {p.name}
@@ -895,16 +1009,24 @@ const ManageMatch = () => {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Non-striker</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Non-striker
+                        </label>
                         <select
                           value={deliveryForm.non_striker}
-                          onChange={(e) => setDeliveryForm({ ...deliveryForm, non_striker: e.target.value })}
+                          onChange={(e) =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              non_striker: e.target.value,
+                            })
+                          }
                           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
                           required
                         >
                           <option value="">Select</option>
                           {getTeamPlayers(
-                            innings.find((i) => i._id === selectedInningId)?.batting_team?._id
+                            innings.find((i) => i._id === selectedInningId)
+                              ?.batting_team?._id
                           ).map((p) => (
                             <option key={p._id} value={p._id}>
                               {p.name}
@@ -914,17 +1036,26 @@ const ManageMatch = () => {
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Bowler</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Bowler
+                        </label>
                         <select
                           value={deliveryForm.bowler}
-                          onChange={(e) => setDeliveryForm({ ...deliveryForm, bowler: e.target.value })}
+                          onChange={(e) =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              bowler: e.target.value,
+                            })
+                          }
                           className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500"
                           required
                         >
                           <option value="">Select</option>
                           {getTeamPlayers(
                             // Bowling team is the opposite of batting team
-                            selectedMatch.team_1?._id === innings.find((i) => i._id === selectedInningId)?.batting_team?._id
+                            selectedMatch.team_1?._id ===
+                              innings.find((i) => i._id === selectedInningId)
+                                ?.batting_team?._id
                               ? selectedMatch.team_2?._id
                               : selectedMatch.team_1?._id
                           ).map((p) => (
@@ -938,7 +1069,9 @@ const ManageMatch = () => {
 
                     {/* Runs */}
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Runs Scored</label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Runs Scored
+                      </label>
                       <div className="flex gap-2">
                         {[0, 1, 2, 3, 4, 6].map((run) => (
                           <button
@@ -970,7 +1103,12 @@ const ManageMatch = () => {
                         <input
                           type="checkbox"
                           checked={deliveryForm.is_wide}
-                          onChange={(e) => setDeliveryForm({ ...deliveryForm, is_wide: e.target.checked })}
+                          onChange={(e) =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              is_wide: e.target.checked,
+                            })
+                          }
                           className="w-5 h-5 text-green-600"
                         />
                         <span className="font-semibold">Wide</span>
@@ -980,7 +1118,12 @@ const ManageMatch = () => {
                         <input
                           type="checkbox"
                           checked={deliveryForm.is_no_ball}
-                          onChange={(e) => setDeliveryForm({ ...deliveryForm, is_no_ball: e.target.checked })}
+                          onChange={(e) =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              is_no_ball: e.target.checked,
+                            })
+                          }
                           className="w-5 h-5 text-green-600"
                         />
                         <span className="font-semibold">No Ball</span>
@@ -990,10 +1133,17 @@ const ManageMatch = () => {
                         <input
                           type="checkbox"
                           checked={deliveryForm.is_wicket}
-                          onChange={(e) => setDeliveryForm({ ...deliveryForm, is_wicket: e.target.checked })}
+                          onChange={(e) =>
+                            setDeliveryForm({
+                              ...deliveryForm,
+                              is_wicket: e.target.checked,
+                            })
+                          }
                           className="w-5 h-5 text-red-600"
                         />
-                        <span className="font-semibold text-red-600">Wicket</span>
+                        <span className="font-semibold text-red-600">
+                          Wicket
+                        </span>
                       </label>
                     </div>
 
@@ -1006,7 +1156,12 @@ const ManageMatch = () => {
                           </label>
                           <select
                             value={deliveryForm.wicket_type}
-                            onChange={(e) => setDeliveryForm({ ...deliveryForm, wicket_type: e.target.value })}
+                            onChange={(e) =>
+                              setDeliveryForm({
+                                ...deliveryForm,
+                                wicket_type: e.target.value,
+                              })
+                            }
                             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500"
                             required
                           >
@@ -1024,10 +1179,17 @@ const ManageMatch = () => {
                           deliveryForm.wicket_type === "run_out" ||
                           deliveryForm.wicket_type === "stumped") && (
                           <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Fielder</label>
+                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                              Fielder
+                            </label>
                             <select
                               value={deliveryForm.fielder}
-                              onChange={(e) => setDeliveryForm({ ...deliveryForm, fielder: e.target.value })}
+                              onChange={(e) =>
+                                setDeliveryForm({
+                                  ...deliveryForm,
+                                  fielder: e.target.value,
+                                })
+                              }
                               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-red-500"
                             >
                               <option value="">Select Fielder</option>
@@ -1047,18 +1209,24 @@ const ManageMatch = () => {
                       disabled={createDeliveryMutation.isPending}
                       className="w-full bg-green-600 hover:bg-green-700 disabled:bg-gray-400 text-white font-bold text-lg py-4 rounded-xl shadow-lg transition"
                     >
-                      {createDeliveryMutation.isPending ? "Recording..." : "Record Delivery"}
+                      {createDeliveryMutation.isPending
+                        ? "Recording..."
+                        : "Record Delivery"}
                     </button>
                   </form>
                 </div>
 
                 {/* Recent Deliveries */}
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">Recent Deliveries</h3>
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">
+                    Recent Deliveries
+                  </h3>
                   {loadingDeliveries ? (
                     <Loading />
                   ) : deliveries.length === 0 ? (
-                    <p className="text-gray-500 text-center py-4">No deliveries recorded yet</p>
+                    <p className="text-gray-500 text-center py-4">
+                      No deliveries recorded yet
+                    </p>
                   ) : (
                     <div className="space-y-2">
                       {deliveries
@@ -1074,17 +1242,25 @@ const ManageMatch = () => {
                                 {delivery.over}.{delivery.ball_number}
                               </span>
                               <span className="text-gray-600">
-                                {delivery.batter?.name} • {delivery.bowler?.name}
+                                {delivery.batter?.name} •{" "}
+                                {delivery.bowler?.name}
                               </span>
                               <span
                                 className={`font-bold ${
-                                  delivery.wicket ? "text-red-600" : "text-green-600"
+                                  delivery.wicket
+                                    ? "text-red-600"
+                                    : "text-green-600"
                                 }`}
                               >
-                                {delivery.wicket ? "W" : delivery.runs?.total || delivery.runs?.batter || 0}
+                                {delivery.wicket
+                                  ? "W"
+                                  : delivery.runs?.total ||
+                                    delivery.runs?.batter ||
+                                    0}
                                 {delivery.runs?.batter === 4 && " (4)"}
                                 {delivery.runs?.batter === 6 && " (6)"}
-                                {delivery.runs?.extras > 0 && ` +${delivery.runs.extras}`}
+                                {delivery.runs?.extras > 0 &&
+                                  ` +${delivery.runs.extras}`}
                               </span>
                             </div>
 

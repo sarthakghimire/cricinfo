@@ -24,7 +24,8 @@ const ManageInnings = () => {
 
   const { data: matchesRes, isLoading: loadingMatches } = useMatches(1, 100);
   const { data: teamsRes } = useTeams();
-  const { data: inningsRes, isLoading: loadingInnings } = useInningsByMatch(selectedMatchId);
+  const { data: inningsRes, isLoading: loadingInnings } =
+    useInningsByMatch(selectedMatchId);
 
   const matches = matchesRes?.data || [];
   const teams = teamsRes?.data || [];
@@ -48,7 +49,9 @@ const ManageInnings = () => {
           setFormData({ match: "", batting_team: "", inning_number: "1" });
         },
         onError: (error) => {
-          toast.error(error.response?.data?.message || "Failed to create innings");
+          toast.error(
+            error.response?.data?.message || "Failed to create innings"
+          );
         },
       }
     );
@@ -57,7 +60,8 @@ const ManageInnings = () => {
   const handleUpdate = (e) => {
     e.preventDefault();
     const updates = {};
-    if (updateData.total_runs) updates.total_runs = Number(updateData.total_runs);
+    if (updateData.total_runs)
+      updates.total_runs = Number(updateData.total_runs);
     if (updateData.wickets) updates.wickets = Number(updateData.wickets);
     if (updateData.overs) updates.overs = Number(updateData.overs);
 
@@ -69,7 +73,9 @@ const ManageInnings = () => {
           setUpdateData({ id: "", total_runs: "", wickets: "", overs: "" });
         },
         onError: (error) => {
-          toast.error(error.response?.data?.message || "Failed to update innings");
+          toast.error(
+            error.response?.data?.message || "Failed to update innings"
+          );
         },
       }
     );
@@ -88,7 +94,7 @@ const ManageInnings = () => {
   };
 
   const handleDelete = (id) => {
-    if (window.confirm("Delete this innings? This cannot be undone.")) {
+    if (window.confirm("Delete this innings?")) {
       deleteMutation.mutate(id, {
         onSuccess: () => toast.success("Innings deleted"),
         onError: () => toast.error("Failed to delete innings"),
@@ -102,7 +108,9 @@ const ManageInnings = () => {
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       {/* Create Innings */}
       <div className="bg-white rounded-xl shadow-lg p-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Create Innings</h2>
+        <h2 className="text-2xl font-bold text-gray-800 mb-6">
+          Create Innings
+        </h2>
         <form onSubmit={handleCreate} className="space-y-6">
           <div className="grid md:grid-cols-3 gap-6">
             <div>
@@ -111,7 +119,9 @@ const ManageInnings = () => {
               </label>
               <select
                 value={formData.match}
-                onChange={(e) => setFormData({ ...formData, match: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, match: e.target.value })
+                }
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                 required
               >
@@ -130,7 +140,9 @@ const ManageInnings = () => {
               </label>
               <select
                 value={formData.batting_team}
-                onChange={(e) => setFormData({ ...formData, batting_team: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, batting_team: e.target.value })
+                }
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                 required
               >
@@ -149,7 +161,9 @@ const ManageInnings = () => {
               </label>
               <select
                 value={formData.inning_number}
-                onChange={(e) => setFormData({ ...formData, inning_number: e.target.value })}
+                onChange={(e) =>
+                  setFormData({ ...formData, inning_number: e.target.value })
+                }
                 className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
               >
                 <option value="1">1st Innings</option>
@@ -197,7 +211,9 @@ const ManageInnings = () => {
             {loadingInnings ? (
               <Loading />
             ) : innings.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No innings found for this match</p>
+              <p className="text-gray-500 text-center py-4">
+                No innings found for this match
+              </p>
             ) : (
               innings.map((inning) => (
                 <div
@@ -206,12 +222,16 @@ const ManageInnings = () => {
                 >
                   <div>
                     <p className="font-semibold text-lg text-gray-800">
-                      {inning.batting_team?.name} - Innings {inning.inning_number}
+                      {inning.batting_team?.name} - Innings{" "}
+                      {inning.inning_number}
                     </p>
                     <p className="text-gray-600 text-sm mt-1">
-                      {inning.total_runs || 0}/{inning.wickets || 0} in {inning.overs || 0} overs
+                      {inning.total_runs || 0}/{inning.wickets || 0} in{" "}
+                      {inning.overs || 0} overs
                       {inning.is_completed && (
-                        <span className="ml-2 text-green-600 font-semibold">(Completed)</span>
+                        <span className="ml-2 text-green-600 font-semibold">
+                          (Completed)
+                        </span>
                       )}
                     </p>
                   </div>
@@ -257,7 +277,9 @@ const ManageInnings = () => {
       {/* Update Score */}
       {updateData.id && (
         <div className="bg-white rounded-xl shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-6">Update Score</h2>
+          <h2 className="text-2xl font-bold text-gray-800 mb-6">
+            Update Score
+          </h2>
           <form onSubmit={handleUpdate} className="space-y-6">
             <div className="grid md:grid-cols-3 gap-6">
               <div>
@@ -267,7 +289,9 @@ const ManageInnings = () => {
                 <input
                   type="number"
                   value={updateData.total_runs}
-                  onChange={(e) => setUpdateData({ ...updateData, total_runs: e.target.value })}
+                  onChange={(e) =>
+                    setUpdateData({ ...updateData, total_runs: e.target.value })
+                  }
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   min="0"
                 />
@@ -280,7 +304,9 @@ const ManageInnings = () => {
                 <input
                   type="number"
                   value={updateData.wickets}
-                  onChange={(e) => setUpdateData({ ...updateData, wickets: e.target.value })}
+                  onChange={(e) =>
+                    setUpdateData({ ...updateData, wickets: e.target.value })
+                  }
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   min="0"
                   max="10"
@@ -295,7 +321,9 @@ const ManageInnings = () => {
                   type="number"
                   step="0.1"
                   value={updateData.overs}
-                  onChange={(e) => setUpdateData({ ...updateData, overs: e.target.value })}
+                  onChange={(e) =>
+                    setUpdateData({ ...updateData, overs: e.target.value })
+                  }
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500"
                   min="0"
                 />
@@ -312,7 +340,14 @@ const ManageInnings = () => {
               </button>
               <button
                 type="button"
-                onClick={() => setUpdateData({ id: "", total_runs: "", wickets: "", overs: "" })}
+                onClick={() =>
+                  setUpdateData({
+                    id: "",
+                    total_runs: "",
+                    wickets: "",
+                    overs: "",
+                  })
+                }
                 className="flex-1 bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 rounded-lg transition"
               >
                 Cancel

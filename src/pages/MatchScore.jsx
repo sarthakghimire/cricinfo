@@ -11,10 +11,10 @@ const MatchScore = () => {
   const [isLive, setIsLive] = useState(true); // Always show as live when auto-polling
 
   const { data: match, isLoading, isError } = useMatch(id, {
-    refetchInterval: 3000, // Auto-refresh every 3 seconds
+    refetchInterval: 3000,
   });
   const { data: inningsData, isLoading: loadingInnings } = useInningsByMatch(id, {
-    refetchInterval: 3000, // Auto-refresh every 3 seconds
+    refetchInterval: 3000,
   });
   
   // Fetch all players to map IDs to names
@@ -237,12 +237,12 @@ const WinnerCalculator = ({ innings, team1, team2, match, calculateScore }) => {
 const InningsScorecard = ({ inning, calculateScore, getPlayerName, match, allInnings }) => {
   const [showDeliveries, setShowDeliveries] = useState(false);
   const { data: deliveriesData, isLoading } = useDeliveriesByInning(inning._id, {
-    refetchInterval: 3000, // Auto-refresh every 3 seconds
+    refetchInterval: 3000,
   });
   const deliveries = deliveriesData?.data || [];
   
   const score = calculateScore(deliveries);
-  const recentDeliveries = deliveries.slice(-6).reverse(); // Last 6 deliveries
+  const recentDeliveries = deliveries.slice(-6).reverse();
 
   // Get match format overs (default to 20 if not available)
   const matchOvers = match?.format || match?.overs || 20;

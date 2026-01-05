@@ -13,6 +13,6 @@ export const useMatch = (matchId, options = {}) => {
     enabled: !!matchId,
     select: (response) => response?.data,
     staleTime: 1000 * 60 * 5,
-    ...options, // Spread additional options like refetchInterval
+    ...options,
   });
 };

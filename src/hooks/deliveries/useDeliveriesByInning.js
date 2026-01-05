@@ -9,6 +9,6 @@ export const useDeliveriesByInning = (inningId, options = {}) => {
       return data;
     },
     enabled: !!inningId,
-    ...options, // Spread additional options like refetchInterval
+    ...options,
   });
 };

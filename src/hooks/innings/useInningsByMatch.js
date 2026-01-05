@@ -9,6 +9,6 @@ export const useInningsByMatch = (matchId, options = {}) => {
       return data;
     },
     enabled: !!matchId,
-    ...options, // Spread additional options like refetchInterval
+    ...options,
   });
 };

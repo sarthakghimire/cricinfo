@@ -12,7 +12,6 @@ export const useUpdateStage = () => {
   return useMutation({
     mutationFn: updateStage,
     onSuccess: (response) => {
-      // Refresh the stages list of the tournament
       const tournamentId = response.data?.tournament?._id;
       if (tournamentId) {
         queryClient.invalidateQueries({ queryKey: ["stages", tournamentId] });
