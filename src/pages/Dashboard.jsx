@@ -171,10 +171,10 @@ const Dashboard = () => {
 
         <div className="space-y-6">
           {/* ADD SECTION */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-md shadow-sm overflow-hidden border border-gray-200">
             <button
               onClick={() => toggleMain("add")}
-              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-green-400 to-green-500 text-white hover:from-green-700 hover:to-green-800 transition cursor-pointer"
+              className="w-full px-6 py-4 text-left flex justify-between items-center bg-green-50 text-green-900 hover:bg-green-100 transition cursor-pointer border-b border-gray-200"
             >
               <h2 className="text-2xl font-bold">Add Resources</h2>
               <span className="text-3xl">{openMain === "add" ? "−" : "+"}</span>
@@ -189,11 +189,11 @@ const Dashboard = () => {
                 {addSections.map((section) => (
                   <div
                     key={section.id}
-                    className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"
+                    className="bg-white rounded-sm overflow-hidden border border-gray-200"
                   >
                     <button
                       onClick={() => toggleSub(section.id)}
-                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-100 transition font-medium"
+                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-50 transition font-medium"
                     >
                       <span className="text-gray-800">{section.title}</span>
                       <span className="text-xl text-gray-600">
@@ -218,10 +218,10 @@ const Dashboard = () => {
           </div>
 
           {/* UPDATE SECTION */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-md shadow-sm overflow-hidden border border-gray-200">
             <button
               onClick={() => toggleMain("update")}
-              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-yellow-400 to-amber-500 text-white hover:from-yellow-700 hover:to-yellow-800 transition cursor-pointer"
+              className="w-full px-6 py-4 text-left flex justify-between items-center bg-amber-50 text-amber-900 hover:bg-amber-100 transition cursor-pointer border-b border-gray-200"
             >
               <h2 className="text-2xl font-bold">Update Resources</h2>
               <span className="text-3xl">
@@ -238,11 +238,11 @@ const Dashboard = () => {
                 {updateSections.map((section) => (
                   <div
                     key={section.id}
-                    className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"
+                    className="bg-white rounded-sm overflow-hidden border border-gray-200"
                   >
                     <button
                       onClick={() => toggleSub(section.id)}
-                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-100 transition font-medium"
+                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-50 transition font-medium"
                     >
                       <span className="text-gray-800">{section.title}</span>
                       <span className="text-xl text-gray-600">
@@ -267,10 +267,10 @@ const Dashboard = () => {
           </div>
 
           {/* DELETE SECTION */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-md shadow-sm overflow-hidden border border-gray-200">
             <button
               onClick={() => toggleMain("delete")}
-              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-red-400 to-red-500 text-white hover:from-red-700 hover:to-red-800 transition cursor-pointer"
+              className="w-full px-6 py-4 text-left flex justify-between items-center bg-red-50 text-red-900 hover:bg-red-100 transition cursor-pointer border-b border-gray-200"
             >
               <h2 className="text-2xl font-bold">Delete Resources</h2>
               <span className="text-3xl">
@@ -287,11 +287,11 @@ const Dashboard = () => {
                 {deleteSections.map((section) => (
                   <div
                     key={section.id}
-                    className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"
+                    className="bg-white rounded-sm overflow-hidden border border-gray-200"
                   >
                     <button
                       onClick={() => toggleSub(section.id)}
-                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-100 transition font-medium"
+                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-50 transition font-medium"
                     >
                       <span className="text-gray-800">{section.title}</span>
                       <span className="text-xl text-gray-600">
@@ -316,10 +316,10 @@ const Dashboard = () => {
           </div>
 
           {/* MATCH MANAGEMENT SECTION */}
-          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-md shadow-sm overflow-hidden border border-gray-200">
             <button
               onClick={() => toggleMain("matchManagement")}
-              className="w-full px-6 py-5 text-left flex justify-between items-center bg-linear-to-r from-purple-400 to-indigo-500 text-white hover:from-purple-700 hover:to-indigo-800 transition cursor-pointer"
+              className="w-full px-6 py-4 text-left flex justify-between items-center bg-indigo-50 text-indigo-900 hover:bg-indigo-100 transition cursor-pointer border-b border-gray-200"
             >
               <h2 className="text-2xl font-bold">Match Management</h2>
               <span className="text-3xl">
@@ -336,11 +336,11 @@ const Dashboard = () => {
                 {matchManagementSections.map((section) => (
                   <div
                     key={section.id}
-                    className="bg-gray-50 rounded-lg overflow-hidden border border-gray-200"
+                    className="bg-white rounded-sm overflow-hidden border border-gray-200"
                   >
                     <button
                       onClick={() => toggleSub(section.id)}
-                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-100 transition font-medium"
+                      className="w-full px-5 py-3 text-left flex justify-between items-center hover:bg-gray-50 transition font-medium"
                     >
                       <span className="text-gray-800">{section.title}</span>
                       <span className="text-xl text-gray-600">

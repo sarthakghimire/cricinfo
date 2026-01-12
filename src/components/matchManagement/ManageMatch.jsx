@@ -307,7 +307,6 @@ const ManageMatch = () => {
       summary: deliveryForm.summary,
     };
 
-    // Add wicket details if applicable
     if (deliveryForm.is_wicket) {
       deliveryData.wicket = {
         type: deliveryForm.wicket_type,
@@ -356,6 +355,7 @@ const ManageMatch = () => {
             is_wicket: false,
             wicket_type: "",
             fielder: "",
+            summary: "",
           });
         } else {
           setCurrentStriker(deliveryForm.batter);
@@ -371,6 +371,7 @@ const ManageMatch = () => {
             is_wicket: false,
             wicket_type: "",
             fielder: "",
+            summary: "",
           });
         }
       },
