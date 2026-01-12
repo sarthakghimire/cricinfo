@@ -296,6 +296,33 @@ const InningsScorecard = ({ inning, calculateScore, getPlayerName, match, allInn
             </div>
           )}
 
+
+          
+          {/* Latest Ball Commentary */}
+          {deliveries.length > 0 && deliveries[deliveries.length - 1].summary && (
+             <div className="mb-8 bg-linear-to-r from-indigo-600 to-blue-600 rounded-lg p-0.5 shadow-sm">
+                <div className="bg-white rounded-[7px] p-4 border-l-4 border-indigo-500">
+                   <div className="flex items-start gap-3">
+                      <div className="shrink-0 pt-1">
+                         <span className="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-100 ring-4 ring-indigo-50">
+                            <svg className="h-3 w-3 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                            </svg>
+                         </span>
+                      </div>
+                      <div>
+                         <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">
+                            Last Ball ({deliveries[deliveries.length - 1].over}.{deliveries[deliveries.length - 1].ball_number})
+                         </p>
+                         <p className="text-gray-900 font-medium leading-relaxed">
+                            {deliveries[deliveries.length - 1].summary}
+                         </p>
+                      </div>
+                   </div>
+                </div>
+             </div>
+          )}
+
           <div className="grid grid-cols-3 gap-px bg-gray-200 rounded-lg overflow-hidden mb-8 border border-gray-200">
             <div className="text-center py-4 bg-white">
               <p className="text-[10px] uppercase tracking-wider text-blue-600 font-bold mb-1">Runs</p>

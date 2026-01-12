@@ -53,6 +53,7 @@ const ManageMatch = () => {
     is_wicket: false,
     wicket_type: "",
     fielder: "",
+    summary: "",
   });
 
   // Track current striker and non-striker for display
@@ -303,6 +304,7 @@ const ManageMatch = () => {
         batter: Number(deliveryForm.runs),
         extras: extras,
       },
+      summary: deliveryForm.summary,
     };
 
     // Add wicket details if applicable
@@ -1203,6 +1205,24 @@ const ManageMatch = () => {
                         )}
                       </div>
                     )}
+
+                    {/* Commentary Input */}
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Commentary (Summary)
+                      </label>
+                      <textarea
+                        value={deliveryForm.summary}
+                        onChange={(e) =>
+                          setDeliveryForm({
+                            ...deliveryForm,
+                            summary: e.target.value,
+                          })
+                        }
+                        placeholder="e.g. Smashed over long-on for a massive six!"
+                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-green-500 h-24 resize-none"
+                      />
+                    </div>
 
                     <button
                       type="submit"

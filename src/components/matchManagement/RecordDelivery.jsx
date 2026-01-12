@@ -22,6 +22,7 @@ const RecordDelivery = () => {
     is_wicket: false,
     wicket_type: "",
     fielder: "",
+    summary: "",
   });
 
   const { data: inningsRes, isLoading: loadingInnings } = useInnings();
@@ -52,6 +53,7 @@ const RecordDelivery = () => {
       is_wide: formData.is_wide,
       is_no_ball: formData.is_no_ball,
       is_wicket: formData.is_wicket,
+      summary: formData.summary,
     };
 
     if (formData.is_wicket) {
@@ -76,6 +78,7 @@ const RecordDelivery = () => {
           is_wicket: false,
           wicket_type: "",
           fielder: "",
+          summary: "",
         });
       },
       onError: (error) => {
@@ -291,6 +294,19 @@ const RecordDelivery = () => {
                 )}
               </div>
             )}
+
+            {/* Commentary Input */}
+            <div>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">
+                Commentary (Summary)
+              </label>
+              <textarea
+                value={formData.summary}
+                onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
+                placeholder="e.g. Smashed over long-on for a massive six!"
+                className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 h-24 resize-none"
+              />
+            </div>
 
             <button
               type="submit"
