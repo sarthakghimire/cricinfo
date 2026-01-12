@@ -66,7 +66,7 @@ const MatchScore = () => {
   if (isLoading) return <Loading />;
   if (isError || !match) {
     return (
-      <div className="text-center py-32 text-4xl text-red-600 font-bold">
+      <div className="text-center py-32 text-4xl text-gray-900 font-bold">
         Match not found
       </div>
     );
@@ -76,8 +76,64 @@ const MatchScore = () => {
   const team2 = match.team_2;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="max-w-4xl mx-auto space-y-6">
+        {/* Header Card */}
+        <div className="bg-white rounded-lg shadow-sm border-t-4 border-indigo-500 p-6 relative">
+          {/* Status Badge */}
+          <div className="flex justify-between items-start mb-6">
+             <div>
+              <p className="text-sm font-bold text-indigo-900 uppercase tracking-wide">
+                {match.stage?.name} • Match {match.match_number}
+              </p>
+              <p className="text-xs text-gray-500 mt-1 font-medium">
+                {match.venue?.name} • {new Date(match.date).toLocaleDateString()}
+              </p>
+             </div>
+             {isLive && (
+                <div className="flex items-center gap-1.5 px-3 py-1 bg-red-50 border border-red-100 rounded-full text-xs font-bold text-red-600 animate-pulse">
+                  <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                  LIVE
+                </div>
+              )}
+          </div>
+          
+          <div className="flex items-center justify-between px-4 sm:px-12">
+            <div className="text-center">
+              {team1?.logo && (
+                 <img src={team1.logo} alt={team1.name} className="w-20 h-20 object-contain mx-auto mb-3" />
+              )}
+              <h2 className="text-lg font-bold text-gray-900">{team1?.name}</h2>
+            </div>
+
+            <div className="text-xl font-light text-gray-400">vs</div>
+
+            <div className="text-center">
+               {team2?.logo && (
+                 <img src={team2.logo} alt={team2.name} className="w-20 h-20 object-contain mx-auto mb-3" />
+              )}
+              <h2 className="text-lg font-bold text-gray-900">{team2?.name}</h2>
+            </div>
+          </div>
+          
+          <div className="mt-8 pt-6 border-t border-gray-100 text-center">
+             {match.toss_result ? (
+               <p className="text-sm text-gray-600">
+                 <span className="font-semibold text-gray-900">
+                   {match.toss_result.winner === team1?._id ? team1?.name : team2?.name}
+                 </span>{" "}
+                 won the toss and elected to{" "}
+                 <span className="font-semibold text-gray-900">
+                   {match.toss_result.decision === "BAT" ? "bat" : "bowl"}
+                 </span>
+               </p>
+             ) : (
+                <p className="text-sm text-gray-400 italic">Toss to happen</p>
+             )}
+          </div>
+        </div>
+
+        {/* Winner / Result Section */}
         <WinnerCalculator 
           innings={innings}
           team1={team1}
@@ -86,58 +142,18 @@ const MatchScore = () => {
           calculateScore={calculateScoreFromDeliveries}
         />
         
-        <div className="bg-white rounded-3xl shadow-2xl p-12 text-center mb-12 relative">
-          {/* LIVE Indicator */}
-          {isLive && (
-            <div className="absolute top-6 right-6 flex items-center gap-2 bg-red-600 text-white px-4 py-2 rounded-full animate-pulse">
-              <span className="w-3 h-3 bg-white rounded-full animate-ping"></span>
-              <span className="font-bold">LIVE</span>
-            </div>
-          )}
-          
-          <h1 className="text-6xl font-extrabold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-6">
-            {team1?.name} vs {team2?.name}
-          </h1>
-          <p className="text-2xl text-gray-700">
-            {match.stage?.name} • Match {match.match_number}
-          </p>
-          <p className="text-xl text-gray-600 mt-4">
-            {match.venue?.name} • {new Date(match.date).toLocaleDateString()}
-          </p>
-            <div className="bg-white rounded-2xl shadow-xl p-10 mb-12 text-center">
-          {match.toss_result ? (
-            <div>
-              <p className="text-3xl font-bold text-green-600">
-                {match.toss_result.winner === team1?._id
-                  ? team1?.name
-                  : team2?.name}{" "}
-                won the toss
-              </p>
-              <p className="text-2xl mt-4">
-                Elected to{" "}
-                <span className="font-bold text-blue-600">
-                  {match.toss_result.decision === "BAT" ? "BAT" : "BOWL"}
-                </span>
-              </p>
-            </div>
-          ) : (
-            <p className="text-2xl text-gray-500 italic">Toss pending</p>
-          )}
-        </div>
-        </div>
-
-        {/* Match Outcome */}
+        {/* Match Outcome (if result declared) */}
         {match.match_outcome && (
-          <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-xl p-8 mb-12 text-center">
-            <h2 className="text-3xl font-bold text-white">{match.match_outcome}</h2>
+          <div className="bg-emerald-50 border border-emerald-100 rounded-lg p-4 text-center">
+            <p className="text-emerald-800 font-bold">{match.match_outcome}</p>
           </div>
         )}
 
-        {/* Innings Scorecards */}
+        {/* Scorecards */}
         {loadingInnings ? (
           <Loading />
         ) : innings.length > 0 ? (
-          <div className="space-y-6 mb-12">
+          <div className="space-y-6">
             {innings.map((inning) => (
               <InningsScorecard 
                 key={inning._id} 
@@ -149,28 +165,18 @@ const MatchScore = () => {
               />
             ))}
             
-            {/* Show "Yet to bat" for second team if only first innings exists */}
+             {/* Show "Yet to bat" for second team if only first innings exists */}
             {innings.length === 1 && (
-              <div className="bg-white rounded-2xl shadow-xl p-8">
-                <div className="flex items-center gap-4 mb-6">
-                  {team2?.logo && (
-                    <img 
-                      src={team2.logo} 
-                      alt={team2.name}
-                      className="w-16 h-16 object-contain"
-                    />
-                  )}
-                  <h2 className="text-3xl font-bold text-gray-800">
-                    {team2?.name}
-                  </h2>
-                </div>
-                <div className="text-center py-8">
-                  <p className="text-4xl font-bold text-gray-500">Yet to bat</p>
-                </div>
+              <div className="bg-white border border-gray-200 border-dashed rounded-lg p-8 text-center opacity-75">
+                 <p className="text-gray-400 font-medium text-lg">{team2?.name} yet to bat</p>
               </div>
             )}
           </div>
-        ) : null}
+        ) : (
+           <div className="text-center py-12 bg-white rounded-lg border border-gray-200 border-dashed">
+              <p className="text-gray-400">Match has not started yet</p>
+           </div>
+        )}
       </div>
     </div>
   );
@@ -204,6 +210,7 @@ const WinnerCalculator = ({ innings, team1, team2, match, calculateScore }) => {
   
   // Determine winner based on cricket rules
   let winnerMessage = "";
+  let winnerColorClass = "text-emerald-700";
   
   if (secondScore.runs > firstScore.runs) {
     // Second innings team won
@@ -218,16 +225,24 @@ const WinnerCalculator = ({ innings, team1, team2, match, calculateScore }) => {
   } else {
     // Tie
     winnerMessage = "Match Tied";
+    winnerColorClass = "text-orange-600";
   }
   
   // Display winner
   return (
-    <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-xl p-8 mb-12 text-center">
-      <h2 className="text-4xl font-bold text-white mb-2">Match Result</h2>
-      <p className="text-3xl font-bold text-white">{winnerMessage}</p>
-      <div className="mt-4 text-white text-lg">
-        <p>{firstInnings.batting_team?.name || team1?.name}: {firstScore.runs}/{firstScore.wickets}</p>
-        <p>{secondInnings.batting_team?.name || team2?.name}: {secondScore.runs}/{secondScore.wickets}</p>
+    <div className="bg-white border-l-4 border-emerald-500 rounded-lg p-6 shadow-sm mb-6 text-center">
+      <h2 className="text-xs uppercase tracking-widest text-emerald-600 mb-2 font-bold">Match Result</h2>
+      <p className={`text-2xl font-bold ${winnerColorClass} mb-4`}>{winnerMessage}</p>
+      
+      <div className="max-w-xs mx-auto grid grid-cols-2 text-sm text-gray-600 border-t border-gray-100 pt-4 gap-4">
+        <div className="text-right border-r border-gray-100 pr-4">
+          <span className="block text-xs text-gray-400 mb-1">{firstInnings.batting_team?.name || team1?.name}</span>
+          <span className="font-mono font-bold text-gray-800">{firstScore.runs}/{firstScore.wickets}</span>
+        </div>
+        <div className="text-left pl-4">
+           <span className="block text-xs text-gray-400 mb-1">{secondInnings.batting_team?.name || team2?.name}</span>
+           <span className="font-mono font-bold text-gray-800">{secondScore.runs}/{secondScore.wickets}</span>
+        </div>
       </div>
     </div>
   );
@@ -249,122 +264,113 @@ const InningsScorecard = ({ inning, calculateScore, getPlayerName, match, allInn
   const totalBalls = matchOvers * 6;
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8">
-      <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center gap-4">
-          {inning.batting_team?.logo && (
-            <img 
-              src={inning.batting_team.logo} 
-              alt={inning.batting_team.name}
-              className="w-16 h-16 object-contain"
-            />
-          )}
-          <h2 className="text-3xl font-bold text-gray-800">
-            {inning.batting_team?.name} - Innings {inning.inning_number}
-          </h2>
-        </div>
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+      <div className="flex justify-between items-center p-6 border-b border-gray-100 bg-gray-50/50">
+        <h2 className="text-lg font-bold text-gray-900">
+          {inning.batting_team?.name} <span className="text-xs font-normal text-indigo-500 ml-2 font-mono">INNINGS {inning.inning_number}</span>
+        </h2>
         {inning.is_completed && (
-          <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-semibold">
-            Completed
+          <span className="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold border border-emerald-100">
+            COMPLETED
           </span>
         )}
       </div>
 
       {isLoading ? (
         <Loading />
-      ) : ( deliveries.length === 0 ? (<div className="text-center py-8"><p className="text-4xl font-bold text-gray-500">Yet to bat</p></div>) : (
-        <>
-          <div className="text-center">
-            <p className="text-6xl font-bold text-indigo-600 mb-2">
-              {score.runs}/{score.wickets}
-            </p>
-            <p className="text-2xl text-gray-600">in {score.overs} overs</p>
-            
-            {/* Show target for second innings */}
-            {inning.inning_number === 2 && allInnings.length >= 1 && (
-              <div className="mt-4 bg-yellow-50 border-2 border-yellow-400 rounded-lg p-4 inline-block">
-                <p className="text-lg font-semibold text-yellow-800">
-                  Target = {calculateScore(allInnings[0]?.deliveries || []).runs + 1} runs in {matchOvers} overs ({totalBalls} balls)
-                </p>
-              </div>
-            )}
+      ) : ( deliveries.length === 0 ? (<div className="text-center py-6"><p className="text-gray-400">Yet to bat</p></div>) : (
+        <div className="p-6">
+          <div className="flex flex-col sm:flex-row items-baseline gap-2 mb-6">
+            <div className="font-mono text-5xl font-bold text-gray-900 tracking-tight">
+              {score.runs}<span className="text-3xl text-gray-300 mx-1">/</span>{score.wickets}
+            </div>
+            <div className="text-gray-500 font-medium ml-2">
+               in <span className="text-gray-800 font-bold">{score.overs}</span> overs
+            </div>
           </div>
+            
+          {/* Show target for second innings */}
+          {inning.inning_number === 2 && allInnings.length >= 1 && (
+            <div className="mb-6 p-3 bg-blue-50 border border-blue-100 rounded text-sm text-blue-800">
+                Target: <span className="font-bold">{calculateScore(allInnings[0]?.deliveries || []).runs + 1}</span> runs in {matchOvers} overs ({totalBalls} balls)
+            </div>
+          )}
 
-          <div className="grid grid-cols-3 gap-4 mt-6">
-            <div className="text-center p-4 bg-blue-50 rounded-lg">
-              <p className="text-sm text-gray-600 mb-1">Runs</p>
-              <p className="text-2xl font-bold text-blue-600">{score.runs}</p>
+          <div className="grid grid-cols-3 gap-px bg-gray-200 rounded-lg overflow-hidden mb-8 border border-gray-200">
+            <div className="text-center py-4 bg-white">
+              <p className="text-[10px] uppercase tracking-wider text-blue-600 font-bold mb-1">Runs</p>
+              <p className="text-2xl font-bold text-gray-900">{score.runs}</p>
             </div>
-            <div className="text-center p-4 bg-red-50 rounded-lg">
-              <p className="text-sm text-gray-600 mb-1">Wickets</p>
-              <p className="text-2xl font-bold text-red-600">{score.wickets}</p>
+             <div className="text-center py-4 bg-white">
+              <p className="text-[10px] uppercase tracking-wider text-red-600 font-bold mb-1">Wickets</p>
+              <p className="text-2xl font-bold text-gray-900">{score.wickets}</p>
             </div>
-            <div className="text-center p-4 bg-green-50 rounded-lg">
-              <p className="text-sm text-gray-600 mb-1">Overs</p>
-              <p className="text-2xl font-bold text-green-600">{score.overs}</p>
+             <div className="text-center py-4 bg-white">
+              <p className="text-[10px] uppercase tracking-wider text-emerald-600 font-bold mb-1">Overs</p>
+              <p className="text-2xl font-bold text-gray-900">{score.overs}</p>
             </div>
           </div>
 
           {/* Recent Deliveries - Accordion for completed innings */}
           {recentDeliveries.length > 0 && (
-            <div className="mt-8">
+            <div>
               <button
                 onClick={() => setShowDeliveries(!showDeliveries)}
-                className="w-full flex items-center justify-between text-lg font-bold text-gray-800 mb-4 p-3 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors"
+                className="w-full flex items-center justify-between text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors py-2 group"
               >
-                <span>Recent Deliveries</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-bold text-indigo-600">Recent Deliveries</span>
+                  <span className="text-xs text-gray-400 font-normal px-2 py-0.5 bg-gray-100 rounded-full">Last 6 balls</span>
+                </div>
                 <svg
-                  className={`w-6 h-6 transition-transform ${showDeliveries ? 'rotate-180' : ''}`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
+                    className={`w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-transform ${showDeliveries ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
               </button>
               
               {showDeliveries && (
-                <div className="space-y-2">
+                <div className="space-y-2 mt-3">
                   {recentDeliveries.map((delivery, index) => (
                     <div
                       key={delivery._id}
-                      className={`flex items-center justify-between p-3 rounded-lg border-2 transition-all ${
-                        index === 0 && !inning.is_completed
-                          ? "border-green-500 bg-green-50 animate-pulse"
-                          : "border-gray-200 bg-gray-50"
-                      }`}
+                      className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-100 hover:border-gray-200 transition-colors"
                     >
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-mono font-bold text-gray-700">
+                        <div className="flex items-baseline gap-3 mb-1">
+                          <span className="font-mono text-sm font-bold text-gray-500 w-10">
                             {delivery.over}.{delivery.ball_number}
                           </span>
+                          <span className="text-sm font-bold text-gray-800">
+                             {getPlayerName(delivery.batter)}
+                          </span>
                         </div>
-                        <div className="text-sm text-gray-600">
-                          <span className="font-semibold text-gray-800">{getPlayerName(delivery.batter)} (S)</span>
-                          {" • "}
-                          <span>{getPlayerName(delivery.non_striker)} (NS)</span>
-                          {" • "}
-                          <span>vs {getPlayerName(delivery.bowler)} (B)</span>
+                        <div className="text-xs text-gray-500 pl-14">
+                           vs <span className="font-medium">{getPlayerName(delivery.bowler)}</span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-2">
+                      
+                      <div className="flex items-center gap-3">
+                        {delivery.runs?.extras > 0 && (
+                          <span className="text-[10px] text-gray-500 uppercase tracking-wide bg-white px-2 py-1 rounded border border-gray-200">
+                            {delivery.extra_type ? delivery.extra_type.replace('_', ' ') : 'Extra'} (+{delivery.runs.extras})
+                          </span>
+                        )}
+                        
                         {delivery.wicket ? (
-                          <span className="px-3 py-1 bg-red-600 text-white font-bold rounded-full">
+                          <span className="w-8 h-8 flex items-center justify-center bg-red-600 text-white font-bold rounded-full text-xs shadow-sm">
                             W
                           </span>
                         ) : (
-                          <span className={`px-3 py-1 font-bold rounded-full ${
-                            (delivery.runs?.batter || 0) >= 4
-                              ? "bg-green-600 text-white"
-                              : "bg-blue-100 text-blue-800"
+                          <span className={`w-8 h-8 flex items-center justify-center font-bold rounded-full text-sm shadow-sm ${
+                            (delivery.runs?.batter || 0) >= 6
+                              ? "bg-purple-600 text-white"
+                              : (delivery.runs?.batter || 0) >= 4 ? "bg-blue-600 text-white" : "bg-white text-gray-700 border border-gray-200"
                           }`}>
                             {delivery.runs?.total || delivery.runs?.batter || 0}
-                          </span>
-                        )}
-                        {delivery.runs?.extras > 0 && (
-                          <span className="text-xs text-orange-600 font-semibold">
-                            +{delivery.runs.extras}
                           </span>
                         )}
                       </div>
@@ -374,7 +380,7 @@ const InningsScorecard = ({ inning, calculateScore, getPlayerName, match, allInn
               )}
             </div>
           )}
-        </>
+        </div>
       ))
     }
     </div>
