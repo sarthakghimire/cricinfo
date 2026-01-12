@@ -123,7 +123,7 @@ const Footer = () => {
 
           <div className="text-center md:text-right">
             <p className="text-xs mt-2 opacity-60">
-              © {currentYear} cricInfo. All Rights Reserved.
+              © {currentYear} WicketEsque. All Rights Reserved.
             </p>
           </div>
         </div>
