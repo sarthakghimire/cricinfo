@@ -31,7 +31,7 @@ const Header = () => {
     <header className="bg-gradient-to-r from-blue-950 to-black text-white shadow-lg h-16 relative z-50">
       <div className="max-w-7xl mx-auto px-6 h-full flex justify-between items-center">
         <Link to="/" className="text-3xl font-black">
-          <span className="text-yellow-400">WicketEsque</span>
+          <span className="text-white">WicketEsque</span>
         </Link>
 
         {/* Desktop View */}
@@ -61,7 +61,7 @@ const Header = () => {
                 />
                 <button
                   type="submit"
-                  className="bg-yellow-400 text-blue-900 font-bold px-4 py-1 rounded-full text-xs hover:bg-yellow-300 transition"
+                  className="bg-white text-blue-950 font-bold px-4 py-1 rounded-full text-xs hover:bg-gray-100 transition"
                 >
                   LOGIN
                 </button>
@@ -78,7 +78,7 @@ const Header = () => {
             <div className="flex items-center gap-4">
               <span className="text-sm font-medium">
                 Welcome,{" "}
-                <span className="text-yellow-400 font-bold">
+                <span className="text-sky-200 font-bold">
                   {user.name || user.email}
                 </span>
               </span>
@@ -120,7 +120,7 @@ const Header = () => {
                   placeholder="Email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="bg-white/10 p-3 rounded-lg text-white placeholder-white/70 outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="bg-white/10 p-3 rounded-lg text-white placeholder-white/70 outline-none focus:ring-2 focus:ring-white"
                   required
                 />
                 <input
@@ -128,12 +128,12 @@ const Header = () => {
                   placeholder="Password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="bg-white/10 p-3 rounded-lg text-white placeholder-white/70 outline-none focus:ring-2 focus:ring-yellow-400"
+                  className="bg-white/10 p-3 rounded-lg text-white placeholder-white/70 outline-none focus:ring-2 focus:ring-white"
                   required
                 />
                 <button
                   type="submit"
-                  className="bg-yellow-400 text-blue-900 font-bold py-3 rounded-lg hover:bg-yellow-300 transition"
+                  className="bg-white text-blue-950 font-bold py-3 rounded-lg hover:bg-gray-100 transition"
                 >
                   LOGIN
                 </button>
@@ -153,7 +153,7 @@ const Header = () => {
             <div className="flex flex-col gap-6 text-center">
               <div className="text-lg">
                 <span className="text-gray-300">Logged in as </span>
-                <span className="text-yellow-400 font-bold block text-xl mt-1">
+                <span className="text-sky-200 font-bold block text-xl mt-1">
                   {user.name || user.email}
                 </span>
               </div>

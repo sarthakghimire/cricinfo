@@ -37,95 +37,139 @@ const TournamentInfo = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-50">
-        {/* Hero Banner */}
-        <div className="relative h-96 md:h-screen">
-          <img
-            src={tournament.banner_image}
-            alt={tournament.name}
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/50 to-transparent" />
+      <div className="min-h-screen bg-gray-50 py-12 px-4">
+        <div className="max-w-5xl mx-auto space-y-8">
+          
+          {/* Header Card */}
+          <div className="bg-white rounded-lg shadow-sm border-t-4 border-indigo-500 border-x border-b border-gray-200 p-8 relative overflow-hidden group">
+            {/* Background Banner with Gradient Fade */}
+            <div className="absolute inset-0 z-0 select-none pointer-events-none">
+               <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-white/20 z-10" />
+               <img 
+                 src={tournament.banner_image} 
+                 className="w-full h-full object-cover opacity-20 grayscale-[20%] group-hover:scale-105 transition-transform duration-700" 
+                 alt=""
+               />
+            </div>
 
-          {/* Logo + Name */}
-          <div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 text-center">
-            <img
-              src={tournament.logo}
-              alt={`${tournament.name} Logo`}
-              className="w-32 h-32 md:w-48 md:h-48 mx-auto mb-6 rounded-full border-8 border-white/80 shadow-2xl object-contain bg-white"
-            />
-            <h1 className="text-5xl md:text-8xl font-extrabold text-white drop-shadow-2xl">
-              {tournament.name}
-            </h1>
-            <p className="text-2xl md:text-4xl text-yellow-400 font-bold mt-4">
-              Season {tournament.season}
-            </p>
+            <div className="relative z-10 flex flex-col md:flex-row items-center md:items-start gap-8">
+              <div className="shrink-0">
+                <img
+                  src={tournament.logo}
+                  alt={`${tournament.name} Logo`}
+                  className="w-32 h-32 object-contain bg-white rounded-full border border-gray-100 shadow-lg p-2"
+                />
+              </div>
+              <div className="text-center md:text-left flex-1">
+                <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 tracking-tight drop-shadow-sm">
+                  {tournament.name}
+                </h1>
+                <p className="text-lg text-indigo-700 font-bold mt-2 uppercase tracking-wide">
+                  Season {tournament.season}
+                </p>
+                <div className="flex flex-wrap justify-center md:justify-start gap-3 mt-4">
+                  <span className="px-3 py-1 bg-white/80 backdrop-blur-sm text-gray-700 rounded-full text-xs font-bold border border-gray-200 shadow-sm">
+                     {tournament.match_type.name}
+                  </span>
+                  <span className="px-3 py-1 bg-white/80 backdrop-blur-sm text-gray-700 rounded-full text-xs font-bold border border-gray-200 shadow-sm">
+                     {tournament.tournament_type.name}
+                  </span>
+                  <span className="px-3 py-1 bg-white/80 backdrop-blur-sm text-gray-700 rounded-full text-xs font-bold border border-gray-200 shadow-sm">
+                     {tournament.gender === "M" ? "Men's" : "Women's"}
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        {/* Main Content */}
-        <div className="max-w-7xl mx-auto px-6 py-16">
-          <div className="grid md:grid-cols-3 gap-10">
-            {/* Left: Details */}
-            <div className="md:col-span-2 space-y-10">
-              {/* Description */}
-              <div className="bg-white rounded-2xl shadow-xl p-8">
-                <h2 className="text-3xl font-bold text-gray-800 mb-4">About</h2>
-                <p className="text-lg text-gray-600 leading-relaxed">
+          <div className="grid md:grid-cols-3 gap-8">
+            {/* Left Column */}
+            <div className="md:col-span-2 space-y-8">
+              
+              {/* About Section */}
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">About</h2>
+                <p className="text-gray-600 leading-relaxed">
                   {tournament.description}
                 </p>
               </div>
 
-              {/* Match Details */}
-              <div className="bg-white rounded-2xl shadow-xl p-8">
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                  Format
-                </h2>
-                <div className="grid grid-cols-2 gap-6">
-                  <Link
-                    to={`/match-info/${tournament.match_type._id}`}
-                    className="bg-blue-50 rounded-xl p-6 text-center"
-                  >
-                    <p className="text-sm text-blue-600 font-medium">
-                      Match Type
-                    </p>
-                    <p className="text-2xl font-bold text-blue-800">
-                      {tournament.match_type.name}
-                    </p>
-                  </Link>
-                  <div className="bg-indigo-50 rounded-xl p-6 text-center">
-                    <p className="text-sm text-indigo-600 font-medium">Overs</p>
-                    <p className="text-2xl font-bold text-indigo-800">
-                      {tournament.total_overs} Overs
-                    </p>
+              {/* Stats Grid */}
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                <h2 className="text-lg font-bold text-gray-900 mb-6 border-b border-gray-100 pb-2">Tournament Format</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-gray-200 rounded-lg overflow-hidden border border-gray-200">
+                  <div className="bg-white p-4 text-center">
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Matches</p>
+                    <p className="text-xl font-bold text-blue-700 mt-1">32</p>
                   </div>
-                  <div className="bg-purple-50 rounded-xl p-6 text-center">
-                    <p className="text-sm text-purple-600 font-medium">
-                      Tournament Type
-                    </p>
-                    <p className="text-2xl font-bold text-purple-800">
-                      {tournament.tournament_type.name}
-                    </p>
+                  <div className="bg-white p-4 text-center">
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Teams</p>
+                    <p className="text-xl font-bold text-blue-700 mt-1">8</p>
                   </div>
-                  <div className="bg-green-50 rounded-xl p-6 text-center">
-                    <p className="text-sm text-green-600 font-medium">Gender</p>
-                    <p className="text-2xl font-bold text-green-800">
-                      {tournament.gender === "M" ? "Men's" : "Women's"}
-                    </p>
+                  <div className="bg-white p-4 text-center">
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Overs</p>
+                    <p className="text-xl font-bold text-emerald-700 mt-1">{tournament.total_overs}</p>
+                  </div>
+                   <div className="bg-white p-4 text-center">
+                    <p className="text-xs font-bold text-gray-400 uppercase tracking-wide">Powerplay</p>
+                    <p className="text-xl font-bold text-purple-700 mt-1">{tournament.match_type.power_play_overs}</p>
                   </div>
                 </div>
               </div>
+              
+              {/* Officials */}
+               {tournament.officials.length > 0 && (
+                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                  <h2 className="text-lg font-bold text-gray-900 mb-6 border-b border-gray-100 pb-2">Officials</h2>
+                  <div className="flex flex-wrap gap-3">
+                    {tournament.officials.map((official) => (
+                      <Link
+                        key={official._id}
+                        to={`/officials/${official._id}`}
+                        className="inline-flex items-center gap-3 bg-gray-50 border border-gray-200 rounded-full pl-1 pr-4 py-1 hover:bg-white hover:border-indigo-300 hover:shadow-sm transition group"
+                      >
+                         <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-xs group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                          {official.name.charAt(0)}
+                        </div>
+                        <div className="flex flex-col">
+                           <span className="font-bold text-sm text-gray-800 group-hover:text-gray-900">{official.name}</span>
+                           <span className="text-[10px] text-gray-500 uppercase tracking-wide">{official.type.replace(/_/g, " ")}</span>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
 
-              {/* Locations */}
-              <div className="bg-white rounded-2xl shadow-xl p-8">
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                  Venues
-                </h2>
-                <div className="flex flex-wrap gap-4">
+            </div>
+
+            {/* Right Column */}
+            <div className="space-y-6">
+              {/* Quick Info / Dates */}
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                 <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Timeline</h3>
+                 <div className="space-y-4">
+                    <div className="flex items-start gap-4">
+                       <div className="w-10 flex flex-col items-center">
+                          <span className="text-xs font-bold text-gray-400 uppercase">Start</span>
+                          <div className="h-full w-px bg-gray-200 my-1"></div>
+                       </div>
+                       <div>
+                          <p className="font-bold text-gray-900">{new Date(tournament.created_at).toLocaleDateString("en-GB")}</p>
+                          <p className="text-xs text-gray-500">Kick-off</p>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+
+               {/* Venues */}
+              <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                 <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wide mb-4">Venues</h3>
+                 <div className="flex flex-wrap gap-2">
                   {tournament.locations.map((location, i) => (
                     <span
                       key={i}
-                      className="px-6 py-3 bg-linear-to-r from-blue-600 to-indigo-600 text-white font-bold rounded-full shadow-lg"
+                      className="px-3 py-1 bg-gray-100 text-gray-600 rounded text-sm font-medium border border-gray-200"
                     >
                       {location}
                     </span>
@@ -133,67 +177,11 @@ const TournamentInfo = () => {
                 </div>
               </div>
 
-              {/* Officials */}
-              {tournament.officials.length > 0 && (
-                <div className="bg-white rounded-2xl shadow-xl p-8">
-                  <h2 className="text-3xl font-bold text-gray-800 mb-6">
-                    Officials
-                  </h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {tournament.officials.map((official) => (
-                      <Link
-                        key={official._id}
-                        to={`/officials/${official._id}`}
-                        className="group bg-linear-to-br from-blue-50 to-indigo-50 rounded-xl p-6 hover:shadow-2xl transition-all duration-300 hover:scale-105 border border-blue-200"
-                      >
-                        <h3 className="font-bold text-lg text-gray-800 group-hover:text-blue-700">
-                          {official.name}
-                        </h3>
-                        <p className="text-sm text-indigo-600 font-medium capitalize mt-1">
-                          {official.type.replace(/_/g, " ")}
-                        </p>
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-
-            {/* Right: Quick Info Card */}
-            <div className="space-y-6">
-              <div className="bg-linear-to-br from-blue-600 to-indigo-700 text-white rounded-2xl shadow-2xl p-8 top-6">
-                <h3 className="text-2xl font-bold mb-6">Quick Info</h3>
-                <div className="space-y-5">
-                  <div>
-                    <p className="text-blue-200 text-sm">Total Matches</p>
-                    <p className="text-3xl font-extrabold">32</p>
-                  </div>
-                  <div>
-                    <p className="text-blue-200 text-sm">Teams</p>
-                    <p className="text-3xl font-extrabold">8</p>
-                  </div>
-                  <div>
-                    <p className="text-blue-200 text-sm">Powerplay</p>
-                    <p className="text-3xl font-extrabold">
-                      {tournament.match_type.power_play_overs} Overs
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-blue-200 text-sm">Created</p>
-                    <p className="text-xl font-medium">
-                      {new Date(tournament.created_at).toLocaleDateString(
-                        "en-GB"
-                      )}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
               <Link
                 to={`/stages/tournaments/${id}`}
-                className="block text-center py-5 bg-white border-2 border-blue-600 text-blue-600 font-bold text-xl rounded-2xl hover:bg-blue-600 hover:text-white transition-all duration-300 shadow-xl"
+                className="block text-center py-4 bg-indigo-600 text-white font-bold rounded-lg hover:bg-indigo-700 transition shadow-sm"
               >
-                Tournament Details
+                View Tournament Stages
               </Link>
             </div>
           </div>
