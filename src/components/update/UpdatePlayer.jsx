@@ -50,7 +50,16 @@ const UpdatePlayer = () => {
     if (formData.gender !== player?.gender) updates.gender = formData.gender;
     if (formData.date_of_birth !== (player?.date_of_birth?.slice(0, 10) || ""))
       updates.date_of_birth = formData.date_of_birth;
-    if (formData.image !== player?.image) updates.image = formData.image;
+    
+    // Only include image if it's changed and not empty
+    if (formData.image !== player?.image) {
+      if (formData.image && formData.image.trim() !== "") {
+        updates.image = formData.image.trim();
+      } else if (player?.image) {
+        // If clearing the image (empty string), explicitly set to null
+        updates.image = null;
+      }
+    }
 
     if (Object.keys(updates).length === 0) {
       return toast("No changes to save", { icon: "ℹ️" });

@@ -73,6 +73,7 @@ const TeamDetail = () => {
                             src={player.image ? player.image : Banner}
                             alt={player.name}
                             className="w-12 h-12 rounded-full object-cover"
+                            onError={handleError}
                           />
                           <div>
                             <p className="font-semibold text-blue-600">

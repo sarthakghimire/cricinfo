@@ -32,9 +32,12 @@ const PlayerDetail = () => {
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="flex justify-center">
               <img
-                src={player.image}
+                src={player.image || "https://via.placeholder.com/400x400?text=No+Image"}
                 alt={player.name}
                 className="h-96 object-fit"
+                onError={(e) => {
+                  e.target.src = "https://via.placeholder.com/400x400?text=No+Image";
+                }}
               />
             </div>
             <div className="p-8">

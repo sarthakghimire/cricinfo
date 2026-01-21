@@ -60,6 +60,9 @@ const DeletePlayers = () => {
                     src={player.image}
                     alt={player.name}
                     className="w-12 h-12 rounded-full object-cover border border-gray-200"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                    }}
                   />
                 )}
                 <p className="font-semibold text-lg text-gray-800">{player.name}</p>

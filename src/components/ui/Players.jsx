@@ -59,10 +59,13 @@ const Players = () => {
                   "
                 >
                   <img
-                    src={player.image}
+                    src={player.image || "https://via.placeholder.com/400x300?text=No+Image"}
                     alt={player.name}
                     className="w-full h-56 object-cover rounded-t-xl"
                     loading="lazy"
+                    onError={(e) => {
+                      e.target.src = "https://via.placeholder.com/400x300?text=No+Image";
+                    }}
                   />
                   <div className="p-5">
                     <h3 className="font-semibold text-lg text-gray-900 truncate">
